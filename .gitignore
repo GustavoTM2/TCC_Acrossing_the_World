@@ -1,0 +1,33 @@
+# Colocar na raiz do projeto Unity, ao lado de Assets, Packages e ProjectSettings.
+# Preservar os arquivos .meta junto com seus respectivos assets.
+
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+.utmp/
+.vs/
+.idea/
+.DS_Store
+Thumbs.db
+
+*.log
+*.csproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.blend1
