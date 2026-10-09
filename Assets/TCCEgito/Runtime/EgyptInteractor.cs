@@ -10,7 +10,7 @@ namespace CrossingTheWorld.TCCEgypt
 
         private void Update()
         {
-            if (stage == null || !stage.isActiveAndEnabled || stage.IsLoading) return;
+            if (stage == null || !stage.isActiveAndEnabled || stage.IsLoading || stage.IsDeliveringScarab) return;
             bool pressed = EgyptInput.InteractPressed;
             if (stage.DialogueIsOpen)
             {

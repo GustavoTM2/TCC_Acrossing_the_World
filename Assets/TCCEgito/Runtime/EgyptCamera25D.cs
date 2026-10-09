@@ -10,6 +10,8 @@ namespace CrossingTheWorld.TCCEgypt
         [Min(0.01f)] public float followSharpness = 8f;
         [Range(0f, 1f)] public float depthFollow = 0.2f;
         public Vector3 depthAxis = Vector3.back;
+        public bool fixedHorizontalFraming;
+        public float horizontalFramePosition;
         private Vector3 initialTarget;
 
         private void Start()
@@ -18,14 +20,17 @@ namespace CrossingTheWorld.TCCEgypt
             initialTarget = target.position;
             depthAxis.y = 0;
             depthAxis = depthAxis.sqrMagnitude > 0.001f ? depthAxis.normalized : Vector3.back;
-            transform.position = target.position + offset;
-            transform.LookAt(target.position + lookOffset);
+            Vector3 frame = target.position;
+            if (fixedHorizontalFraming) frame.x = horizontalFramePosition;
+            transform.position = frame + offset;
+            transform.LookAt(frame + lookOffset);
         }
         private void LateUpdate()
         {
             if (target == null) return;
             Vector3 framingTarget = target.position
                 - depthAxis * Vector3.Dot(target.position - initialTarget, depthAxis) * (1f - depthFollow);
+            if (fixedHorizontalFraming) framingTarget.x = horizontalFramePosition;
             float amount = 1f - Mathf.Exp(-followSharpness * Time.deltaTime);
             transform.position = Vector3.Lerp(transform.position, framingTarget + offset, amount);
             transform.LookAt(framingTarget + lookOffset);

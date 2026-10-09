@@ -6,6 +6,8 @@ namespace CrossingTheWorld.TCCEgypt
     public sealed class EgyptNpcIdle : MonoBehaviour
     {
         public Transform coordinateSpace;
+        public EgyptStage stage;
+        public string speaker = "Múmia";
         public Transform head;
         public Transform leftArm;
         public Transform rightArm;
@@ -44,16 +46,17 @@ namespace CrossingTheWorld.TCCEgypt
             if (!basePoseCaptured) CaptureBasePose();
             if (coordinateSpace == null) coordinateSpace = transform;
             float t = time + phaseOffset;
+            float gesture = stage != null && stage.CurrentSpeaker == speaker ? 1f : 0f;
             if (head != null)
             {
                 Vector3 up = head.parent.InverseTransformDirection(coordinateSpace.up);
                 Vector3 right = head.parent.InverseTransformDirection(coordinateSpace.right);
                 head.localRotation = Quaternion.AngleAxis(Mathf.Sin(t * 0.45f) * headTurnDegrees, up)
-                    * Quaternion.AngleAxis(Mathf.Sin(t * 0.65f + 0.4f) * headNodDegrees, right) * headBase;
+                    * Quaternion.AngleAxis(Mathf.Sin(t * (0.65f + gesture * 0.7f) + 0.4f) * (headNodDegrees + gesture * 1.4f), right) * headBase;
             }
-            Arm(leftArm, leftBase, leftArmSide, -relaxArmDegrees + Mathf.Sin(t * 0.8f) * armSwayDegrees);
+            Arm(leftArm, leftBase, leftArmSide, -relaxArmDegrees + Mathf.Sin(t * 0.8f) * armSwayDegrees + Mathf.Sin(t * 1.25f) * gesture * 3f);
             Arm(rightArm, rightBase, rightArmSide, -relaxArmDegrees * 0.85f
-                + Mathf.Sin(t * 0.63f + 1.1f) * armSwayDegrees);
+                + Mathf.Sin(t * 0.63f + 1.1f) * armSwayDegrees + Mathf.Sin(t * 0.95f + 0.4f) * gesture * 2f);
         }
 
         private void Arm(Transform arm, Quaternion rest, float side, float angle)

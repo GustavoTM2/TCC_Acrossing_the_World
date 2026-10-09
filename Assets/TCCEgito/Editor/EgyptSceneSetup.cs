@@ -56,6 +56,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
                 Scene scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
                 EgyptModelIntegration.ApplyToScene(scene);
                 EgyptFreeDepthSetup.ApplyToScene(scene);
+                if (path == Interior) EgyptInteriorRepair.ApplyToScene(scene);
                 EditorSceneManager.MarkSceneDirty(scene);
                 if (!EditorSceneManager.SaveScene(scene, path))
                     throw new InvalidOperationException("Não consegui salvar os modelos em " + path);
@@ -295,7 +296,8 @@ namespace CrossingTheWorld.TCCEgypt.Editor
         {
             RaycastHit[] hits = Physics.RaycastAll(point + Vector3.up * 200, Vector3.down, 400,
                 ~0, QueryTriggerInteraction.Ignore);
-            foreach (RaycastHit hit in hits.OrderBy(hit => hit.distance))
+            // No interior, o piso inferior é escolhido antes do Tile_B usado como teto.
+            foreach (RaycastHit hit in hits.OrderBy(hit => interior ? -hit.distance : hit.distance))
             {
                 if (Vector3.Dot(hit.normal, Vector3.up) < 0.65f) continue;
                 bool floor = hit.collider is TerrainCollider;

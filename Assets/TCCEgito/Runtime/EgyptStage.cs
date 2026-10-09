@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ namespace CrossingTheWorld.TCCEgypt
         public string exteriorScene = "Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity";
         public string interiorScene = "Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity";
         public GameObject scarabVisual;
+        public EgyptPlayer25D player;
         public UnityEvent onGuideFinished = new UnityEvent();
         public UnityEvent onScarabReceived = new UnityEvent();
         public UnityEvent onStageCompleted = new UnityEvent();
@@ -46,8 +48,10 @@ namespace CrossingTheWorld.TCCEgypt
         public static EgyptQuestProgress Progress { get; private set; } = new EgyptQuestProgress();
         public bool DialogueIsOpen => lines != null;
         public bool CompletionIsOpen { get; private set; }
-        public bool IsLoading { get; private set; }
-        public bool BlocksMovement => DialogueIsOpen || CompletionIsOpen || IsLoading;
+        public bool IsLoading => EgyptSceneTransition.IsBusy;
+        public bool IsDeliveringScarab { get; private set; }
+        public string CurrentSpeaker => DialogueIsOpen ? lines[lineIndex].speaker : "";
+        public bool BlocksMovement => DialogueIsOpen || CompletionIsOpen || IsLoading || IsDeliveringScarab;
         public string Hint { get; set; }
         private EgyptLine[] lines;
         private int lineIndex;
@@ -55,6 +59,9 @@ namespace CrossingTheWorld.TCCEgypt
         private string message;
         private float messageUntil;
         private int lastAdvanceFrame = -1;
+        private EgyptStageUI ui;
+        private Vector3 scarabScale;
+        private Quaternion scarabRotation;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetSession() { Progress = new EgyptQuestProgress(); }
@@ -68,7 +75,12 @@ namespace CrossingTheWorld.TCCEgypt
                 Progress.EnterPyramid();
             }
             else if (interior && Progress.Step == EgyptQuestStep.EnterPyramid) Progress.EnterPyramid();
-            if (scarabVisual != null) scarabVisual.SetActive(Progress.HasScarab);
+            if (scarabVisual != null)
+            {
+                scarabScale = scarabVisual.transform.localScale;
+                scarabRotation = scarabVisual.transform.localRotation;
+                scarabVisual.SetActive(false);
+            }
         }
 
         public void Interact(EgyptPointKind kind)
@@ -138,9 +150,44 @@ namespace CrossingTheWorld.TCCEgypt
 
         private void ReceiveScarab()
         {
+            if (Progress.Step != EgyptQuestStep.ListenToMummy || IsDeliveringScarab) return;
+            // A validação no Editor confere a missão; a apresentação ocorre durante o Play.
+            if (!Application.isPlaying || scarabVisual == null || player == null) { FinishReceipt(); return; }
+            StartCoroutine(DeliverScarab());
+        }
+
+        private IEnumerator DeliverScarab()
+        {
+            IsDeliveringScarab = true;
+            Hint = "";
+            Transform item = scarabVisual.transform;
+            Vector3 start = item.position;
+            Vector3 destination = player.transform.position + new Vector3(0, 1.1f, 0.3f);
+            scarabVisual.SetActive(true);
+            float elapsed = 0;
+            const float duration = 1.25f;
+            while (elapsed < duration)
+            {
+                float t = Mathf.Clamp01(elapsed / duration);
+                item.position = Vector3.Lerp(start, destination, Mathf.SmoothStep(0, 1, t))
+                    + Vector3.up * Mathf.Sin(t * Mathf.PI) * 0.45f;
+                item.localRotation = scarabRotation * Quaternion.Euler(0, t * 270f, 0);
+                item.localScale = scarabScale * Mathf.Lerp(1f, 0.1f, Mathf.SmoothStep(0, 1, Mathf.InverseLerp(0.65f, 1f, t)));
+                elapsed += Time.unscaledDeltaTime;
+                yield return null;
+            }
+            scarabVisual.SetActive(false);
+            item.localScale = scarabScale;
+            item.localRotation = scarabRotation;
+            IsDeliveringScarab = false;
+            FinishReceipt();
+        }
+
+        private void FinishReceipt()
+        {
             if (!Progress.FinishMummy()) return;
             CompletionIsOpen = true;
-            if (scarabVisual != null) scarabVisual.SetActive(true);
+            if (scarabVisual != null) scarabVisual.SetActive(false);
             onScarabReceived.Invoke();
             onStageCompleted.Invoke();
         }
@@ -156,24 +203,21 @@ namespace CrossingTheWorld.TCCEgypt
                 Notify("A cena de destino não está disponível. Adicione as cenas jogáveis à lista do Build Profile.");
                 return;
             }
-            // A missão permanece em memória; a nova cena não perde a apresentação do guia.
-            try
-            {
-                IsLoading = true;
-                AsyncOperation operation = SceneManager.LoadSceneAsync(path);
-                if (operation == null) { IsLoading = false; Notify("Não foi possível carregar a cena."); }
-            }
-            catch (Exception exception)
-            {
-                IsLoading = false;
-                Debug.LogException(exception, this);
-                Notify("Não foi possível carregar a cena. Confira o Console.");
-            }
+            // O controlador persiste entre cenas para manter a tela preta durante a carga.
+            EgyptSceneTransition.Load(path, this);
         }
 
         private void OnDisable()
         {
-            // Interromper uma conversa nunca concede o item ou completa a missão.
+            // Interromper uma conversa ou a entrega nunca concede o item.
+            StopAllCoroutines();
+            IsDeliveringScarab = false;
+            if (scarabVisual != null)
+            {
+                scarabVisual.SetActive(false);
+                scarabVisual.transform.localScale = scarabScale;
+                scarabVisual.transform.localRotation = scarabRotation;
+            }
             lines = null;
             dialogueFinished = null;
         }
@@ -194,51 +238,13 @@ namespace CrossingTheWorld.TCCEgypt
 
         private void OnGUI()
         {
-            Matrix4x4 oldMatrix = GUI.matrix;
-            Color oldColor = GUI.color;
-            float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
-            GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280 * scale) / 2,
-                (Screen.height - 720 * scale) / 2, 0), Quaternion.identity, Vector3.one * scale);
-            GUIStyle body = new GUIStyle(GUI.skin.label) { fontSize = 21, wordWrap = true };
-            GUIStyle title = new GUIStyle(body) { fontStyle = FontStyle.Bold };
-
-            GUI.Box(new Rect(20, 20, 900, 100), "");
-            GUI.Label(new Rect(40, 28, 860, 35), "EGITO — AREIAS DO TEMPO", title);
-            GUI.Label(new Rect(40, 65, 860, 50), Objective, body);
-            GUI.Label(new Rect(30, 130, 1100, 30), "A/D: lados    W/S: fundo/frente    Espaço: pular    E/Enter: interagir", body);
-
-            if (IsLoading)
-            {
-                GUI.Box(new Rect(340, 300, 600, 100), "");
-                GUI.Label(new Rect(365, 330, 550, 40), "Carregando o destino...", title);
-            }
-            else if (DialogueIsOpen)
-            {
-                EgyptLine line = lines[lineIndex];
-                GUI.Box(new Rect(130, 425, 1020, 275), "");
-                GUI.Label(new Rect(155, 442, 970, 36), line.speaker, title);
-                GUI.Label(new Rect(155, 490, 970, 130), line.text, body);
-                GUI.Label(new Rect(155, 649, 650, 30), "E ou Enter para continuar", body);
-                if (GUI.Button(new Rect(920, 644, 200, 40), "Continuar")) AdvanceFromInput();
-            }
-            else if (CompletionIsOpen)
-            {
-                GUI.Box(new Rect(250, 240, 780, 250), "");
-                GUI.Label(new Rect(280, 265, 720, 40), "VELHO ESCARAVELHO CONQUISTADO", title);
-                GUI.Label(new Rect(280, 315, 720, 110), "Amira aprendeu que ouvir, respeitar e confiar nas pessoas torna a viagem mais rica.", body);
-                if (GUI.Button(new Rect(525, 435, 230, 35), "Continuar explorando")) CloseCompletion();
-            }
-            else
-            {
-                string status = Time.unscaledTime < messageUntil ? message : Hint;
-                if (!string.IsNullOrEmpty(status))
-                {
-                    GUI.Box(new Rect(170, 610, 940, 85), "");
-                    GUI.Label(new Rect(195, 626, 890, 65), status, body);
-                }
-            }
-            GUI.color = oldColor;
-            GUI.matrix = oldMatrix;
+            if (IsLoading) return;
+            if (ui == null) ui = new EgyptStageUI();
+            string status = Time.unscaledTime < messageUntil ? message : Hint;
+            ui.Draw(this, Objective, status, DialogueIsOpen ? lines[lineIndex] : null,
+                lineIndex, DialogueIsOpen ? lines.Length : 0);
         }
+
+        private void OnDestroy() { ui?.Dispose(); }
     }
 }
