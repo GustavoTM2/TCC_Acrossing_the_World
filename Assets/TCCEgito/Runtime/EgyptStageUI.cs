@@ -10,6 +10,7 @@ namespace CrossingTheWorld.TCCEgypt
         private Texture2D rounded;
         private GUIStyle panel, small, body, speaker, heading, button;
 
+        // Preparo os estilos de texto, botões e o fundo arredondado das caixas.
         private void Prepare()
         {
             if (rounded != null) return;
@@ -49,6 +50,7 @@ namespace CrossingTheWorld.TCCEgypt
             GUI.color = Color.white;
         }
 
+        // Desenho a caixa com sombra, borda dourada e fundo escuro.
         private void Panel(Rect rect)
         {
             Fill(new Rect(rect.x + 3, rect.y + 5, rect.width, rect.height), new Color(0, 0, 0, 0.32f));
@@ -71,11 +73,13 @@ namespace CrossingTheWorld.TCCEgypt
             return pressed;
         }
 
+        // Aqui desenho os objetivos, avisos, diálogos e a mensagem de conclusão.
         public void Draw(EgyptStage stage, string objective, string status, EgyptLine line, int index, int count)
         {
             Prepare();
             Matrix4x4 oldMatrix = GUI.matrix;
             Color oldColor = GUI.color, oldBackground = GUI.backgroundColor;
+            // Ajusto a interface à resolução da janela usando 1280 por 720 como referência.
             float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
             GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280 * scale) * 0.5f,
                 (Screen.height - 720 * scale) * 0.5f, 0), Quaternion.identity, Vector3.one * scale);
@@ -93,6 +97,7 @@ namespace CrossingTheWorld.TCCEgypt
                     GUI.Label(new Rect(948, 40, 294, 25), "Escaravelho conquistado", new GUIStyle(speaker) { fontSize = 18 });
                 }
 
+                // Na conversa, mostro quem está falando, o texto e o botão para continuar.
                 if (stage.DialogueIsOpen && line != null)
                 {
                     Panel(new Rect(88, 456, 1104, 240));
@@ -101,6 +106,7 @@ namespace CrossingTheWorld.TCCEgypt
                         new GUIStyle(small) { alignment = TextAnchor.MiddleRight });
                     Rule(new Rect(126, 514, 1028, 1));
                     GUIStyle dialogueBody = new GUIStyle(body);
+                    // Diminuo um pouco a letra se a fala for longa, para caber dentro da caixa.
                     while (dialogueBody.fontSize > 18 && dialogueBody.CalcHeight(new GUIContent(line.text), 1028) > 102)
                         dialogueBody.fontSize--;
                     GUI.Label(new Rect(126, 532, 1028, 104), line.text, dialogueBody);
@@ -112,6 +118,7 @@ namespace CrossingTheWorld.TCCEgypt
                     Panel(new Rect(390, 632, 500, 58));
                     GUI.Label(new Rect(414, 650, 452, 32), "Recebendo o Velho Escaravelho...", new GUIStyle(speaker) { fontSize = 20 });
                 }
+                // Quando a fase termina, mostro o artefato conquistado e a opção de continuar explorando.
                 else if (stage.CompletionIsOpen)
                 {
                     Panel(new Rect(264, 206, 752, 322));

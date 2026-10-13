@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 namespace CrossingTheWorld.TCCEgypt
 {
     [Serializable]
+    // Cada fala guarda o nome do personagem e o texto da conversa.
     public sealed class EgyptLine
     {
         public string speaker;
@@ -51,6 +52,7 @@ namespace CrossingTheWorld.TCCEgypt
         public bool IsLoading => EgyptSceneTransition.IsBusy;
         public bool IsDeliveringScarab { get; private set; }
         public string CurrentSpeaker => DialogueIsOpen ? lines[lineIndex].speaker : "";
+        // Estas situações pausam a movimentação para o jogador acompanhar o que está acontecendo.
         public bool BlocksMovement => DialogueIsOpen || CompletionIsOpen || IsLoading || IsDeliveringScarab;
         public string Hint { get; set; }
         private EgyptLine[] lines;
@@ -83,6 +85,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
         }
 
+        // Escolho a ação do guia, da entrada, da múmia ou da saída conforme o progresso da fase.
         public void Interact(EgyptPointKind kind)
         {
             if (BlocksMovement) return;
@@ -112,6 +115,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
         }
 
+        // Abro a conversa na primeira fala e guardo a ação que deve acontecer quando ela terminar.
         private void Open(EgyptLine[] newLines, Action finished)
         {
             if (newLines == null || newLines.Length == 0)
@@ -130,6 +134,7 @@ namespace CrossingTheWorld.TCCEgypt
             dialogueFinished = finished;
         }
 
+        // Passo para a próxima fala. Ao terminar, fecho o diálogo e executo a ação guardada.
         public void AdvanceDialogue()
         {
             if (!DialogueIsOpen) return;
@@ -156,6 +161,7 @@ namespace CrossingTheWorld.TCCEgypt
             StartCoroutine(DeliverScarab());
         }
 
+        // Animo o escaravelho até Amira ao longo de vários quadros, sem travar o jogo.
         private IEnumerator DeliverScarab()
         {
             IsDeliveringScarab = true;
@@ -183,6 +189,7 @@ namespace CrossingTheWorld.TCCEgypt
             FinishReceipt();
         }
 
+        // Registro a conquista do escaravelho e abro o aviso de conclusão.
         private void FinishReceipt()
         {
             if (!Progress.FinishMummy()) return;
@@ -222,6 +229,7 @@ namespace CrossingTheWorld.TCCEgypt
             dialogueFinished = null;
         }
 
+        // O objetivo mostrado na tela muda de acordo com o progresso do jogador.
         private string Objective
         {
             get
@@ -236,6 +244,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
         }
 
+        // Envio os textos e o estado da fase para a classe que desenha a interface.
         private void OnGUI()
         {
             if (IsLoading) return;

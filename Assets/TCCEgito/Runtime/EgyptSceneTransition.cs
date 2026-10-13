@@ -17,6 +17,7 @@ namespace CrossingTheWorld.TCCEgypt
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetSession() { instance = null; }
 
+        // Inicio a transição e evito que duas trocas de cena aconteçam ao mesmo tempo.
         public static void Load(string path, EgyptStage owner)
         {
             if (IsBusy) return;
@@ -24,6 +25,7 @@ namespace CrossingTheWorld.TCCEgypt
             {
                 instance = FindFirstObjectByType<EgyptSceneTransition>();
                 if (instance == null) instance = new GameObject("Transicao_Egito").AddComponent<EgyptSceneTransition>();
+                // Mantenho este objeto durante a troca de cena para a tela preta continuar aparecendo.
                 DontDestroyOnLoad(instance.gameObject);
             }
             instance.busy = true;
@@ -31,6 +33,7 @@ namespace CrossingTheWorld.TCCEgypt
             instance.StartCoroutine(instance.ChangeScene(path, owner));
         }
 
+        // Escureço a tela, carrego a cena e depois mostro o cenário novamente.
         private IEnumerator ChangeScene(string path, EgyptStage owner)
         {
             yield return Fade(0, 1, 0.45f);
@@ -53,10 +56,12 @@ namespace CrossingTheWorld.TCCEgypt
 
         private static AsyncOperation BeginLoad(string path)
         {
+            // Carrego a próxima cena de forma assíncrona enquanto a transição fica na tela.
             try { return SceneManager.LoadSceneAsync(path); }
             catch (Exception exception) { Debug.LogException(exception); return null; }
         }
 
+        // Mudo a opacidade aos poucos para fazer a tela escurecer ou clarear suavemente.
         private IEnumerator Fade(float from, float to, float duration)
         {
             opacity = from;
@@ -70,6 +75,7 @@ namespace CrossingTheWorld.TCCEgypt
             opacity = to;
         }
 
+        // Desenho a tela preta e o aviso de transição por cima da interface.
         private void OnGUI()
         {
             if (!busy && opacity <= 0) return;

@@ -24,6 +24,7 @@ namespace CrossingTheWorld.TCCEgypt
         private Vector3 spawn;
         private float verticalSpeed;
 
+        // Preparo o CharacterController e guardo a posição inicial da Amira.
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
@@ -37,6 +38,7 @@ namespace CrossingTheWorld.TCCEgypt
             if (animator != null) animator.applyRootMotion = false;
         }
 
+        // Leio o teclado a cada quadro e envio os comandos para a movimentação.
         private void Update()
         {
             TickMovement(new Vector2(EgyptInput.Horizontal, EgyptInput.Depth), EgyptInput.JumpPressed, Time.deltaTime);
@@ -47,19 +49,24 @@ namespace CrossingTheWorld.TCCEgypt
         {
             if (controller == null) Awake();
             if (deltaTime <= 0) return;
+            // Durante diálogos, transições ou entrega do item, Amira fica parada.
             if (stage != null && stage.BlocksMovement)
             {
                 if (animator != null) animator.SetFloat("Speed", 0);
                 return;
             }
+            // Evito que andar na diagonal aumente a velocidade.
             input = Vector2.ClampMagnitude(input, 1f);
             Vector3 planarVelocity = (movementAxis * input.x + depthAxis * input.y * depthSpeedMultiplier) * speed;
             if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2f;
+            // Amira só pode iniciar um pulo quando está no chão.
             if (controller.isGrounded && jump && jumpHeight > 0)
                 verticalSpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            // Aplico a gravidade e depois movimento Amira respeitando as colisões.
             verticalSpeed += gravity * deltaTime;
             controller.Move((planarVelocity + Vector3.up * verticalSpeed) * deltaTime);
 
+            // Ajusto a direção do modelo e a animação de acordo com o movimento.
             if (visual != null && planarVelocity.sqrMagnitude > 0.001f)
                 visual.rotation = Quaternion.LookRotation(planarVelocity, Vector3.up)
                     * Quaternion.Euler(0, visualYawOffset, 0);
@@ -67,6 +74,7 @@ namespace CrossingTheWorld.TCCEgypt
             if (transform.position.y < respawnBelowY) Respawn();
         }
 
+        // Se cair fora da fase, Amira volta para a posição inicial.
         public void Respawn()
         {
             controller.enabled = false;

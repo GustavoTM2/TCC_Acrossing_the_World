@@ -5,8 +5,10 @@ using UnityEngine.InputSystem;
 
 namespace CrossingTheWorld.TCCEgypt
 {
+    // Centralizo a leitura das teclas. Estes controles também são usados no Brasil.
     public static class EgyptInput
     {
+        // A/D e as setas retornam -1 para esquerda, 1 para direita e 0 quando parado.
         public static float Horizontal
         {
             get
@@ -26,6 +28,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
         }
 
+        // W/S e as setas controlam o movimento para o fundo e para frente.
         public static float Depth
         {
             get
@@ -44,6 +47,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
         }
 
+        // Detecto o momento em que E ou Enter é apertado para iniciar ou avançar uma interação.
         public static bool InteractPressed
         {
             get
@@ -59,6 +63,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
         }
 
+        // Espaço aciona o pulo no Egito. Lucas não usa pulo nesta versão do Brasil.
         public static bool JumpPressed
         {
             get

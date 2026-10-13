@@ -23,6 +23,7 @@ namespace CrossingTheWorld.TCCEgypt
         [SerializeField, HideInInspector] private Quaternion leftBase;
         [SerializeField, HideInInspector] private Quaternion rightBase;
 
+        // Guardo a posição original das articulações para usar como base dos movimentos.
         public void CaptureBasePose()
         {
             if (head != null) headBase = head.localRotation;
@@ -39,6 +40,7 @@ namespace CrossingTheWorld.TCCEgypt
             if (rightArm != null) rightArm.localRotation = rightBase;
         }
 
+        // Atualizo os pequenos movimentos de cabeça e braços a cada quadro.
         private void LateUpdate() { EvaluatePose(Time.time); }
 
         public void EvaluatePose(float time)
@@ -46,7 +48,9 @@ namespace CrossingTheWorld.TCCEgypt
             if (!basePoseCaptured) CaptureBasePose();
             if (coordinateSpace == null) coordinateSpace = transform;
             float t = time + phaseOffset;
+            // Aumento um pouco os gestos quando este personagem está falando.
             float gesture = stage != null && stage.CurrentSpeaker == speaker ? 1f : 0f;
+            // Uso o seno para a cabeça se mover devagar de um lado para o outro.
             if (head != null)
             {
                 Vector3 up = head.parent.InverseTransformDirection(coordinateSpace.up);
@@ -59,6 +63,7 @@ namespace CrossingTheWorld.TCCEgypt
                 + Mathf.Sin(t * 0.63f + 1.1f) * armSwayDegrees + Mathf.Sin(t * 0.95f + 0.4f) * gesture * 2f);
         }
 
+        // Aplico uma rotação leve no braço para deixar a postura mais natural.
         private void Arm(Transform arm, Quaternion rest, float side, float angle)
         {
             if (arm == null) return;

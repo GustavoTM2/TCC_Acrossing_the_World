@@ -4,6 +4,7 @@ namespace CrossingTheWorld.TCCEgypt
 {
     public sealed class EgyptMovementBounds : MonoBehaviour
     {
+        // Estes valores definem o espaço em que o personagem pode andar.
         public float horizontalMin = -5f;
         public float horizontalMax = 30f;
         [Min(0.5f)] public float frontDistance = 2f;
@@ -13,6 +14,7 @@ namespace CrossingTheWorld.TCCEgypt
         [Min(0.1f)] public float wallThickness = 0.5f;
 
         [ContextMenu("Atualizar paredes invisíveis")]
+        // Crio ou atualizo quatro paredes invisíveis: frente, fundo, esquerda e direita.
         public void UpdateColliders()
         {
             float width = Mathf.Max(1f, horizontalMax - horizontalMin);
@@ -41,14 +43,17 @@ namespace CrossingTheWorld.TCCEgypt
             wall.localPosition = position;
             wall.localRotation = Quaternion.identity;
             wall.localScale = Vector3.one;
+            // A parede tem colisão, mas não tem um modelo visível.
             BoxCollider collider = wall.GetComponent<BoxCollider>();
             if (collider == null) collider = wall.gameObject.AddComponent<BoxCollider>();
             collider.center = Vector3.zero;
             collider.size = size;
+            // Com isTrigger desativado, a parede bloqueia a passagem do personagem.
             collider.isTrigger = false;
             collider.enabled = true;
         }
 
+        // Confiro se uma posição está dentro da área permitida.
         public bool Contains(Vector3 worldPosition, float tolerance = 0.05f)
         {
             Vector3 local = transform.InverseTransformPoint(worldPosition);
@@ -56,6 +61,7 @@ namespace CrossingTheWorld.TCCEgypt
                 && local.z >= -frontDistance - tolerance && local.z <= backDistance + tolerance;
         }
 
+        // Mostro o contorno da área no Editor quando este objeto está selecionado.
         private void OnDrawGizmosSelected()
         {
             Matrix4x4 previous = Gizmos.matrix;
