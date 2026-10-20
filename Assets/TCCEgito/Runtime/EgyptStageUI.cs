@@ -33,6 +33,7 @@ namespace CrossingTheWorld.TCCEgypt
                 border = new RectOffset(10, 10, 10, 10), alignment = TextAnchor.MiddleCenter };
             foreach (GUIStyleState state in new[] { button.normal, button.hover, button.active, button.focused })
             { state.background = rounded; state.textColor = new Color(0.08f, 0.12f, 0.14f); }
+            button.onNormal.background = rounded;
         }
 
         private static GUIStyle Text(int size, Color color, bool bold = false)
@@ -91,10 +92,12 @@ namespace CrossingTheWorld.TCCEgypt
                 GUI.Label(new Rect(46, 35, 590, 24), "EGITO  /  AREIAS DO TEMPO", speaker);
                 GUIStyle objectiveStyle = new GUIStyle(body) { fontSize = 18 };
                 GUI.Label(new Rect(46, 72, 590, 42), objective, objectiveStyle);
-                if (EgyptStage.Progress.HasScarab)
+                if (EgyptStage.Progress.HasScarab && !stage.CompletionIsOpen)
                 {
-                    Panel(new Rect(928, 24, 328, 52));
-                    GUI.Label(new Rect(948, 40, 294, 25), "Escaravelho conquistado", new GUIStyle(speaker) { fontSize = 18 });
+                    Panel(new Rect(944, 24, 312, 124));
+                    DrawScarab(new Rect(952, 28, 112, 112), stage.ScarabPreview);
+                    GUI.Label(new Rect(1074, 48, 170, 28), "ARTEFATO", small);
+                    GUI.Label(new Rect(1074, 75, 170, 55), "Velho Escaravelho", new GUIStyle(speaker) { fontSize = 19 });
                 }
 
                 // Na conversa, mostro quem está falando, o texto e o botão para continuar.
@@ -118,15 +121,22 @@ namespace CrossingTheWorld.TCCEgypt
                     Panel(new Rect(390, 632, 500, 58));
                     GUI.Label(new Rect(414, 650, 452, 32), "Recebendo o Velho Escaravelho...", new GUIStyle(speaker) { fontSize = 20 });
                 }
-                // Quando a fase termina, mostro o artefato conquistado e a opção de continuar explorando.
+                // Mostro o escaravelho e as duas opções ao concluir a fase.
                 else if (stage.CompletionIsOpen)
                 {
-                    Panel(new Rect(264, 206, 752, 322));
-                    GUI.Label(new Rect(306, 236, 668, 25), "ARTEFATO CONQUISTADO", speaker);
-                    GUI.Label(new Rect(306, 278, 668, 48), "Velho Escaravelho", heading);
-                    Rule(new Rect(306, 334, 668, 1));
-                    GUI.Label(new Rect(306, 355, 668, 94), "Amira aprendeu que ouvir, respeitar e confiar nas pessoas torna a viagem mais rica.", body);
-                    if (Button(new Rect(477, 468, 326, 38), "Continuar explorando")) stage.CloseCompletion();
+                    Panel(new Rect(240, 174, 800, 466));
+                    GUI.Label(new Rect(278, 202, 724, 30), "FASE CONCLUÍDA", speaker);
+                    Rule(new Rect(278, 244, 724, 1));
+                    // Mostro o escaravelho girando em destaque antes de deixá-lo no canto da tela.
+                    DrawScarab(new Rect(274, 260, 236, 236), stage.ScarabPreview);
+                    GUI.Label(new Rect(534, 278, 458, 48), "Velho Escaravelho", heading);
+                    GUI.Label(new Rect(534, 342, 450, 132), "Amira aprendeu que ouvir, respeitar e confiar nas pessoas torna a viagem mais rica.", body);
+                    bool wasEnabled = GUI.enabled;
+                    GUI.enabled = false;
+                    Button(new Rect(278, 536, 342, 44), "Voltar para o menu");
+                    GUI.enabled = wasEnabled;
+                    if (Button(new Rect(660, 536, 342, 44), "Continuar a fase")) stage.CloseCompletion();
+                    GUI.Label(new Rect(278, 592, 342, 28), "Menu indisponível nesta versão.", small);
                 }
                 else
                 {
@@ -140,6 +150,11 @@ namespace CrossingTheWorld.TCCEgypt
                 }
             }
             finally { GUI.matrix = oldMatrix; GUI.color = oldColor; GUI.backgroundColor = oldBackground; }
+        }
+
+        private static void DrawScarab(Rect rect, Texture preview)
+        {
+            if (preview != null) GUI.DrawTexture(rect, preview, ScaleMode.ScaleToFit, true);
         }
 
         public void Dispose()

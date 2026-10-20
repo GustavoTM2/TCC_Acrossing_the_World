@@ -11,6 +11,8 @@ namespace CrossingTheWorld.TCCEgypt
     {
         public Transform environment;
         public Transform target;
+        public Renderer[] cutawaySurfaces;
+        public bool fadeOnlyInteriorProps;
         [Range(0, 1)] public float obscuredAlpha = 0.12f;
         [Min(0.1f)] public float fadeSpeed = 6f;
         private sealed class Surface
@@ -30,6 +32,14 @@ namespace CrossingTheWorld.TCCEgypt
         {
             if (environment == null || target == null) return;
             blocked.Clear();
+            // Deixo transparente a parede dianteira para a câmera acompanhar a exploração de toda a sala.
+            if (cutawaySurfaces != null)
+                foreach (Renderer renderer in cutawaySurfaces)
+                {
+                    if (renderer == null || !renderer.enabled) continue;
+                    blocked.Add(renderer);
+                    if (!surfaces.ContainsKey(renderer)) surfaces.Add(renderer, CreateSurface(renderer));
+                }
             Vector3 direction = target.position + Vector3.up - transform.position;
             float distance = direction.magnitude;
             if (distance > 0.5f)
@@ -39,6 +49,9 @@ namespace CrossingTheWorld.TCCEgypt
                     if (!hit.collider.transform.IsChildOf(environment)) continue;
                     Renderer renderer = hit.collider.GetComponent<Renderer>();
                     if (renderer == null || !renderer.enabled) continue;
+                    // Mantenho a estrutura fechada para não revelar o lado de fora da pirâmide.
+                    if (fadeOnlyInteriorProps && !renderer.name.StartsWith("Pillar_")
+                        && !renderer.name.StartsWith("Handrail_")) continue;
                     blocked.Add(renderer);
                     if (!surfaces.ContainsKey(renderer)) surfaces.Add(renderer, CreateSurface(renderer));
                 }

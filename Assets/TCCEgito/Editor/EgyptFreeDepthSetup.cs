@@ -91,6 +91,8 @@ namespace CrossingTheWorld.TCCEgypt.Editor
         public static EgyptNpcIdle ConfigureIdle(GameObject visual, string id)
         {
             EgyptNpcIdle existing = visual.GetComponent<EgyptNpcIdle>();
+            if (existing != null)
+                existing.speaker = id == "Guia" ? EgyptDialogueContent.GuideSpeaker : EgyptDialogueContent.MummySpeaker;
             if (existing != null && visual.transform.Find("Rig_Leve_" + id) != null) return existing;
             if (existing != null)
             {
@@ -103,6 +105,9 @@ namespace CrossingTheWorld.TCCEgypt.Editor
                 throw new InvalidOperationException("Não encontrei cabeça e braços em " + id);
             foreach (Animator animator in visual.GetComponentsInChildren<Animator>(true)) animator.enabled = false;
             EgyptNpcIdle idle = visual.AddComponent<EgyptNpcIdle>();
+            idle.stage = visual.scene.GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<EgyptStage>(true)).Single();
+            idle.speaker = id == "Guia" ? EgyptDialogueContent.GuideSpeaker : EgyptDialogueContent.MummySpeaker;
             idle.coordinateSpace = visual.transform;
             idle.head = head;
             idle.leftArm = left;

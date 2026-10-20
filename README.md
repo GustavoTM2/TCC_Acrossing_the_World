@@ -36,14 +36,24 @@ A integração e os testes estão descritos em [Docs/BRASIL_EXPLORACAO.md](Docs/
 - Duas cenas jogáveis: exterior e interior da pirâmide, com a estrutura original adaptada à escala da personagem.
 - Movimentação com CharacterController, câmera lateral e profundidade limitada por paredes invisíveis.
 - Conversas com o guia e a múmia, objetivos e progressão da missão.
+- Múmia junto ao portal do patamar superior, acessível pela escadaria original, com câmera lateral e limites de caminhada ajustados ao percurso.
+- Câmera interna presa a um trilho paralelo à parede: acompanha somente a lateral, mantendo profundidade, altura e ângulo fixos.
+- Trilho dentro da sala, com enquadramento próximo e barreira invisível na frente para Amira não passar sob a câmera. Paredes opacas e fechamento das frestas do piso evitam mostrar o vazio externo.
+- Câmera interna elevada à altura da cabeça da múmia no patamar, com leve inclinação fixa para baixo.
+- Diálogos do roteiro Horizon Travel: 5 caixas na chegada e 11 de Rami, com a entrega do escaravelho após a última fala.
 - Entrega animada do Velho Escaravelho ao concluir a conversa com a múmia, seguida da tela de conquista.
+- Escaravelho 3D girando na conquista e no canto direito ao continuar explorando, inclusive após voltar ao exterior.
+- Altura visual de Amira ajustada em 8 cm no exterior para aproximar os pés da areia.
 - Movimentos sutis de cabeça e braços dos NPCs, com gestos da múmia durante suas falas.
 - Transição com tela preta na entrada e na saída da pirâmide.
+- A tela preta cobre toda a janela antes de carregar o destino e aguarda a nova câmera antes de revelar a cena.
 - Caixas de diálogo com bordas, cores, contador de falas e tamanho proporcional à janela.
 - Pilares que ficam translúcidos quando encobrem Amira.
 - Textura de areia aplicada ao terreno exterior.
+- Vegetação com materiais locais em tons secos e terrosos; Amira aproximada da câmera no exterior.
+- Exploração de toda a sala interna e conclusão com **Continuar a fase** e **Voltar para o menu** (ainda desativado).
 
-O progresso é mantido durante a sessão e não possui salvamento permanente. Alguns assets de plantas do exterior ainda têm texturas ausentes nos arquivos recebidos. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
+O progresso é mantido durante a sessão e não possui salvamento permanente. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
 
 ## Próximas entregas planejadas
 
@@ -57,3 +67,5 @@ O progresso é mantido durante a sessão e não possui salvamento permanente. Al
 ## Correções e validação
 
 A causa do interior vazio e as alterações nos scripts estão descritas em [Docs/EGITO_CORRECOES.md](Docs/EGITO_CORRECOES.md). Os testes físicos e em Play verificaram o caminho até a múmia, a ordem dos diálogos, o bloqueio durante a transição, a entrega animada, a recompensa única e o retorno ao exterior com o progresso preservado.
+
+Os ajustes de altura, transição e escaravelho de 19/10/2026 estão registrados em [Docs/EGITO_AJUSTES_VISUAIS.md](Docs/EGITO_AJUSTES_VISUAIS.md), incluindo os testes em Play e a pendência de configuração que bloqueou a tentativa de exportar um executável no Unity 6000.5.7f1.

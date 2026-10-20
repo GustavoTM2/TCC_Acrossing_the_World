@@ -60,6 +60,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
                 filter.gameObject.AddComponent<MeshCollider>().sharedMesh = filter.sharedMesh;
             }
             RepairMaterials(environment);
+            CloseFloorSeams(environment);
             foreach (Light lamp in environment.GetComponentsInChildren<Light>(true))
             {
                 if (lamp.type == LightType.Point) lamp.intensity = 2f;
@@ -69,31 +70,58 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             EgyptInteractionPoint mummy = interactor.points.Single(p => p.kind == EgyptPointKind.Mummy);
             EgyptInteractionPoint exit = interactor.points.Single(p => p.kind == EgyptPointKind.Exit);
             EgyptCamera25D follow = Camera.main.GetComponent<EgyptCamera25D>();
-            if (firstRepair || !follow.fixedHorizontalFraming)
+            // O percurso agora segue o comprimento da sala e termina no alto da escada.
+            // Reaplico o mesmo layout ao atualizar os modelos, sem voltar à posição antiga.
             {
-                // Raycast começa abaixo do teto. O Tile_B superior não é o piso da sala.
-                player.transform.position = FloorAt(environment, new Vector3(6, 0, 6)) + Vector3.up * 0.08f;
+                player.transform.position = FloorAt(environment, new Vector3(0, 0, 16.5f)) + Vector3.up * 0.08f;
                 player.respawnBelowY = player.transform.position.y - 10;
-                mummy.transform.position = FloorAt(environment, new Vector3(-6, 0, 6));
-                exit.transform.position = FloorAt(environment, new Vector3(7.4f, 0, 6));
+                player.movementAxis = Vector3.back;
+                player.depthAxis = Vector3.right;
+                if (player.visual != null) player.visual.rotation = Quaternion.LookRotation(player.movementAxis)
+                    * Quaternion.Euler(0, player.visualYawOffset, 0);
+                // Cada degrau mede aproximadamente 24 cm; a cápsula sobe sem precisar pular.
+                player.GetComponent<CharacterController>().stepOffset = 0.35f;
+                // Parto da altura do patamar para o raycast não pegar o teto nem o piso inferior.
+                mummy.transform.position = FloorAt(environment, new Vector3(0, 2.4f, -6.25f));
+                mummy.transform.rotation = Quaternion.identity;
+                mummy.radius = 1.5f;
+                mummy.maxHeightDifference = 0.3f;
+                exit.transform.position = FloorAt(environment, new Vector3(0, 0, 17.2f));
+                exit.radius = 1.5f;
                 Transform marker = exit.transform.Find("Visual_Provisorio_Substituir");
                 if (marker != null) marker.gameObject.SetActive(false);
-                follow.offset = new Vector3(0, 2.6f, 8f);
-                follow.lookOffset = new Vector3(0, 1.1f, 0);
-                follow.depthFollow = 0.2f;
-                follow.fixedHorizontalFraming = true;
+                // Trilho paralelo à parede lateral: profundidade, altura e ângulo ficam fixos.
+                follow.useWallRail = true;
+                // O trilho fica dentro da sala, à frente da parede, para não mostrar o vazio externo.
+                float railHeight = mummy.transform.position.y + 1.6f;
+                follow.railStart = new Vector3(-7.5f, railHeight, -3.8f);
+                follow.railEnd = new Vector3(-7.5f, railHeight, 14.5f);
+                // Na altura da múmia, inclino um pouco o olhar para ainda enxergar o piso inferior.
+                follow.railLookDirection = new Vector3(1f, -0.2f, 0);
+                follow.offset = new Vector3(-8f, 2.2f, 3f);
+                follow.lookOffset = new Vector3(0, 1.1f, -1.8f);
+                follow.depthAxis = player.depthAxis;
+                follow.depthFollow = 0f;
+                follow.fixedHorizontalFraming = false;
                 follow.horizontalFramePosition = 0;
-                Camera.main.fieldOfView = 65;
-                Vector3 frame = player.transform.position;
-                frame.x = follow.horizontalFramePosition;
-                Camera.main.transform.position = frame + follow.offset;
-                Camera.main.transform.LookAt(frame + follow.lookOffset);
+                follow.clampFramingZ = true;
+                follow.minFramingZ = -2.8f;
+                follow.maxFramingZ = 12.3f;
+                Camera.main.fieldOfView = 58;
+                Camera.main.clearFlags = CameraClearFlags.SolidColor;
+                Camera.main.backgroundColor = new Color(0.025f, 0.022f, 0.018f);
+                Vector3 railPosition = follow.railStart;
+                railPosition.z = Mathf.Clamp(player.transform.position.z, follow.railStart.z, follow.railEnd.z);
+                Camera.main.transform.position = railPosition;
+                Camera.main.transform.rotation = Quaternion.LookRotation(follow.railLookDirection, Vector3.up);
                 var bounds = player.stage.GetComponentInChildren<EgyptMovementBounds>();
-                bounds.transform.position = player.transform.position;
-                bounds.horizontalMin = -1.8f;
-                bounds.horizontalMax = 13.8f;
-                bounds.frontDistance = 1.2f;
-                bounds.backDistance = 2.5f;
+                bounds.transform.position = Vector3.zero;
+                bounds.transform.rotation = Quaternion.LookRotation(player.depthAxis, Vector3.up);
+                bounds.horizontalMin = -17.7f;
+                bounds.horizontalMax = 7.2f;
+                // Esta parede invisível impede Amira de passar embaixo ou atrás da câmera.
+                bounds.frontDistance = 2f;
+                bounds.backDistance = 6.7f;
                 bounds.UpdateColliders();
                 if (player.stage.scarabVisual != null)
                 {
@@ -104,17 +132,40 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             foreach (EgyptNpcIdle idle in mummy.GetComponentsInChildren<EgyptNpcIdle>(true))
             {
                 idle.stage = player.stage;
-                idle.speaker = "Múmia";
+                idle.speaker = EgyptDialogueContent.MummySpeaker;
                 idle.headNodDegrees = 1.8f;
                 idle.armSwayDegrees = 2.5f;
             }
             player.stage.player = player;
-            Camera.main.fieldOfView = 65;
+            Camera.main.fieldOfView = 58;
             EgyptCameraObstruction obstruction = Camera.main.GetComponent<EgyptCameraObstruction>();
             if (obstruction == null) obstruction = Camera.main.gameObject.AddComponent<EgyptCameraObstruction>();
             obstruction.environment = environment.transform;
             obstruction.target = player.transform;
-            Debug.Log("TCC_INTERIOR_REPAIRED: estrutura original preservada, escala 0.1, jogador no piso interno; " + environment.GetComponentsInChildren<Renderer>(true).Length + " módulos visuais.");
+            // As paredes e o piso permanecem opacos; só pilares e corrimãos podem esconder Amira.
+            obstruction.cutawaySurfaces = Array.Empty<Renderer>();
+            obstruction.fadeOnlyInteriorProps = true;
+            Debug.Log("TCC_INTERIOR_REPAIRED: trilho dentro da sala, barreira frontal, fechamento das frestas do piso e múmia no patamar.");
+        }
+
+        private static void CloseFloorSeams(GameObject environment)
+        {
+            const string name = "Fechamento_Frestas_Piso";
+            Transform backing = environment.transform.Find(name);
+            if (backing == null)
+            {
+                GameObject floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                floor.name = name;
+                backing = floor.transform;
+                backing.SetParent(environment.transform, false);
+            }
+            // Uma camada abaixo dos módulos fecha pequenas frestas sem alterar o chão onde Amira anda.
+            backing.position = new Vector3(-0.8f, -0.12f, 5.2f);
+            backing.rotation = Quaternion.identity;
+            Vector3 scale = environment.transform.lossyScale;
+            backing.localScale = new Vector3(16.4f / scale.x, 0.1f / scale.y, 26.3f / scale.z);
+            foreach (Collider collider in backing.GetComponents<Collider>()) UnityEngine.Object.DestroyImmediate(collider);
+            backing.GetComponent<Renderer>().sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>(Generated + "Interior_Tile.mat");
         }
 
         public static Vector3 FloorAt(GameObject environment, Vector3 point)

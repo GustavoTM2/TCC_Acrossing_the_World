@@ -22,7 +22,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
             if (stage.CompletionIsOpen)
             {
-                if (pressed) stage.CloseCompletion();
+                // A conclusão espera a escolha do botão, para E não fechar o prêmio por acidente.
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace CrossingTheWorld.TCCEgypt
                 {
                     if (point == null || !point.isActiveAndEnabled) continue;
                     float distance = (transform.position - point.Position).sqrMagnitude;
-                    if (distance <= point.radius * point.radius && distance < best)
+                    if (point.CanInteractFrom(transform.position) && distance < best)
                     {
                         best = distance;
                         closest = point;

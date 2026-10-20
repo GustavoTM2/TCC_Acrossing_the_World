@@ -49,6 +49,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             animator.applyRootMotion = false;
             player.visual = amira.transform;
             player.animator = animator;
+            player.ApplyVisualHeightOffset();
 
             EgyptInteractionPoint[] points = scene.GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<EgyptInteractionPoint>(true)).ToArray();

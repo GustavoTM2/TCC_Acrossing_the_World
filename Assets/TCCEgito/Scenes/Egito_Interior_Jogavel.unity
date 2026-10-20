@@ -596,7 +596,7 @@ Transform:
   m_GameObject: {fileID: 148659810}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.4, y: 0.062505, z: 6}
+  m_LocalPosition: {x: 0, y: 0.062505, z: 17.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -616,7 +616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptInteractionPoint
   kind: 3
-  radius: 2.5
+  radius: 1.5
+  maxHeightDifference: 0
   origin: {fileID: 0}
 --- !u!1 &183375382
 GameObject:
@@ -990,6 +991,7 @@ GameObject:
   m_Component:
   - component: {fileID: 233133280}
   - component: {fileID: 233133279}
+  - component: {fileID: 233133281}
   m_Layer: 0
   m_Name: TCC_Egito_Programacao
   m_TagString: Untagged
@@ -1024,31 +1026,67 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   guideLines:
-  - speaker: "Guia tur\xEDstico"
-    text: "Bem-vinda ao Egito, uma terra onde cada monumento guarda milhares de anos de hist\xF3ria."
-  - speaker: "Guia tur\xEDstico"
-    text: "As pir\xE2mides e a Esfinge fazem parte do patrim\xF4nio hist\xF3rico deste destino. Nossa ag\xEAncia apresenta esses lugares em seus passeios culturais."
-  - speaker: "Guia tur\xEDstico"
-    text: "Dentro desta pir\xE2mide vive uma antiga m\xFAmia, guardi\xE3 de um artefato conhecido como Velho Escaravelho."
+  - speaker: Agente da Horizon Travel
+    text: Bem-vinda ao Egito, Amira! Sou da Horizon Travel e vou te guiar por aqui.
   - speaker: Amira
-    text: "Ent\xE3o a lenda \xE9 verdadeira?"
-  - speaker: "Guia tur\xEDstico"
-    text: "Ela guarda mem\xF3rias importantes sobre este lugar. Ou\xE7a sua hist\xF3ria com aten\xE7\xE3o."
+    text: Valeu! Pra onde a gente vai primeiro?
+  - speaker: Agente da Horizon Travel
+    text: "T\xE1 vendo aquela pir\xE2mide? Tem uma m\xFAmia l\xE1 dentro esperando
+      sua visita!"
+  - speaker: Amira
+    text: "Uma m\xFAmia? Essa conversa vai ser interessante!"
+  - speaker: Agente da Horizon Travel
+    text: "Pois \xE9! V\xE1 at\xE9 a pir\xE2mide e fale com ele. Ele tem algo pra
+      te contar!"
   mummyLines:
-  - speaker: "M\xFAmia"
-    text: "H\xE1 milhares de anos, eu vivi nesta terra e acompanhei acontecimentos que hoje se transformaram em hist\xF3rias."
-  - speaker: "M\xFAmia"
-    text: "Meu corpo foi preparado de acordo com os rituais funer\xE1rios do antigo Egito, para que minha mem\xF3ria fosse preservada."
-  - speaker: "M\xFAmia"
-    text: "As pir\xE2mides foram erguidas com planejamento, conhecimento de engenharia e o trabalho organizado de muitas pessoas."
-  - speaker: "M\xFAmia"
-    text: "Os blocos eram transportados e posicionados com t\xE9cnicas desenvolvidas ao longo de muitos anos."
-  - speaker: Amira
-    text: "Quero conhecer este lugar com respeito e aprender com suas hist\xF3rias."
-  - speaker: "M\xFAmia"
-    text: "Voc\xEA demonstrou respeito e curiosidade. Por isso, pode levar o Velho Escaravelho como lembran\xE7a desta jornada."
-  - speaker: Amira
-    text: "Coragem n\xE3o significa enfrentar tudo sozinha. \xC0s vezes, confiar nas pessoas \xE9 o que nos leva mais longe."
+  - speaker: Rami
+    text: "Uma visitante! Pode chegar, Amira. Eu sou Rami! N\xE3o precisa ter medo
+      dessas faixas\u2026 O mais assustador por aqui \xE9 ficar tanto tempo sem ningu\xE9m
+      pra conversar!"
+  - speaker: Rami
+    text: "Nasci h\xE1 mais de tr\xEAs mil anos, perto do rio Nilo. Meu pai era escriba:
+      trabalhava escrevendo e fazendo registros. Eu vivia pedindo que ele me ensinasse.
+      Queria guardar todas as hist\xF3rias que ouvia!"
+  - speaker: Rami
+    text: "Naquela \xE9poca, o Nilo enchia todos os anos. Quando a \xE1gua baixava,
+      deixava uma camada de terra f\xE9rtil para plantar. Eu adorava ver as margens
+      ficando verdes outra vez. Nossa vida seguia o ritmo do rio!"
+  - speaker: Rami
+    text: "Meu pai me ensinou que os hier\xF3glifos n\xE3o eram s\xF3 desenhos bonitos.
+      Eles podiam representar sons, palavras e ajudar a entender o significado do
+      que estava escrito. Imagina descobrir que um passarinho desenhado faz parte
+      de uma mensagem!"
+  - speaker: Rami
+    text: "E sabe uma coisa engra\xE7ada? Quando eu nasci, as grandes pir\xE2mides
+      de Giz\xE9 j\xE1 tinham mais de mil anos! Elas foram constru\xEDdas como t\xFAmulos
+      de reis. Eu tamb\xE9m olhava pra elas e pensava: \u201CComo conseguiram fazer
+      tudo isso?\u201D"
+  - speaker: Rami
+    text: "A Grande Pir\xE2mide tinha um revestimento de calc\xE1rio claro e liso.
+      Era bem diferente das pedras expostas que voc\xEA v\xEA hoje! Algumas dessas
+      pedras de revestimento chegaram de barco. Imagina o trabalho para transportar
+      tudo!"
+  - speaker: Rami
+    text: "Muito tempo depois, quando minha vida terminou, meu corpo foi mumificado.
+      N\xF3s acredit\xE1vamos numa vida ap\xF3s a morte, e preservar o corpo fazia
+      parte dessa prepara\xE7\xE3o. Um processo completo podia levar cerca de setenta
+      dias. Haja paci\xEAncia!"
+  - speaker: Rami
+    text: "As faixas n\xE3o faziam tudo sozinhas! Usavam natr\xE3o, uma mistura natural
+      de sais, para secar o corpo, e depois vinha o linho. Tamb\xE9m colocavam amuletos
+      entre as camadas, porque acredit\xE1vamos que eles ofereciam prote\xE7\xE3o."
+  - speaker: Rami
+    text: "O meu amuleto tinha um pedido especial: que minhas hist\xF3rias nunca
+      se perdessem. No meu caso, a magia funcionou at\xE9 demais! Acordei, sa\xED
+      do meu antigo t\xFAmulo e vim para esta pir\xE2mide contar o que lembrava."
+  - speaker: Rami
+    text: "Hoje eu guardo essas lembran\xE7as, Amira. Porque o Egito tamb\xE9m era
+      feito de fam\xEDlias, planta\xE7\xF5es e gente curiosa como voc\xEA. Quando
+      sair daqui, conte alguma coisa que aprendeu. Assim, um pedacinho da nossa hist\xF3ria
+      vai junto!"
+  - speaker: Rami
+    text: "Antes de ir, Amira, leve este velho amuleto de escaravelho! \xC9 meu presente
+      pra voc\xEA. Cuide bem dele e lembre das nossas hist\xF3rias!"
 --- !u!4 &233133280
 Transform:
   m_ObjectHideFlags: 0
@@ -1069,6 +1107,20 @@ Transform:
   - {fileID: 1383288952}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &233133281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233133278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f88d0014dce999459d8384a734eb766, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptScarabDisplay
+  previewPrefab: {fileID: 8850525478133021688, guid: 04f8581432409134c9efa76f5cd4dae8, type: 3}
+  rotationSpeed: 35
 --- !u!1 &233866332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1392,7 +1444,7 @@ Transform:
   m_GameObject: {fileID: 288188143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 10, z: -1.45}
+  m_LocalPosition: {x: -5.2500005, y: 10, z: -2.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1417,7 +1469,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 16.6, y: 40, z: 0.5}
+  m_Size: {x: 25.900002, y: 40, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &333602381
 GameObject:
@@ -2461,7 +2513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptNpcIdle
   coordinateSpace: {fileID: 628791718}
   stage: {fileID: 233133279}
-  speaker: "M\xFAmia"
+  speaker: Rami
   head: {fileID: 1954791201}
   leftArm: {fileID: 249805326}
   rightArm: {fileID: 248498288}
@@ -4319,7 +4371,7 @@ Transform:
   m_GameObject: {fileID: 969630877}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 1.312505, z: 6.3}
+  m_LocalPosition: {x: 0, y: 3.676, z: -5.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4430,7 +4482,7 @@ Transform:
   m_GameObject: {fileID: 1003974516}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 10, z: 2.75}
+  m_LocalPosition: {x: -5.2500005, y: 10, z: 6.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4455,7 +4507,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 16.6, y: 40, z: 0.5}
+  m_Size: {x: 25.900002, y: 40, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1010542895
 GameObject:
@@ -5320,8 +5372,8 @@ Camera:
   m_GameObject: {fileID: 1152840312}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.025, g: 0.022, b: 0.018, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5344,7 +5396,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 1000
-  field of view: 65
+  field of view: 58
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -5370,8 +5422,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1152840312}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9957089, z: -0.09254137, w: 0}
-  m_LocalPosition: {x: 0, y: 2.7425048, z: 14}
+  m_LocalRotation: {x: 0.06967662, y: 0.7036655, z: -0.06967662, w: 0.70366555}
+  m_LocalPosition: {x: -7.5, y: 4.026, z: 14.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5434,13 +5486,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptCamera25D
   target: {fileID: 1233578668}
-  offset: {x: 0, y: 2.6, z: 8}
-  lookOffset: {x: 0, y: 1.1, z: 0}
+  offset: {x: -8, y: 2.2, z: 3}
+  lookOffset: {x: 0, y: 1.1, z: -1.8}
   followSharpness: 8
-  depthFollow: 0.2
-  depthAxis: {x: 0, y: 0, z: -1}
-  fixedHorizontalFraming: 1
+  depthFollow: 0
+  depthAxis: {x: 1, y: 0, z: 0}
+  fixedHorizontalFraming: 0
   horizontalFramePosition: 0
+  clampFramingZ: 1
+  minFramingZ: -2.8
+  maxFramingZ: 12.3
+  useWallRail: 1
+  railStart: {x: -7.5, y: 4.026, z: -3.8}
+  railEnd: {x: -7.5, y: 4.026, z: 14.5}
+  railLookDirection: {x: 1, y: -0.2, z: 0}
 --- !u!114 &1152840318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5455,6 +5514,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptCameraObstruction
   environment: {fileID: 1266688024}
   target: {fileID: 1233578668}
+  cutawaySurfaces: []
+  fadeOnlyInteriorProps: 1
   obscuredAlpha: 0.12
   fadeSpeed: 6
 --- !u!1001 &1186260041
@@ -5701,7 +5762,7 @@ Transform:
   m_GameObject: {fileID: 1233578667}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0.14250499, z: 6}
+  m_LocalPosition: {x: 0, y: 0.14250499, z: 16.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5740,9 +5801,10 @@ MonoBehaviour:
   stage: {fileID: 233133279}
   visual: {fileID: 1796809345}
   animator: {fileID: 1796809347}
+  visualHeightOffset: 0
   visualYawOffset: 0
-  movementAxis: {x: -1, y: 0, z: 0}
-  depthAxis: {x: 0, y: 0, z: -1}
+  movementAxis: {x: 0, y: 0, z: -1}
+  depthAxis: {x: 1, y: 0, z: 0}
   depthSpeedMultiplier: 0.65
   speed: 4
   jumpHeight: 1.2
@@ -5954,6 +6016,7 @@ Transform:
   - {fileID: 183375385}
   - {fileID: 1557083899}
   - {fileID: 368312758}
+  - {fileID: 1512811312}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1276660274
@@ -6298,7 +6361,7 @@ Transform:
   m_GameObject: {fileID: 1303760629}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6, y: 0.062505, z: 6}
+  m_LocalPosition: {x: 0, y: 2.426, z: -6.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6318,7 +6381,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptInteractionPoint
   kind: 2
-  radius: 2.5
+  radius: 1.5
+  maxHeightDifference: 0.3
   origin: {fileID: 0}
 --- !u!1001 &1324563547
 PrefabInstance:
@@ -6904,8 +6968,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1383288951}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 6, y: 0.14250499, z: 6}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6927,10 +6991,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4528f69d450e4cdbb0253d9cbef151d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptMovementBounds
-  horizontalMin: -1.8
-  horizontalMax: 13.8
-  frontDistance: 1.2
-  backDistance: 2.5
+  horizontalMin: -17.7
+  horizontalMax: 7.2
+  frontDistance: 2
+  backDistance: 6.7
   wallHeight: 40
   wallBase: -10
   wallThickness: 0.5
@@ -7068,7 +7132,7 @@ Transform:
   m_GameObject: {fileID: 1391575604}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.05, y: 10, z: 0.65}
+  m_LocalPosition: {x: -17.95, y: 10, z: 2.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7093,7 +7157,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 40, z: 3.7}
+  m_Size: {x: 0.5, y: 40, z: 8.7}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1417258074
 PrefabInstance:
@@ -7706,6 +7770,96 @@ Transform:
   - {fileID: 1459596332}
   m_Father: {fileID: 1266688024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1512811311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512811312}
+  - component: {fileID: 1512811314}
+  - component: {fileID: 1512811313}
+  m_Layer: 0
+  m_Name: Fechamento_Frestas_Piso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1512811312
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512811311}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -8, y: -1.1999999, z: 52}
+  m_LocalScale: {x: 164, y: 1, z: 263}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1266688024}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1512811313
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512811311}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 3c4186ff16bd2af4393144a57894e767, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1512811314
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512811311}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1555728712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8515,19 +8669,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e5213a5d01676c74d95a6877fb029c8e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e5213a5d01676c74d95a6877fb029c8e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e5213a5d01676c74d95a6877fb029c8e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e5213a5d01676c74d95a6877fb029c8e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e5213a5d01676c74d95a6877fb029c8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -8723,7 +8877,7 @@ Transform:
   m_GameObject: {fileID: 1809123604}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.05, y: 10, z: 0.65}
+  m_LocalPosition: {x: 7.45, y: 10, z: 2.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8748,7 +8902,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 40, z: 3.7}
+  m_Size: {x: 0.5, y: 40, z: 8.7}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1859555659
 PrefabInstance:

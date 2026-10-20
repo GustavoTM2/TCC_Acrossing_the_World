@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace CrossingTheWorld.TCCEgypt
 {
@@ -9,10 +10,11 @@ namespace CrossingTheWorld.TCCEgypt
     {
         private static EgyptSceneTransition instance;
         public static bool IsBusy => instance != null && instance.busy;
+        public float Opacity => overlay != null ? overlay.alpha : 0;
         private bool busy;
-        private float opacity;
-        private string caption;
-        private GUIStyle label;
+        private Canvas canvas;
+        private CanvasGroup overlay;
+        private Text caption;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetSession() { instance = null; }
@@ -21,6 +23,11 @@ namespace CrossingTheWorld.TCCEgypt
         public static void Load(string path, EgyptStage owner)
         {
             if (IsBusy) return;
+            if (string.IsNullOrWhiteSpace(path) || !Application.CanStreamedLevelBeLoaded(path))
+            {
+                if (owner != null) owner.Notify("A cena de destino não está disponível.");
+                return;
+            }
             if (instance == null)
             {
                 instance = FindFirstObjectByType<EgyptSceneTransition>();
@@ -28,73 +35,101 @@ namespace CrossingTheWorld.TCCEgypt
                 // Mantenho este objeto durante a troca de cena para a tela preta continuar aparecendo.
                 DontDestroyOnLoad(instance.gameObject);
             }
+            instance.PrepareOverlay();
             instance.busy = true;
-            instance.caption = path.Contains("Interior") ? "Entrando na pirâmide..." : "Voltando ao deserto...";
+            instance.canvas.enabled = true;
+            instance.caption.text = path.Contains("Interior") ? "Entrando na pirâmide..." : "Voltando ao deserto...";
             instance.StartCoroutine(instance.ChangeScene(path, owner));
         }
 
         // Escureço a tela, carrego a cena e depois mostro o cenário novamente.
         private IEnumerator ChangeScene(string path, EgyptStage owner)
         {
-            yield return Fade(0, 1, 0.45f);
+            // Só começo a carregar depois que o cenário antigo estiver totalmente coberto.
+            yield return Fade(0, 1, 0.65f);
+            Canvas.ForceUpdateCanvases();
+            yield return null;
             AsyncOperation loading = BeginLoad(path);
             if (loading == null)
             {
                 if (owner != null) owner.Notify("Não foi possível carregar a cena. Confira o Console.");
                 yield return Fade(1, 0, 0.35f);
-                busy = false;
+                Finish();
                 yield break;
             }
             while (!loading.isDone) yield return null;
             // Aguarda Awake/Start, inclusive o enquadramento da câmera, mantendo a tela preta.
             yield return null;
             yield return null;
-            yield return new WaitForSecondsRealtime(0.15f);
-            yield return Fade(1, 0, 0.45f);
-            busy = false;
+            yield return new WaitForSecondsRealtime(0.3f);
+            yield return Fade(1, 0, 0.65f);
+            Finish();
         }
 
         private static AsyncOperation BeginLoad(string path)
         {
             // Carrego a próxima cena de forma assíncrona enquanto a transição fica na tela.
-            try { return SceneManager.LoadSceneAsync(path); }
+            try { return SceneManager.LoadSceneAsync(path, LoadSceneMode.Single); }
             catch (Exception exception) { Debug.LogException(exception); return null; }
         }
 
         // Mudo a opacidade aos poucos para fazer a tela escurecer ou clarear suavemente.
         private IEnumerator Fade(float from, float to, float duration)
         {
-            opacity = from;
+            overlay.alpha = from;
             float elapsed = 0;
             while (elapsed < duration)
             {
                 elapsed += Time.unscaledDeltaTime;
-                opacity = Mathf.Lerp(from, to, Mathf.SmoothStep(0, 1, Mathf.Clamp01(elapsed / duration)));
+                overlay.alpha = Mathf.Lerp(from, to, Mathf.SmoothStep(0, 1, Mathf.Clamp01(elapsed / duration)));
                 yield return null;
             }
-            opacity = to;
+            overlay.alpha = to;
         }
 
-        // Desenho a tela preta e o aviso de transição por cima da interface.
-        private void OnGUI()
+        // A tela preta ocupa a janela inteira e não depende da câmera ou do tamanho dos diálogos.
+        private void PrepareOverlay()
         {
-            if (!busy && opacity <= 0) return;
-            Matrix4x4 matrix = GUI.matrix;
-            Color color = GUI.color;
-            int depth = GUI.depth;
-            GUI.depth = -10000;
-            GUI.matrix = Matrix4x4.identity;
-            GUI.color = new Color(1, 1, 1, opacity);
-            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), Texture2D.blackTexture);
-            if (opacity > 0.95f)
-            {
-                if (label == null) label = new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter,
-                    fontSize = 20, normal = { textColor = new Color(0.9f, 0.79f, 0.58f) } };
-                GUI.Label(new Rect(0, Screen.height * 0.73f, Screen.width, 50), caption, label);
-            }
-            GUI.depth = depth;
-            GUI.color = color;
-            GUI.matrix = matrix;
+            if (canvas != null) return;
+            GameObject root = new GameObject("Tela_Preta", typeof(RectTransform), typeof(Canvas),
+                typeof(CanvasGroup), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            root.transform.SetParent(transform, false);
+            canvas = root.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = short.MaxValue;
+            overlay = root.GetComponent<CanvasGroup>();
+            overlay.alpha = 0;
+            overlay.blocksRaycasts = true;
+            root.GetComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            root.GetComponent<CanvasScaler>().referenceResolution = new Vector2(1280, 720);
+
+            GameObject black = new GameObject("Fundo_Preto", typeof(RectTransform), typeof(Image));
+            black.transform.SetParent(root.transform, false);
+            RectTransform rect = black.GetComponent<RectTransform>();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = rect.offsetMax = Vector2.zero;
+            black.GetComponent<Image>().color = Color.black;
+
+            GameObject label = new GameObject("Aviso", typeof(RectTransform), typeof(Text));
+            label.transform.SetParent(root.transform, false);
+            RectTransform labelRect = label.GetComponent<RectTransform>();
+            labelRect.anchorMin = new Vector2(0, 0.18f);
+            labelRect.anchorMax = new Vector2(1, 0.3f);
+            labelRect.offsetMin = labelRect.offsetMax = Vector2.zero;
+            caption = label.GetComponent<Text>();
+            caption.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            caption.fontSize = 22;
+            caption.alignment = TextAnchor.MiddleCenter;
+            caption.color = new Color(0.9f, 0.79f, 0.58f);
+            caption.raycastTarget = false;
+        }
+
+        private void Finish()
+        {
+            overlay.alpha = 0;
+            canvas.enabled = false;
+            busy = false;
         }
 
         private void OnDestroy() { if (instance == this) instance = null; }

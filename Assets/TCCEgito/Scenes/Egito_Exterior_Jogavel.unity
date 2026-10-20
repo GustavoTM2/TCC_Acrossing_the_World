@@ -141,6 +141,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 433.0631
@@ -198,6 +202,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 444.16
@@ -302,7 +310,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1853626484}
+    m_TransformParent: {fileID: 1270944141}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e5213a5d01676c74d95a6877fb029c8e, type: 3}
       propertyPath: m_LocalScale.x
@@ -528,6 +536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fern_C (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5027213193735674214, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 745b761e517dec94ca3a3689fe995449, type: 2}
     - target: {fileID: 7140844442097323097, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 423.64035
@@ -585,6 +597,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 430.34848
@@ -682,6 +698,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassDry_C
       objectReference: {fileID: 0}
+    - target: {fileID: 7442140905335235343, guid: 8aa8def6286fc784ba128570ec475974, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: d89f52482645ee749bdd28d5e45e44a5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -811,6 +831,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 442.36
@@ -874,6 +898,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1347868722}
     m_Modifications:
+    - target: {fileID: 2315274950560864275, guid: 4dfd50a1f648e984f8188be70774f281, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 2a6ab143d7f61ff468a2c9f26b1ccf51, type: 2}
     - target: {fileID: 3414463147842802935, guid: 4dfd50a1f648e984f8188be70774f281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 434.10342
@@ -931,6 +959,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1347868722}
     m_Modifications:
+    - target: {fileID: 2315274950560864275, guid: 4dfd50a1f648e984f8188be70774f281, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 2a6ab143d7f61ff468a2c9f26b1ccf51, type: 2}
     - target: {fileID: 3414463147842802935, guid: 4dfd50a1f648e984f8188be70774f281, type: 3}
       propertyPath: m_LocalPosition.x
       value: 438.4688
@@ -1081,6 +1113,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027139320053055477, guid: 4c72217d56dcb6749a897a75cad1f34e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 2a6ab143d7f61ff468a2c9f26b1ccf51, type: 2}
     - target: {fileID: 6846659341408791651, guid: 4c72217d56dcb6749a897a75cad1f34e, type: 3}
       propertyPath: m_Name
       value: Grass_C (1)
@@ -1219,6 +1255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 412.57
@@ -1356,8 +1396,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.994029, z: -0.109116785, w: 0}
-  m_LocalPosition: {x: 438.89, y: 4.1467953, z: 963.83}
+  m_LocalRotation: {x: 0, y: 0.99213505, z: -0.12517236, w: 0}
+  m_LocalPosition: {x: 438.89, y: 4.18758, z: 963.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1420,11 +1460,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptCamera25D
   target: {fileID: 1853626484}
-  offset: {x: 0, y: 3, z: 9}
+  offset: {x: 0, y: 3, z: 7.8}
   lookOffset: {x: 0, y: 1, z: 0}
   followSharpness: 8
   depthFollow: 0.2
   depthAxis: {x: 0, y: 0, z: -1}
+  fixedHorizontalFraming: 0
+  horizontalFramePosition: 0
+  clampFramingZ: 0
+  minFramingZ: 0
+  maxFramingZ: 0
+  useWallRail: 0
+  railStart: {x: 0, y: 0, z: 0}
+  railEnd: {x: 0, y: 0, z: 0}
+  railLookDirection: {x: 1, y: 0, z: 0}
 --- !u!1001 &340088925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1477,6 +1526,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass_B (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3713275524980311458, guid: 7b3e6db10d22f504dbc606110b2cb5e7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 00e52f197779dfc46b3596bf1f7d176b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1534,6 +1587,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9185370473857334979, guid: 0ec1c69bd47ad864f96cc2b516f6cd4b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 412e3870abbd4454587728dd19ead0c4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1551,6 +1608,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 426.07
@@ -1819,6 +1880,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fern_C (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5027213193735674214, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 745b761e517dec94ca3a3689fe995449, type: 2}
     - target: {fileID: 7140844442097323097, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 418.42148
@@ -1876,6 +1941,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 428.73
@@ -1934,6 +2003,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1347868722}
     m_Modifications:
+    - target: {fileID: 2875072454829532741, guid: 8569bec78272c564ab74ca5b8a4762f1, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: c2742f1924c2e2b4bbae3e142ec7ae20, type: 2}
     - target: {fileID: 5282797068109607686, guid: 8569bec78272c564ab74ca5b8a4762f1, type: 3}
       propertyPath: m_Name
       value: Plant_D
@@ -2058,6 +2131,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 433.55045
@@ -2115,6 +2192,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fern_C
       objectReference: {fileID: 0}
+    - target: {fileID: 5027213193735674214, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 745b761e517dec94ca3a3689fe995449, type: 2}
     - target: {fileID: 7140844442097323097, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 422.0119
@@ -2212,6 +2293,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass_B (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3713275524980311458, guid: 7b3e6db10d22f504dbc606110b2cb5e7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 00e52f197779dfc46b3596bf1f7d176b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2270,6 +2355,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fern_A
       objectReference: {fileID: 0}
+    - target: {fileID: 6754631035083144406, guid: 6629880e46886724fa0107d3035304e6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 745b761e517dec94ca3a3689fe995449, type: 2}
     - target: {fileID: 8525110361885640127, guid: 6629880e46886724fa0107d3035304e6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 451.52332
@@ -2593,6 +2682,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heather_B
       objectReference: {fileID: 0}
+    - target: {fileID: 1812815810799895238, guid: dd902ff2a6f685041be127af00c09664, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 3987303e52a48c049a50ee45200ec3b2, type: 2}
     - target: {fileID: 3120705534441101108, guid: dd902ff2a6f685041be127af00c09664, type: 3}
       propertyPath: m_LocalPosition.x
       value: 433.12677
@@ -2664,7 +2757,7 @@ Transform:
   m_GameObject: {fileID: 930403671}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 438.89, y: 1.1467954, z: 954.83}
+  m_LocalPosition: {x: 438.89, y: 1.1875799, z: 956.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2745,6 +2838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassDry_C (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7442140905335235343, guid: 8aa8def6286fc784ba128570ec475974, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: d89f52482645ee749bdd28d5e45e44a5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2762,6 +2859,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_A (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3826201323488876390, guid: 6d6ea10f03c4d7245a66d6515bf1bc6d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: c2742f1924c2e2b4bbae3e142ec7ae20, type: 2}
     - target: {fileID: 5107076573298825875, guid: 6d6ea10f03c4d7245a66d6515bf1bc6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 412.7381
@@ -3013,6 +3114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptNpcIdle
   coordinateSpace: {fileID: 1082720566}
+  stage: {fileID: 1856274477}
+  speaker: Agente da Horizon Travel
   head: {fileID: 1877145088}
   leftArm: {fileID: 1644565726}
   rightArm: {fileID: 683479481}
@@ -3039,6 +3142,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassDry_B
       objectReference: {fileID: 0}
+    - target: {fileID: 4936456245813105690, guid: 3d4dd2affe15db043a6502ae256cd0d4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: d89f52482645ee749bdd28d5e45e44a5, type: 2}
     - target: {fileID: 6476042813406998376, guid: 3d4dd2affe15db043a6502ae256cd0d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 422.56998
@@ -3136,6 +3243,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heather_A (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8364043966977720213, guid: cce04f533c148314abf74aff71206ec7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 3987303e52a48c049a50ee45200ec3b2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3153,6 +3264,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 430.07
@@ -3210,6 +3325,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Plant_A
       objectReference: {fileID: 0}
+    - target: {fileID: 3826201323488876390, guid: 6d6ea10f03c4d7245a66d6515bf1bc6d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: c2742f1924c2e2b4bbae3e142ec7ae20, type: 2}
     - target: {fileID: 5107076573298825875, guid: 6d6ea10f03c4d7245a66d6515bf1bc6d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 430.37558
@@ -3317,6 +3436,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass_B
       objectReference: {fileID: 0}
+    - target: {fileID: 3713275524980311458, guid: 7b3e6db10d22f504dbc606110b2cb5e7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 00e52f197779dfc46b3596bf1f7d176b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3334,6 +3457,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 422.98
@@ -3389,6 +3516,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
   m_PrefabInstance: {fileID: 349187952}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1270944140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1270944141}
+  m_Layer: 0
+  m_Name: Altura_Visual_Amira
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1270944141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270944140}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: -0.08, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 110913938}
+  m_Father: {fileID: 1853626484}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1272758657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7140844442097323097, guid: 4786e2698ac97a949a9209febfcbd49b, type: 3}
@@ -3630,6 +3789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptInteractionPoint
   kind: 1
   radius: 2.5
+  maxHeightDifference: 0
   origin: {fileID: 0}
 --- !u!1001 &1396960231
 PrefabInstance:
@@ -3643,6 +3803,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grass_A
       objectReference: {fileID: 0}
+    - target: {fileID: 6474607512827437805, guid: 4e6885e0d11bd224fa27617a4657c329, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 00e52f197779dfc46b3596bf1f7d176b, type: 2}
     - target: {fileID: 7922592579014258194, guid: 4e6885e0d11bd224fa27617a4657c329, type: 3}
       propertyPath: m_LocalPosition.x
       value: 459.6954
@@ -3745,6 +3909,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptInteractionPoint
   kind: 0
   radius: 2.5
+  maxHeightDifference: 0
   origin: {fileID: 0}
 --- !u!4 &1443473495 stripped
 Transform:
@@ -3862,6 +4027,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6783845505919672072, guid: 9e8508e3025d9c844810b83c5607c09e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: d89f52482645ee749bdd28d5e45e44a5, type: 2}
     - target: {fileID: 8486787402013068894, guid: 9e8508e3025d9c844810b83c5607c09e, type: 3}
       propertyPath: m_Name
       value: GrassDry_A
@@ -3960,6 +4129,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4027139320053055477, guid: 4c72217d56dcb6749a897a75cad1f34e, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 2a6ab143d7f61ff468a2c9f26b1ccf51, type: 2}
     - target: {fileID: 6846659341408791651, guid: 4c72217d56dcb6749a897a75cad1f34e, type: 3}
       propertyPath: m_Name
       value: Grass_C
@@ -4017,6 +4190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 436.2608
@@ -4074,6 +4251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BushDry_B (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 950158807591737093, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 644a773e30e872a4294976d9718c648d, type: 2}
     - target: {fileID: 5802263826613843982, guid: 054bf5cf244ff2e4083cbf8eca205cf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 422.91
@@ -4244,11 +4425,11 @@ Transform:
   m_GameObject: {fileID: 1853626483}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 438.89, y: 1.1467954, z: 954.83}
+  m_LocalPosition: {x: 438.89, y: 1.1875799, z: 956.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 110913938}
+  - {fileID: 1270944141}
   m_Father: {fileID: 1856274478}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1853626485
@@ -4282,6 +4463,7 @@ MonoBehaviour:
   stage: {fileID: 1856274477}
   visual: {fileID: 110913938}
   animator: {fileID: 110913940}
+  visualHeightOffset: -0.08
   visualYawOffset: 0
   movementAxis: {x: -1, y: 0, z: 0}
   depthAxis: {x: 0, y: 0, z: -1}
@@ -4289,7 +4471,7 @@ MonoBehaviour:
   speed: 4
   jumpHeight: 1.2
   gravity: -22
-  respawnBelowY: -13.853205
+  respawnBelowY: -13.81242
 --- !u!143 &1853626487
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4325,6 +4507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1856274478}
   - component: {fileID: 1856274477}
+  - component: {fileID: 1856274479}
   m_Layer: 0
   m_Name: TCC_Egito_Programacao
   m_TagString: Untagged
@@ -4348,6 +4531,7 @@ MonoBehaviour:
   exteriorScene: Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity
   interiorScene: Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity
   scarabVisual: {fileID: 0}
+  player: {fileID: 1853626486}
   onGuideFinished:
     m_PersistentCalls:
       m_Calls: []
@@ -4358,31 +4542,67 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   guideLines:
-  - speaker: "Guia tur\xEDstico"
-    text: "Bem-vinda ao Egito, uma terra onde cada monumento guarda milhares de anos de hist\xF3ria."
-  - speaker: "Guia tur\xEDstico"
-    text: "As pir\xE2mides e a Esfinge fazem parte do patrim\xF4nio hist\xF3rico deste destino. Nossa ag\xEAncia apresenta esses lugares em seus passeios culturais."
-  - speaker: "Guia tur\xEDstico"
-    text: "Dentro desta pir\xE2mide vive uma antiga m\xFAmia, guardi\xE3 de um artefato conhecido como Velho Escaravelho."
+  - speaker: Agente da Horizon Travel
+    text: Bem-vinda ao Egito, Amira! Sou da Horizon Travel e vou te guiar por aqui.
   - speaker: Amira
-    text: "Ent\xE3o a lenda \xE9 verdadeira?"
-  - speaker: "Guia tur\xEDstico"
-    text: "Ela guarda mem\xF3rias importantes sobre este lugar. Ou\xE7a sua hist\xF3ria com aten\xE7\xE3o."
+    text: Valeu! Pra onde a gente vai primeiro?
+  - speaker: Agente da Horizon Travel
+    text: "T\xE1 vendo aquela pir\xE2mide? Tem uma m\xFAmia l\xE1 dentro esperando
+      sua visita!"
+  - speaker: Amira
+    text: "Uma m\xFAmia? Essa conversa vai ser interessante!"
+  - speaker: Agente da Horizon Travel
+    text: "Pois \xE9! V\xE1 at\xE9 a pir\xE2mide e fale com ele. Ele tem algo pra
+      te contar!"
   mummyLines:
-  - speaker: "M\xFAmia"
-    text: "H\xE1 milhares de anos, eu vivi nesta terra e acompanhei acontecimentos que hoje se transformaram em hist\xF3rias."
-  - speaker: "M\xFAmia"
-    text: "Meu corpo foi preparado de acordo com os rituais funer\xE1rios do antigo Egito, para que minha mem\xF3ria fosse preservada."
-  - speaker: "M\xFAmia"
-    text: "As pir\xE2mides foram erguidas com planejamento, conhecimento de engenharia e o trabalho organizado de muitas pessoas."
-  - speaker: "M\xFAmia"
-    text: "Os blocos eram transportados e posicionados com t\xE9cnicas desenvolvidas ao longo de muitos anos."
-  - speaker: Amira
-    text: "Quero conhecer este lugar com respeito e aprender com suas hist\xF3rias."
-  - speaker: "M\xFAmia"
-    text: "Voc\xEA demonstrou respeito e curiosidade. Por isso, pode levar o Velho Escaravelho como lembran\xE7a desta jornada."
-  - speaker: Amira
-    text: "Coragem n\xE3o significa enfrentar tudo sozinha. \xC0s vezes, confiar nas pessoas \xE9 o que nos leva mais longe."
+  - speaker: Rami
+    text: "Uma visitante! Pode chegar, Amira. Eu sou Rami! N\xE3o precisa ter medo
+      dessas faixas\u2026 O mais assustador por aqui \xE9 ficar tanto tempo sem ningu\xE9m
+      pra conversar!"
+  - speaker: Rami
+    text: "Nasci h\xE1 mais de tr\xEAs mil anos, perto do rio Nilo. Meu pai era escriba:
+      trabalhava escrevendo e fazendo registros. Eu vivia pedindo que ele me ensinasse.
+      Queria guardar todas as hist\xF3rias que ouvia!"
+  - speaker: Rami
+    text: "Naquela \xE9poca, o Nilo enchia todos os anos. Quando a \xE1gua baixava,
+      deixava uma camada de terra f\xE9rtil para plantar. Eu adorava ver as margens
+      ficando verdes outra vez. Nossa vida seguia o ritmo do rio!"
+  - speaker: Rami
+    text: "Meu pai me ensinou que os hier\xF3glifos n\xE3o eram s\xF3 desenhos bonitos.
+      Eles podiam representar sons, palavras e ajudar a entender o significado do
+      que estava escrito. Imagina descobrir que um passarinho desenhado faz parte
+      de uma mensagem!"
+  - speaker: Rami
+    text: "E sabe uma coisa engra\xE7ada? Quando eu nasci, as grandes pir\xE2mides
+      de Giz\xE9 j\xE1 tinham mais de mil anos! Elas foram constru\xEDdas como t\xFAmulos
+      de reis. Eu tamb\xE9m olhava pra elas e pensava: \u201CComo conseguiram fazer
+      tudo isso?\u201D"
+  - speaker: Rami
+    text: "A Grande Pir\xE2mide tinha um revestimento de calc\xE1rio claro e liso.
+      Era bem diferente das pedras expostas que voc\xEA v\xEA hoje! Algumas dessas
+      pedras de revestimento chegaram de barco. Imagina o trabalho para transportar
+      tudo!"
+  - speaker: Rami
+    text: "Muito tempo depois, quando minha vida terminou, meu corpo foi mumificado.
+      N\xF3s acredit\xE1vamos numa vida ap\xF3s a morte, e preservar o corpo fazia
+      parte dessa prepara\xE7\xE3o. Um processo completo podia levar cerca de setenta
+      dias. Haja paci\xEAncia!"
+  - speaker: Rami
+    text: "As faixas n\xE3o faziam tudo sozinhas! Usavam natr\xE3o, uma mistura natural
+      de sais, para secar o corpo, e depois vinha o linho. Tamb\xE9m colocavam amuletos
+      entre as camadas, porque acredit\xE1vamos que eles ofereciam prote\xE7\xE3o."
+  - speaker: Rami
+    text: "O meu amuleto tinha um pedido especial: que minhas hist\xF3rias nunca
+      se perdessem. No meu caso, a magia funcionou at\xE9 demais! Acordei, sa\xED
+      do meu antigo t\xFAmulo e vim para esta pir\xE2mide contar o que lembrava."
+  - speaker: Rami
+    text: "Hoje eu guardo essas lembran\xE7as, Amira. Porque o Egito tamb\xE9m era
+      feito de fam\xEDlias, planta\xE7\xF5es e gente curiosa como voc\xEA. Quando
+      sair daqui, conte alguma coisa que aprendeu. Assim, um pedacinho da nossa hist\xF3ria
+      vai junto!"
+  - speaker: Rami
+    text: "Antes de ir, Amira, leve este velho amuleto de escaravelho! \xC9 meu presente
+      pra voc\xEA. Cuide bem dele e lembre das nossas hist\xF3rias!"
 --- !u!4 &1856274478
 Transform:
   m_ObjectHideFlags: 0
@@ -4402,6 +4622,20 @@ Transform:
   - {fileID: 930403672}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1856274479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856274476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f88d0014dce999459d8384a734eb766, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptScarabDisplay
+  previewPrefab: {fileID: 8850525478133021688, guid: 04f8581432409134c9efa76f5cd4dae8, type: 3}
+  rotationSpeed: 35
 --- !u!1 &1877145087
 GameObject:
   m_ObjectHideFlags: 0
@@ -4485,6 +4719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GrassDry_C (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7442140905335235343, guid: 8aa8def6286fc784ba128570ec475974, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: d89f52482645ee749bdd28d5e45e44a5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4557,6 +4795,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heather_A
       objectReference: {fileID: 0}
+    - target: {fileID: 8364043966977720213, guid: cce04f533c148314abf74aff71206ec7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value:
+      objectReference: {fileID: 2100000, guid: 3987303e52a48c049a50ee45200ec3b2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

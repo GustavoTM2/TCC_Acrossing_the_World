@@ -26,25 +26,9 @@ namespace CrossingTheWorld.TCCEgypt
         public UnityEvent onScarabReceived = new UnityEvent();
         public UnityEvent onStageCompleted = new UnityEvent();
 
-        [Header("Textos adaptados do roteiro do TCC")]
-        public EgyptLine[] guideLines =
-        {
-            new EgyptLine("Guia turístico", "Bem-vinda ao Egito, uma terra onde cada monumento guarda milhares de anos de história."),
-            new EgyptLine("Guia turístico", "As pirâmides e a Esfinge fazem parte do patrimônio histórico deste destino. Nossa agência apresenta esses lugares em seus passeios culturais."),
-            new EgyptLine("Guia turístico", "Dentro desta pirâmide vive uma antiga múmia, guardiã de um artefato conhecido como Velho Escaravelho."),
-            new EgyptLine("Amira", "Então a lenda é verdadeira?"),
-            new EgyptLine("Guia turístico", "Ela guarda memórias importantes sobre este lugar. Ouça sua história com atenção.")
-        };
-        public EgyptLine[] mummyLines =
-        {
-            new EgyptLine("Múmia", "Há milhares de anos, eu vivi nesta terra e acompanhei acontecimentos que hoje se transformaram em histórias."),
-            new EgyptLine("Múmia", "Meu corpo foi preparado de acordo com os rituais funerários do antigo Egito, para que minha memória fosse preservada."),
-            new EgyptLine("Múmia", "As pirâmides foram erguidas com planejamento, conhecimento de engenharia e o trabalho organizado de muitas pessoas."),
-            new EgyptLine("Múmia", "Os blocos eram transportados e posicionados com técnicas desenvolvidas ao longo de muitos anos."),
-            new EgyptLine("Amira", "Quero conhecer este lugar com respeito e aprender com suas histórias."),
-            new EgyptLine("Múmia", "Você demonstrou respeito e curiosidade. Por isso, pode levar o Velho Escaravelho como lembrança desta jornada."),
-            new EgyptLine("Amira", "Coragem não significa enfrentar tudo sozinha. Às vezes, confiar nas pessoas é o que nos leva mais longe.")
-        };
+        [Header("Falas do roteiro Horizon Travel")]
+        public EgyptLine[] guideLines = EgyptDialogueContent.CreateGuide();
+        public EgyptLine[] mummyLines = EgyptDialogueContent.CreateMummy();
 
         public static EgyptQuestProgress Progress { get; private set; } = new EgyptQuestProgress();
         public bool DialogueIsOpen => lines != null;
@@ -62,6 +46,8 @@ namespace CrossingTheWorld.TCCEgypt
         private float messageUntil;
         private int lastAdvanceFrame = -1;
         private EgyptStageUI ui;
+        private EgyptScarabDisplay scarabDisplay;
+        public Texture ScarabPreview => scarabDisplay != null ? scarabDisplay.PreviewTexture : null;
         private Vector3 scarabScale;
         private Quaternion scarabRotation;
 
@@ -70,6 +56,7 @@ namespace CrossingTheWorld.TCCEgypt
 
         private void Awake()
         {
+            scarabDisplay = GetComponent<EgyptScarabDisplay>();
             // Permite testar o interior diretamente no Editor sem precisar percorrer o exterior.
             if (interior && Progress.Step == EgyptQuestStep.MeetGuide)
             {
@@ -94,7 +81,7 @@ namespace CrossingTheWorld.TCCEgypt
                 case EgyptPointKind.Guide:
                     if (Progress.Step == EgyptQuestStep.MeetGuide)
                         Open(guideLines, () => { if (Progress.FinishGuide()) onGuideFinished.Invoke(); });
-                    else Open(new[] { new EgyptLine("Guia turístico", Progress.HasScarab
+                    else Open(new[] { new EgyptLine(EgyptDialogueContent.GuideSpeaker, Progress.HasScarab
                         ? "Você voltou com novos aprendizados. Boa viagem, Amira!"
                         : "Entre na pirâmide e converse com a múmia.") }, null);
                     break;
@@ -106,7 +93,7 @@ namespace CrossingTheWorld.TCCEgypt
                     if (Progress.Step == EgyptQuestStep.ListenToMummy)
                         Open(mummyLines, ReceiveScarab);
                     else if (Progress.HasScarab)
-                        Open(new[] { new EgyptLine("Múmia", "Leve consigo o respeito pelas histórias deste lugar.") }, null);
+                        Open(new[] { new EgyptLine(EgyptDialogueContent.MummySpeaker, "Leve consigo o respeito pelas histórias deste lugar.") }, null);
                     else Notify("Converse com o guia e entre na pirâmide para continuar.");
                     break;
                 case EgyptPointKind.Exit:
@@ -238,7 +225,7 @@ namespace CrossingTheWorld.TCCEgypt
                 {
                     case EgyptQuestStep.MeetGuide: return "Converse com o guia turístico.";
                     case EgyptQuestStep.EnterPyramid: return "Vá até a entrada da pirâmide e aperte E.";
-                    case EgyptQuestStep.ListenToMummy: return "Encontre a múmia e ouça suas histórias.";
+                    case EgyptQuestStep.ListenToMummy: return "Suba a escadaria e converse com Rami, a múmia junto ao portal.";
                     default: return "Velho Escaravelho conquistado — fase concluída.";
                 }
             }

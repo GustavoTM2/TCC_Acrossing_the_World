@@ -8,6 +8,8 @@ namespace CrossingTheWorld.TCCEgypt
         public EgyptStage stage;
         public Transform visual;
         public Animator animator;
+        [Tooltip("Ajuste da altura do modelo em metros. Valores negativos aproximam os pés da areia.")]
+        [Range(-0.2f, 0.2f)] public float visualHeightOffset;
         [Tooltip("Correção de orientação do modelo, em graus, se Amira olhar para o lado oposto ao movimento.")]
         public float visualYawOffset;
         [Tooltip("Direção no mundo correspondente a D/seta direita.")]
@@ -29,6 +31,7 @@ namespace CrossingTheWorld.TCCEgypt
         {
             controller = GetComponent<CharacterController>();
             spawn = transform.position;
+            ApplyVisualHeightOffset();
             movementAxis.y = 0;
             movementAxis = movementAxis.sqrMagnitude > 0.001f ? movementAxis.normalized : Vector3.left;
             depthAxis.y = 0;
@@ -36,6 +39,22 @@ namespace CrossingTheWorld.TCCEgypt
             depthAxis = depthAxis.sqrMagnitude > 0.001f ? depthAxis.normalized
                 : Vector3.Cross(movementAxis, Vector3.up).normalized;
             if (animator != null) animator.applyRootMotion = false;
+        }
+
+        // Abaixo só o modelo. A cápsula continua na mesma altura para manter as colisões e o pulo.
+        public void ApplyVisualHeightOffset()
+        {
+            if (visual == null || visual == transform) return;
+            Transform heightRoot = transform.Find("Altura_Visual_Amira");
+            if (heightRoot == null)
+            {
+                if (Mathf.Approximately(visualHeightOffset, 0)) return;
+                heightRoot = new GameObject("Altura_Visual_Amira").transform;
+                heightRoot.SetParent(transform, false);
+            }
+            // O ajuste fica fora do Animator, para a caminhada não desfazer a altura escolhida.
+            if (visual.parent != heightRoot) visual.SetParent(heightRoot, false);
+            heightRoot.localPosition = Vector3.up * visualHeightOffset;
         }
 
         // Leio o teclado a cada quadro e envio os comandos para a movimentação.
