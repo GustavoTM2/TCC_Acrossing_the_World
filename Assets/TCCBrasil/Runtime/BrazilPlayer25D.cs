@@ -9,6 +9,7 @@ namespace CrossingTheWorld.TCCBrazil
         // Referências do modelo e da animação, preenchidas no Inspector
         public Transform visual;
         public Animator animator;
+        public BrazilStage stage;
         public Vector3 horizontalAxis = Vector3.right;
         public Vector3 depthAxis = Vector3.forward;
         public float visualYawOffset;
@@ -39,11 +40,13 @@ namespace CrossingTheWorld.TCCBrazil
             TickMovement(new Vector2(EgyptInput.Horizontal, EgyptInput.Depth), Time.deltaTime);
         }
 
-        // Usa as mesmas entradas de teclado do Egito nesta etapa Lucas apenas caminha
+        // Reaproveito as entradas do Egito e respeito o bloqueio das conversas e do desafio.
         public void TickMovement(Vector2 input, float deltaTime)
         {
             if (controller == null) Awake();
             if (deltaTime <= 0) return;
+            // Durante a conversa e o desafio, mantenho Lucas no lugar, mas continuo aplicando a gravidade.
+            if (stage != null && stage.BlocksMovement) input = Vector2.zero;
             // Limito a entrada para Lucas não andar mais rápido na diagonal
             input = Vector2.ClampMagnitude(input, 1);
             // Calculo o movimento para os lados e para frente/fundo. Na profundidade, a velocidade é menor
@@ -64,9 +67,14 @@ namespace CrossingTheWorld.TCCBrazil
         // Se Lucas cair abaixo do limite, devolvo ele à posição inicial
         public void Respawn()
         {
+            PlaceAt(spawn);
+        }
+
+        public void PlaceAt(Vector3 position)
+        {
             if (controller == null) Awake();
             controller.enabled = false;
-            transform.position = spawn;
+            transform.position = position;
             verticalSpeed = 0;
             controller.enabled = true;
         }

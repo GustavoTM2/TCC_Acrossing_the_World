@@ -74,6 +74,34 @@ namespace CrossingTheWorld.TCCEgypt
             return pressed;
         }
 
+        // Egito e Brasil usam a mesma caixa para os avisos de interação.
+        // A interface que chama este método já aplica a escala de 1280 por 720.
+        public void DrawInteractionPrompt(string status)
+        {
+            if (string.IsNullOrEmpty(status)) return;
+            Prepare();
+            Color oldColor = GUI.color, oldBackground = GUI.backgroundColor;
+            GUI.color = Color.white;
+            GUI.backgroundColor = Color.white;
+            Panel(new Rect(220, 592, 840, 63));
+            GUI.Label(new Rect(244, 609, 792, 38), status,
+                new GUIStyle(body) { fontSize = 19, alignment = TextAnchor.MiddleCenter });
+            GUI.color = oldColor;
+            GUI.backgroundColor = oldBackground;
+        }
+
+        public void DrawExplorationControls(string controls)
+        {
+            Prepare();
+            Color oldColor = GUI.color, oldBackground = GUI.backgroundColor;
+            GUI.color = Color.white;
+            GUI.backgroundColor = Color.white;
+            Fill(new Rect(24, 672, 800, 30), new Color(ink.r, ink.g, ink.b, 0.8f));
+            GUI.Label(new Rect(38, 679, 774, 22), controls, small);
+            GUI.color = oldColor;
+            GUI.backgroundColor = oldBackground;
+        }
+
         // Aqui desenho os objetivos, avisos, diálogos e a mensagem de conclusão.
         public void Draw(EgyptStage stage, string objective, string status, EgyptLine line, int index, int count)
         {
@@ -140,13 +168,8 @@ namespace CrossingTheWorld.TCCEgypt
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(status))
-                    {
-                        Panel(new Rect(220, 592, 840, 63));
-                        GUI.Label(new Rect(244, 609, 792, 38), status, new GUIStyle(body) { fontSize = 19, alignment = TextAnchor.MiddleCenter });
-                    }
-                    Fill(new Rect(24, 672, 800, 30), new Color(ink.r, ink.g, ink.b, 0.8f));
-                    GUI.Label(new Rect(38, 679, 774, 22), "A/D · lados     W/S · fundo/frente     Espaço · pular     E/Enter · interagir", small);
+                    DrawInteractionPrompt(status);
+                    DrawExplorationControls("A/D · lados     W/S · fundo/frente     Espaço · pular     E/Enter · interagir");
                 }
             }
             finally { GUI.matrix = oldMatrix; GUI.color = oldColor; GUI.backgroundColor = oldBackground; }

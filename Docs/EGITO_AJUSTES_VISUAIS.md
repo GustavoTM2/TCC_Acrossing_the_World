@@ -60,6 +60,8 @@ As capturas foram feitas na janela Game do Editor, em formato amplo. Não repres
 
 ## Pendências fora desta entrega
 
+Em 26/10/2026, as conversas de retorno receberam falas próprias: depois da apresentação, o guia lembra Amira de visitar Rami na pirâmide e diz que aguardará seu retorno. Após a conquista, Rami agradece a conversa e se despede; o guia também reconhece a viagem concluída. Essas interações não repetem a entrega do escaravelho nem reabrem o painel de conclusão.
+
 A tentativa de gerar um executável de verificação foi bloqueada pelo asset `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset`, herdado da versão anterior do projeto: ele está serializado na versão 11, enquanto a URP 17.5 do Unity 6000.5.7f1 exige a versão 10. Será necessário preparar essas configurações na versão correta antes de exportar o jogo. Nenhum número de versão foi alterado artificialmente para contornar essa checagem. A validação desta entrega foi concluída no Play do Editor.
 
 Continuam pendentes a integração do botão **Voltar para o menu** e a porta do interior. As falas do guia e de Rami já foram substituídas pelo roteiro fornecido. O painel abre após a entrega, sem exigir clique no artefato, conforme o pedido mais recente. Não há salvamento permanente da conquista entre sessões.

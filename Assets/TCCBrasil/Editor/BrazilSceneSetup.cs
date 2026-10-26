@@ -221,6 +221,8 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             if (animator == null) animator = visual.AddComponent<Animator>();
             animator.runtimeAnimatorController = MakeAnimator(modelPath);
             animator.applyRootMotion = false;
+            // Baixo só o visual em 16 cm para os pés entrarem um pouco na areia.
+            pivot.transform.localPosition = Vector3.down * 0.16f;
             player.visual = pivot.transform;
             player.animator = animator;
             return root;

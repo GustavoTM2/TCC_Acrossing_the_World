@@ -83,7 +83,7 @@ namespace CrossingTheWorld.TCCEgypt
                         Open(guideLines, () => { if (Progress.FinishGuide()) onGuideFinished.Invoke(); });
                     else Open(new[] { new EgyptLine(EgyptDialogueContent.GuideSpeaker, Progress.HasScarab
                         ? "Você voltou com novos aprendizados. Boa viagem, Amira!"
-                        : "Entre na pirâmide e converse com a múmia.") }, null);
+                        : "Vá até a pirâmide e converse com Rami, a múmia que guarda suas histórias. Vou ficar aqui esperando você voltar!") }, null);
                     break;
                 case EgyptPointKind.Entrance:
                     if (Progress.Step == EgyptQuestStep.MeetGuide) Notify("Converse com o guia antes de entrar na pirâmide.");
@@ -93,7 +93,7 @@ namespace CrossingTheWorld.TCCEgypt
                     if (Progress.Step == EgyptQuestStep.ListenToMummy)
                         Open(mummyLines, ReceiveScarab);
                     else if (Progress.HasScarab)
-                        Open(new[] { new EgyptLine(EgyptDialogueContent.MummySpeaker, "Leve consigo o respeito pelas histórias deste lugar.") }, null);
+                        Open(new[] { new EgyptLine(EgyptDialogueContent.MummySpeaker, "Obrigado pela nossa conversa, Amira! Foi um prazer compartilhar as histórias do Egito com você. Cuide bem do Velho Escaravelho. Espero sua visita em uma próxima aventura!") }, null);
                     else Notify("Converse com o guia e entre na pirâmide para continuar.");
                     break;
                 case EgyptPointKind.Exit:

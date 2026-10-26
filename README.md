@@ -1,6 +1,6 @@
 # Crossing The World — TCC
 
-Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito contém diálogos e a conquista de um artefato; o Brasil já possui Lucas explorando a praia em 2,5D.
+Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito contém diálogos e a conquista de um artefato; o Brasil reúne exploração da praia, guia, morador e um desafio de embaixadinhas com o berimbau como prêmio.
 
 ## Abrir e testar
 
@@ -16,18 +16,23 @@ Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito 
 |---|---|
 | A/D ou setas esquerda/direita | Caminhar lateralmente |
 | W/S ou setas cima/baixo | Andar para o fundo ou para a frente |
-| Espaço | Pular |
+| Espaço | Pular no Egito; iniciar e acertar as embaixadinhas no Brasil |
 | E/Enter | Interagir e avançar as falas |
+| Esc | Fechar conversa ou sair do desafio no Brasil |
 
-No Brasil, esta entrega inclui somente caminhada com A/D e W/S ou setas; o desafio com Espaço e as conversas serão implementados depois.
+No Brasil, converse primeiro com o guia. Depois siga pela praia até o morador, leia as instruções e complete dez toques seguidos na faixa verde. A faixa verde muda de posição e largura a cada acerto. Solte Espaço entre os toques. É possível tentar novamente após uma falha.
 
 ## Estado atual do Brasil
 
 - Modelo, textura e caminhada do Lucas enviados pela equipe.
-- Praia original preservada e cena jogável independente com a textura de areia existente.
+- Praia original preservada e cena jogável independente com material URP de terreno, areia e faixa de caminhada nivelada.
 - Controle em 2,5D com gravidade, câmera lateral, colisão com objetos e quatro paredes invisíveis.
 - Faixa de exploração de 50 metros lateralmente, com 8 metros de profundidade.
-- Aviso na tela com o nome da fase e as teclas de movimento.
+- Objetos da praia redimensionados em relação à altura de Lucas e caminho desobstruído.
+- Guia com cinco falas e morador com seis falas do roteiro Horizon Travel.
+- Desafio com contagem regressiva, dez embaixadinhas consecutivas, indicação de tempo, falha e nova tentativa.
+- Berimbau 3D girando na tela de conquista e no canto da tela após continuar.
+- Morador com modelo, textura e esqueleto enviados pela equipe, com movimentos sutis de cabeça e braços. A embaixadinha utiliza um movimento simples dos ossos, pois não foi recebido um clip específico.
 
 A integração e os testes estão descritos em [Docs/BRASIL_EXPLORACAO.md](Docs/BRASIL_EXPLORACAO.md).
 
@@ -58,7 +63,8 @@ O progresso é mantido durante a sessão e não possui salvamento permanente. Co
 ## Próximas entregas planejadas
 
 - Revisar a experiência completa com a equipe e confirmar a execução no Unity da escola.
-- Expandir a fase brasileira com diálogos e um desafio de dez embaixadinhas consecutivas, usando Espaço no momento certo.
+- Refinar a animação de embaixadinha quando o clip definitivo estiver disponível.
+- Integrar o menu principal e o salvamento permanente do progresso.
 
 ## Versionamento
 
