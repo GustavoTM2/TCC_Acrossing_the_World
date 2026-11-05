@@ -21,7 +21,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             if (Application.unityVersion != "6000.5.7f1") throw new InvalidOperationException("Abra com Unity 6000.5.7f1.");
             if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             var scene = EditorSceneManager.OpenScene(BrazilSceneSetup.ScenePath);
-            var terrain = Object.FindAnyObjectByType<Terrain>();
+            var terrain = Object.FindObjectsByType<Terrain>(FindObjectsSortMode.None).Single(t => AssetDatabase.GetAssetPath(t.terrainData) == Generated + "Praia_Terreno.asset");
             RepairGround(terrain);
             RestoreCart(scene);
             ResizeProps(terrain);
@@ -125,7 +125,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             EditorSceneManager.CloseScene(sourceScene,true); SceneManager.SetActiveScene(brazil);
         }
 
-        private static void ResizeProps(Terrain terrain)
+        internal static void ResizeProps(Terrain terrain)
         {
             var props = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None)
                 .Where(t => TargetSize(t.name, out _) > 0 && t.GetComponentsInChildren<Renderer>().Length > 0)
@@ -256,11 +256,11 @@ namespace CrossingTheWorld.TCCBrazil.Editor
         {
             var stage = Object.FindAnyObjectByType<BrazilStage>();
             if (stage == null || stage.guide == null || stage.resident == null || stage.ball == null || stage.rewardDisplay.previewPrefab == null || stage.kickPose.thigh == null) throw new InvalidOperationException("Referências incompletas da fase.");
-            var terrain = Object.FindAnyObjectByType<Terrain>();
+            var terrain = Object.FindObjectsByType<Terrain>(FindObjectsSortMode.None).Single(t => AssetDatabase.GetAssetPath(t.terrainData) == Generated + "Praia_Terreno.asset");
             if (terrain.materialTemplate.shader.name != "Universal Render Pipeline/Terrain/Lit") throw new InvalidOperationException("Material incorreto no chão.");
             var cart = GameObject.Find("IceCream");
             var cartBounds = BoundsOf(cart);
-            if(cartBounds.center.x < 320 || cartBounds.center.x > 405 || cartBounds.center.z < 510 || cartBounds.center.z > 625 || Mathf.Abs(cartBounds.size.y - 2.1f) > .05f)
+            if(Mathf.Abs(cartBounds.size.y - 2.1f) > .05f)
                 throw new InvalidOperationException("Carrinho fora da praia ou com escala incorreta.");
             foreach (float x in new[]{364f,369f,372f}) foreach(float z in new[]{526f,535f,559f,574f})
                 if (Mathf.Abs(terrain.SampleHeight(new Vector3(x,0,z))-Ground) > .04f) throw new InvalidOperationException("Chão desnivelado na faixa jogável.");

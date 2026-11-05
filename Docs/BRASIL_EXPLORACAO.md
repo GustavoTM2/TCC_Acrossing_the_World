@@ -72,3 +72,11 @@ Depois da primeira conversa completa, o guia usa um lembrete curto para encaminh
 O cabeçalho segue o formato PAÍS / LOCAL, como EGITO / AREIAS DO TEMPO e BRASIL / RIO DE JANEIRO. Ao concluir o Brasil, o objetivo mostra “Berimbau conquistado — fase concluída.” O cartão do artefato fica no canto superior direito, alinhado ao cabeçalho, com a imagem girando à esquerda e o rótulo ARTEFATO e o nome Berimbau antigo à direita. Cores, borda dourada, tipografia e posições seguem a referência do Egito. As próximas fases devem seguir o mesmo padrão.
 
 A faixa do minigame é sorteada entre regiões esquerda, central e direita. Região e largura sempre mudam em relação ao toque anterior e ficam estáveis até o acerto ou a falha. A indicação visual e a regra de acerto leem os mesmos limites. Uma pausa de 0,35 s permite observar cada faixa nova; manter Espaço pressionado não gera acertos automáticos.
+
+## Cenário da equipe integrado em 05/11/2026
+
+O mapa recebido em 02/11 foi combinado com os objetos atuais da aventura: Lucas, guia, morador, bola, prêmio, câmera e limites. O relevo e a distribuição dos objetos vêm do mapa da equipe; a faixa do desafio foi nivelada para manter o chão estável. Os objetos de praia foram ajustados à escala dos personagens. A cena jogável mantém o mesmo caminho usado pelo menu.
+
+A referência recebida fica em Assets/TCCBrasil/Source/Brasil_Cenario_Equipe.unity. O comando TCC → Brasil → Integrar cenario da equipe refaz a composição; use somente para reaplicar essa referência, pois substitui o cenário da cena jogável.
+
+Validação em 05/11/2026: cena aberta e renderizada na Unity 6000.5.7f1; referências dos personagens preservadas; guia, dez acertos, berimbau, retorno ao menu e nova partida aprovados no teste integrado.
