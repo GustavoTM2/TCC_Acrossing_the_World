@@ -159,12 +159,9 @@ namespace CrossingTheWorld.TCCEgypt
                     DrawScarab(new Rect(274, 260, 236, 236), stage.ScarabPreview);
                     GUI.Label(new Rect(534, 278, 458, 48), "Velho Escaravelho", heading);
                     GUI.Label(new Rect(534, 342, 450, 132), "Amira aprendeu que ouvir, respeitar e confiar nas pessoas torna a viagem mais rica.", body);
-                    bool wasEnabled = GUI.enabled;
-                    GUI.enabled = false;
-                    Button(new Rect(278, 536, 342, 44), "Voltar para o menu");
-                    GUI.enabled = wasEnabled;
+                    if (Button(new Rect(278, 536, 342, 44), "Voltar para o menu")) stage.ReturnToMenu();
                     if (Button(new Rect(660, 536, 342, 44), "Continuar a fase")) stage.CloseCompletion();
-                    GUI.Label(new Rect(278, 592, 342, 28), "Menu indisponível nesta versão.", small);
+                    GUI.Label(new Rect(278, 592, 724, 28), "Sua conquista foi salva neste computador.", small);
                 }
                 else
                 {

@@ -7,8 +7,10 @@ Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito 
 1. No Unity Hub, adicione a pasta deste repositório como projeto existente.
 2. A versão de desenvolvimento é **Unity 6000.5.7f1**, com **URP 17.5.0**, conforme solicitado pela equipe. A exploração do Brasil foi testada em Play nessa versão; as duas cenas do Egito também passaram pela verificação de referências, chão e lógica de diálogo.
 3. Aguarde a importação dos assets e a compilação dos scripts.
-4. Para o Egito, abra `Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity` e entre em Play.
-5. Para o Brasil, abra `Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity`, ou use **TCC → Brasil → Abrir praia jogavel**, e entre em Play.
+4. Abra `Assets/TCCMenu/Scenes/Menu_Principal.unity` e entre em Play, ou use **TCC → Menu → Jogar pelo menu**.
+5. Escolha Jogar e entre no Egito ou no Brasil. Também é possível abrir diretamente as cenas jogáveis em `Assets/TCCEgito/Scenes` e `Assets/TCCBrasil/Scenes`.
+
+O menu usa W/S ou setas verticais, Enter e mouse. Na seleção de países, use A/D ou setas horizontais; Esc volta. Itália/Japão estão como Em breve. Opções, Créditos e Sair serão implementados depois. Veja [o guia do menu](Docs/MENU_PRINCIPAL.md).
 
 ## Controles
 
@@ -56,15 +58,15 @@ A integração e os testes estão descritos em [Docs/BRASIL_EXPLORACAO.md](Docs/
 - Pilares que ficam translúcidos quando encobrem Amira.
 - Textura de areia aplicada ao terreno exterior.
 - Vegetação com materiais locais em tons secos e terrosos; Amira aproximada da câmera no exterior.
-- Exploração de toda a sala interna e conclusão com **Continuar a fase** e **Voltar para o menu** (ainda desativado).
+- Exploração de toda a sala interna e conclusão com **Continuar a fase** e **Voltar para o menu**.
 
-O progresso é mantido durante a sessão e não possui salvamento permanente. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
+O progresso das missões e as conquistas são salvos localmente com PlayerPrefs. Ao revisitar um destino, o personagem volta ao ponto de entrada, com suas conquistas preservadas. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
 
 ## Próximas entregas planejadas
 
 - Revisar a experiência completa com a equipe e confirmar a execução no Unity da escola.
 - Refinar a animação de embaixadinha quando o clip definitivo estiver disponível.
-- Integrar o menu principal e o salvamento permanente do progresso.
+- Implementar Opções, Créditos e Sair; desenvolver as fases da Itália e do Japão.
 
 ## Versionamento
 

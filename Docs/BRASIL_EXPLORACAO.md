@@ -14,7 +14,7 @@ Abra a cena e entre em Play, ou use **TCC → Brasil → Jogar fase completa**.
 6. Um toque antecipado, atrasado ou ausente encerra a tentativa. Espaço ou o botão correspondente inicia outra tentativa.
 7. Após vencer, o berimbau aparece girando na tela de conquista. Continuar libera a caminhada e mantém o prêmio no canto da tela.
 
-Esc fecha conversas ou cancela o desafio. O botão de menu está identificado como **em breve** e permanece desativado até a integração do menu principal. O progresso desta fase dura apenas a sessão atual de Play; reabrir a cena inicia outra visita.
+Esc fecha conversas ou cancela o desafio. Voltar para o menu retorna à tela inicial após a conquista. A conversa do guia e a conquista do berimbau são salvas localmente com PlayerPrefs; reabrir a cena mantém esse progresso, começando com Lucas no ponto inicial da praia. Uma sequência de embaixadinhas em andamento não é salva.
 
 ## Chão e escala
 
@@ -67,7 +67,7 @@ Modelo e textura enviados integrados ao ponto existente do desafio. Verificados 
 
 O aviso de aproximação do guia e do morador usa o mesmo método de desenho do Egito: caixa centralizada na parte inferior, borda dourada, fundo escuro e texto claro de 19 pontos. O texto segue “E — Conversar com o guia/morador”. A escala acompanha a resolução da janela. Antes da primeira conversa com o guia, o morador mostra apenas o lembrete para procurar o guia.
 
-Depois da primeira conversa completa, o guia usa um lembrete curto para encaminhar Lucas ao desafio. Após a vitória, o guia e o morador têm despedidas próprias; o morador relembra que o berimbau era do avô. Essas conversas voltam à exploração, sem reabrir o prêmio ou reiniciar o campeonato. Cancelar a apresentação inicial mantém as falas completas na próxima interação. O progresso vale durante a sessão atual da fase.
+Depois da primeira conversa completa, o guia usa um lembrete curto para encaminhar Lucas ao desafio. Após a vitória, o guia e o morador têm despedidas próprias; o morador relembra que o berimbau era do avô. Essas conversas voltam à exploração, sem reabrir o prêmio ou reiniciar o campeonato. Cancelar a apresentação inicial mantém as falas completas na próxima interação. O progresso salvo também vale ao retornar pelo menu.
 
 O cabeçalho segue o formato PAÍS / LOCAL, como EGITO / AREIAS DO TEMPO e BRASIL / RIO DE JANEIRO. Ao concluir o Brasil, o objetivo mostra “Berimbau conquistado — fase concluída.” O cartão do artefato fica no canto superior direito, alinhado ao cabeçalho, com a imagem girando à esquerda e o rótulo ARTEFATO e o nome Berimbau antigo à direita. Cores, borda dourada, tipografia e posições seguem a referência do Egito. As próximas fases devem seguir o mesmo padrão.
 

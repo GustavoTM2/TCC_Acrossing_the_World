@@ -9,6 +9,7 @@ namespace CrossingTheWorld.TCCEgypt
         public bool HasScarab => Step == EgyptQuestStep.Complete;
 
         public void Reset() { Step = EgyptQuestStep.MeetGuide; }
+        public void Restore(EgyptQuestStep savedStep) { Step = savedStep; }
         public bool FinishGuide()
         {
             if (Step != EgyptQuestStep.MeetGuide) return false;

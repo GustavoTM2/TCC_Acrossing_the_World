@@ -20,7 +20,7 @@ namespace CrossingTheWorld.TCCEgypt
         private static void ResetSession() { instance = null; }
 
         // Inicio a transição e evito que duas trocas de cena aconteçam ao mesmo tempo.
-        public static void Load(string path, EgyptStage owner)
+        public static void Load(string path, EgyptStage owner, string loadingText = null)
         {
             if (IsBusy) return;
             if (string.IsNullOrWhiteSpace(path) || !Application.CanStreamedLevelBeLoaded(path))
@@ -38,7 +38,7 @@ namespace CrossingTheWorld.TCCEgypt
             instance.PrepareOverlay();
             instance.busy = true;
             instance.canvas.enabled = true;
-            instance.caption.text = path.Contains("Interior") ? "Entrando na pirâmide..." : "Voltando ao deserto...";
+            instance.caption.text = loadingText ?? (path.Contains("Interior") ? "Entrando na pirâmide..." : "Voltando ao deserto...");
             instance.StartCoroutine(instance.ChangeScene(path, owner));
         }
 

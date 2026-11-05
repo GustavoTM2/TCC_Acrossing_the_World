@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using CrossingTheWorld.TCCMenu;
 
 namespace CrossingTheWorld.TCCEgypt
 {
@@ -56,6 +57,7 @@ namespace CrossingTheWorld.TCCEgypt
 
         private void Awake()
         {
+            Progress.Restore(TravelProgress.EgyptStep);
             scarabDisplay = GetComponent<EgyptScarabDisplay>();
             // Permite testar o interior diretamente no Editor sem precisar percorrer o exterior.
             if (interior && Progress.Step == EgyptQuestStep.MeetGuide)
@@ -64,6 +66,7 @@ namespace CrossingTheWorld.TCCEgypt
                 Progress.EnterPyramid();
             }
             else if (interior && Progress.Step == EgyptQuestStep.EnterPyramid) Progress.EnterPyramid();
+            TravelProgress.SaveEgypt(Progress.Step);
             if (scarabVisual != null)
             {
                 scarabScale = scarabVisual.transform.localScale;
@@ -80,7 +83,12 @@ namespace CrossingTheWorld.TCCEgypt
             {
                 case EgyptPointKind.Guide:
                     if (Progress.Step == EgyptQuestStep.MeetGuide)
-                        Open(guideLines, () => { if (Progress.FinishGuide()) onGuideFinished.Invoke(); });
+                        Open(guideLines, () =>
+                        {
+                            if (!Progress.FinishGuide()) return;
+                            TravelProgress.SaveEgypt(Progress.Step);
+                            onGuideFinished.Invoke();
+                        });
                     else Open(new[] { new EgyptLine(EgyptDialogueContent.GuideSpeaker, Progress.HasScarab
                         ? "Você voltou com novos aprendizados. Boa viagem, Amira!"
                         : "Vá até a pirâmide e converse com Rami, a múmia que guarda suas histórias. Vou ficar aqui esperando você voltar!") }, null);
@@ -180,6 +188,7 @@ namespace CrossingTheWorld.TCCEgypt
         private void FinishReceipt()
         {
             if (!Progress.FinishMummy()) return;
+            TravelProgress.SaveEgypt(Progress.Step);
             CompletionIsOpen = true;
             if (scarabVisual != null) scarabVisual.SetActive(false);
             onScarabReceived.Invoke();
@@ -187,6 +196,12 @@ namespace CrossingTheWorld.TCCEgypt
         }
 
         public void CloseCompletion() { CompletionIsOpen = false; }
+        public void ReturnToMenu()
+        {
+            if (IsLoading || IsDeliveringScarab) return;
+            TravelProgress.SaveEgypt(Progress.Step);
+            EgyptSceneTransition.Load(TravelMenu.ScenePath, this, "Voltando ao menu...");
+        }
         public void Notify(string text) { message = text; messageUntil = Time.unscaledTime + 4f; }
 
         private void LoadDestination(string path)

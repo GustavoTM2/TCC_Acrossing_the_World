@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using CrossingTheWorld.TCCEgypt;
+using CrossingTheWorld.TCCMenu;
 using Object = UnityEngine.Object;
 
 namespace CrossingTheWorld.TCCBrazil.Editor
@@ -13,6 +14,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
     public static class BrazilAdventureValidation
     {
         private const string Key = "TCCBrasil.AdventureValidation";
+        private const string TestSave = "CrossingTheWorld.Tests.Brazil.";
         private static BrazilStage stage;
         private static int step, frames;
         private static int lastGameFrame;
@@ -35,6 +37,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
                 }
                 if (state == PlayModeStateChange.EnteredEditMode)
                 {
+                    ClearTestSave();
                     SessionState.SetBool(Key,false);
                     Debug.Log("BRAZIL_ADVENTURE_PLAY_OK");
                     EditorApplication.Exit(0);
@@ -45,13 +48,28 @@ namespace CrossingTheWorld.TCCBrazil.Editor
         public static void Run()
         {
             Require(Application.unityVersion == "6000.5.7f1", "Versão da Unity");
-            TestEgyptConversations();
+            string originalPrefix = TravelProgress.KeyPrefix;
+            try { TravelProgress.KeyPrefix = TestSave; TestEgyptConversations(); }
+            finally { TravelProgress.KeyPrefix = originalPrefix; ClearTestSave(); }
             TestTiming();
             EditorSceneManager.OpenScene(BrazilSceneSetup.ScenePath);
             BrazilAdventureSetup.ValidateScene();
             Directory.CreateDirectory(Output);
             SessionState.SetBool(Key,true);
             EditorApplication.EnterPlaymode();
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void PrepareTestSave()
+        {
+            if (!SessionState.GetBool(Key, false)) return;
+            TravelProgress.KeyPrefix = TestSave;
+            ClearTestSave();
+        }
+        private static void ClearTestSave()
+        {
+            foreach (string key in new[] { "Egypt", "BrazilGuide", "BrazilPrize" }) PlayerPrefs.DeleteKey(TestSave + key);
+            PlayerPrefs.Save();
         }
         public static void BuildAndRun()
         {
@@ -247,6 +265,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             catch(Exception e)
             {
                 ending=true; SessionState.SetBool(Key,false); Debug.LogException(e);
+                ClearTestSave();
                 File.WriteAllText(Path.Combine(Output,"falha.txt"),e.ToString()); EditorApplication.Exit(1);
             }
         }

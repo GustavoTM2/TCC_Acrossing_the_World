@@ -1,5 +1,6 @@
 using UnityEngine;
 using CrossingTheWorld.TCCEgypt;
+using CrossingTheWorld.TCCMenu;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -23,7 +24,7 @@ namespace CrossingTheWorld.TCCBrazil
         public float Countdown { get; private set; }
         public int LineIndex { get; private set; }
         public bool TalkingToGuide { get; private set; }
-        public bool BlocksMovement => State != BrazilState.Exploring;
+        public bool BlocksMovement => State != BrazilState.Exploring || EgyptSceneTransition.IsBusy;
         public BrazilTimingChallenge Challenge { get; } = new BrazilTimingChallenge();
         public int LineCount => dialogueLines == null ? 0 : dialogueLines.GetLength(0);
         public string Speaker => dialogueLines == null ? "" : dialogueLines[LineIndex, 0];
@@ -66,6 +67,8 @@ namespace CrossingTheWorld.TCCBrazil
 
         private void Start()
         {
+            GuideFinished = TravelProgress.BrazilGuide || TravelProgress.BrazilPrize;
+            HasPrize = TravelProgress.BrazilPrize;
             if (followCamera != null)
             {
                 normalOffset = followCamera.offset; normalLook = followCamera.lookOffset;
@@ -91,6 +94,7 @@ namespace CrossingTheWorld.TCCBrazil
 
         private void Update()
         {
+            if (EgyptSceneTransition.IsBusy) return;
             bool escape = false;
 #if ENABLE_INPUT_SYSTEM
             escape = Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
@@ -127,7 +131,11 @@ namespace CrossingTheWorld.TCCBrazil
         {
             if (State != BrazilState.Dialogue) return;
             if (LineIndex + 1 < LineCount) { LineIndex++; return; }
-            if (TalkingToGuide) { GuideFinished = true; State = BrazilState.Exploring; }
+            if (TalkingToGuide)
+            {
+                GuideFinished = true; State = BrazilState.Exploring;
+                TravelProgress.SaveBrazil(GuideFinished, HasPrize);
+            }
             // Se já ganhou, a conversa só termina; não abro o prêmio ou o desafio de novo.
             else State = HasPrize ? BrazilState.Exploring : BrazilState.Ready;
             dialogueLines = null;
@@ -163,6 +171,7 @@ namespace CrossingTheWorld.TCCBrazil
             if (Challenge.Won)
             {
                 if (!HasPrize) { HasPrize = true; AwardCount++; }
+                TravelProgress.SaveBrazil(GuideFinished, HasPrize);
                 State = BrazilState.Reward;
             }
             else { State = BrazilState.Failed; failureAge = 0; }
@@ -178,6 +187,13 @@ namespace CrossingTheWorld.TCCBrazil
                 followCamera.GetComponent<Camera>().fieldOfView = normalFov;
             }
             UpdateBall();
+        }
+
+        public void ReturnToMenu()
+        {
+            if (EgyptSceneTransition.IsBusy) return;
+            TravelProgress.SaveBrazil(GuideFinished, HasPrize);
+            EgyptSceneTransition.Load(TravelMenu.ScenePath, null, "Voltando ao menu...");
         }
 
         private void UpdateBall()

@@ -56,7 +56,7 @@ namespace CrossingTheWorld.TCCBrazil
 
         private void OnGUI()
         {
-            if (stage == null) return;
+            if (stage == null || EgyptSceneTransition.IsBusy) return;
             Prepare();
             Matrix4x4 previous = GUI.matrix;
             float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
@@ -124,9 +124,7 @@ namespace CrossingTheWorld.TCCBrazil
             Text(new Rect(514, 260, 530, 45), "Berimbau antigo", title, Color.white);
             Text(new Rect(514, 322, 520, 160), "O berimbau que animava as rodas de capoeira do avô do morador agora acompanha sua viagem.\n\nMais uma história para levar pelo mundo!", body, Color.white);
             if (Button(new Rect(514, 520, 520, 52), "Continuar na praia")) stage.ContinueExploring();
-            GUI.enabled = false;
-            Button(new Rect(514, 589, 520, 42), "Voltar ao menu · em breve");
-            GUI.enabled = true;
+            if (Button(new Rect(514, 589, 520, 42), "Voltar para o menu")) stage.ReturnToMenu();
         }
         private void DrawSmallPrize()
         {
