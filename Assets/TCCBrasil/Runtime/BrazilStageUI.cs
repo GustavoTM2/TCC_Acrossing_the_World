@@ -65,6 +65,7 @@ namespace CrossingTheWorld.TCCBrazil
             Text(new Rect(46, 35, 590, 28), "BRASIL  /  RIO DE JANEIRO", phaseTitle, gold);
             Text(new Rect(46, 72, 590, 42), stage.Objective, objective, Color.white);
             if (stage.HasPrize && stage.State != BrazilState.Reward) DrawSmallPrize();
+            if (interactionUI.DrawMenuButton()) stage.ReturnToMenu();
             switch (stage.State)
             {
                 case BrazilState.Exploring:

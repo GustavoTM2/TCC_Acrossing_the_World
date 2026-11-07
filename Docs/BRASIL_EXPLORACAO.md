@@ -1,6 +1,6 @@
 # Brasil — praia e desafio de embaixadinhas
 
-Desenvolvimento em **Unity 6000.5.7f1**, com URP 17.5.0. A cena jogável é `Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity`. A cena original `Assets/Scenes/brasil.unity` foi preservada.
+Desenvolvimento em **Unity 6000.5.7f1**, com URP 17.5.0. A cena jogável é `Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity`. A única cena do Brasil é a versão atualizada; a cena antiga foi removida.
 
 ## Jogar
 
@@ -22,7 +22,7 @@ O Terrain da cena jogável estava associado a um material de água. Agora usa `A
 
 `Praia_Alturas_Originais.asset` preserva os dados anteriores para que a preparação seja repetível. As alterações são aplicadas à cópia `Praia_Terreno.asset`, sem editar o terreno da cena original.
 
-Os objetos são dimensionados em relação ao Lucas de 1,8 m: guarda-sóis com cerca de 2,8 m, cadeiras com 1,85 m, prancha com 1,8 m e torre de salva-vidas com 5,2 m. Os objetos são apoiados no chão e afastados da faixa central de caminhada. Quatro paredes invisíveis continuam delimitando aproximadamente 50 m de extensão por 8 m de profundidade.
+Os objetos são dimensionados em relação ao Lucas de 1,8 m: guarda-sóis com cerca de 2,8 m, cadeiras com 1,85 m, prancha com 1,8 m e torre de salva-vidas com 5,2 m. Os objetos são apoiados no chão e afastados da faixa central de caminhada. Quatro paredes invisíveis continuam delimitando aproximadamente 46 m de extensão por 8,5 m de profundidade.
 
 ## Componentes principais
 
@@ -77,6 +77,28 @@ A faixa do minigame é sorteada entre regiões esquerda, central e direita. Regi
 
 O mapa recebido em 02/11 foi combinado com os objetos atuais da aventura: Lucas, guia, morador, bola, prêmio, câmera e limites. O relevo e a distribuição dos objetos vêm do mapa da equipe; a faixa do desafio foi nivelada para manter o chão estável. Os objetos de praia foram ajustados à escala dos personagens. A cena jogável mantém o mesmo caminho usado pelo menu.
 
-A referência recebida fica em Assets/TCCBrasil/Source/Brasil_Cenario_Equipe.unity. O comando TCC → Brasil → Integrar cenario da equipe refaz a composição; use somente para reaplicar essa referência, pois substitui o cenário da cena jogável.
+A cena de referência duplicada e o comando de reintegração foram removidos em 06/11/2026. O cenário atualizado já está salvo na cena jogável.
 
 Validação em 05/11/2026: cena aberta e renderizada na Unity 6000.5.7f1; referências dos personagens preservadas; guia, dez acertos, berimbau, retorno ao menu e nova partida aprovados no teste integrado.
+
+## Cena única e embaixadinhas — 06/11/2026
+
+Foi mantida apenas Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity. A câmera, os limites, o movimento e o cenário dessa cena foram preservados. O menu carrega diretamente essa versão.
+
+BrazilKickPose agora prepara a perna antes de a bola chegar, posiciona a bola sobre o pé durante a faixa de acerto e inicia a subida no contato. O movimento utiliza o tempo do desafio, incluindo a preparação da próxima faixa. A apresentação ocorre no LateUpdate, depois de atualizar os ossos; não há mais dois cálculos concorrentes para a posição da bola. Ao terminar ou cancelar, a perna retorna à postura de repouso e o Animator é reativado.
+
+Validação em 06/11/2026: contato no início/meio/fim das faixas sem salto ao acertar; dez acertos, prêmio único e restauração do Animator. O teste completo também aprovou diálogos, tentativas, apoio no chão, movimento nos dois eixos e as quatro paredes invisíveis.
+
+
+## Enquadramento da praia e Corcovado — 06/11/2026
+
+A câmera acompanha um percurso diagonal à praia, com mar à esquerda, guarda-sóis distribuídos ao redor e o relevo do Corcovado ao fundo. Lucas, o guia, o morador e a bola foram reposicionados nessa faixa. A/D seguem a horizontal vista na tela; W/S controlam a profundidade limitada pelas quatro paredes invisíveis. A câmera aproxima durante as embaixadinhas mantendo a mesma direção e volta ao enquadramento de exploração ao sair.
+
+BrazilBeachFraming configura o percurso, nivela sua faixa com bordas suaves e apoia os objetos na areia. O comando TCC → Brasil → Ajustar visão da praia e Corcovado reaplica esse enquadramento. A preparação completa também usa essa configuração. O ponto de repouso da bola e a direção do chute acompanham a nova orientação do jogador.
+
+A simplificação máxima do Terrain da praia foi ajustada para zero, com erro de pixel 1, para evitar que a malha visível encubra os pés e a bola apesar da colisão correta. Conferidos em Play os enquadramentos de chegada, morador e desafio; a fase permanece aberta para teste manual.
+
+
+## Praia plana — 06/11/2026
+
+As elevações de areia acima da faixa jogável foram niveladas no Terrain da praia, inclusive no fundo do cenário. O fundo do mar e o Terrain separado do Corcovado foram preservados. Guarda-sóis, cadeiras, carrinhos e torres foram novamente apoiados na superfície atualizada. Mantidos o enquadramento próximo e os limites do percurso. Conferência visual em Play realizada na chegada e junto ao desafio.

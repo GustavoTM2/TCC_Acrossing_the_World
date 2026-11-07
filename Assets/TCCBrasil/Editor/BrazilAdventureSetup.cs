@@ -23,7 +23,6 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             var scene = EditorSceneManager.OpenScene(BrazilSceneSetup.ScenePath);
             var terrain = Object.FindObjectsByType<Terrain>(FindObjectsSortMode.None).Single(t => AssetDatabase.GetAssetPath(t.terrainData) == Generated + "Praia_Terreno.asset");
             RepairGround(terrain);
-            RestoreCart(scene);
             ResizeProps(terrain);
             var old = GameObject.Find("TCC_Brasil_Aventura");
             if (old != null) Object.DestroyImmediate(old);
@@ -59,6 +58,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             stage.kickPose.stage = stage; stage.kickPose.animator = stage.player.animator; stage.kickPose.visual = stage.player.visual;
             stage.kickPose.thigh = stage.player.visual.GetComponentsInChildren<Transform>().Single(t => t.name == "coxa.r");
             stage.kickPose.shin = stage.player.visual.GetComponentsInChildren<Transform>().Single(t => t.name == "perna.r");
+            BrazilBeachFraming.Configure();
             Physics.SyncTransforms();
             EditorSceneManager.MarkSceneDirty(scene); EditorSceneManager.SaveScene(scene);
             AssetDatabase.SaveAssets();
@@ -109,20 +109,6 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             if (name.StartsWith("Cream")) { height = true; return .18f; }
             if (name.StartsWith("Duck")) { height = true; return .55f; }
             return 0;
-        }
-
-        private static void RestoreCart(Scene brazil)
-        {
-            // As rodas pertencem ao carrinho e precisam receber a mesma escala que a carroceria.
-            foreach (var part in Object.FindObjectsByType<Transform>(FindObjectsSortMode.None).Where(t => t.name.StartsWith("IceCream")).ToArray())
-                if (part != null) Object.DestroyImmediate(part.gameObject);
-            var sourceScene = EditorSceneManager.OpenScene(BrazilSceneSetup.SourcePath,OpenSceneMode.Additive);
-            var source = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None).Single(t => t.gameObject.scene == sourceScene && t.name == "IceCream");
-            var cart = Object.Instantiate(source.gameObject); cart.name = "IceCream";
-            cart.transform.SetPositionAndRotation(source.position,source.rotation);
-            cart.transform.localScale = source.lossyScale;
-            SceneManager.MoveGameObjectToScene(cart,brazil);
-            EditorSceneManager.CloseScene(sourceScene,true); SceneManager.SetActiveScene(brazil);
         }
 
         internal static void ResizeProps(Terrain terrain)
@@ -262,8 +248,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             var cartBounds = BoundsOf(cart);
             if(Mathf.Abs(cartBounds.size.y - 2.1f) > .05f)
                 throw new InvalidOperationException("Carrinho fora da praia ou com escala incorreta.");
-            foreach (float x in new[]{364f,369f,372f}) foreach(float z in new[]{526f,535f,559f,574f})
-                if (Mathf.Abs(terrain.SampleHeight(new Vector3(x,0,z))-Ground) > .04f) throw new InvalidOperationException("Chão desnivelado na faixa jogável.");
+            BrazilBeachFraming.ValidateWalkway();
             foreach (var script in Object.FindObjectsByType<Transform>(FindObjectsSortMode.None))
                 if (GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(script.gameObject) > 0) throw new InvalidOperationException("Script ausente: " + script.name);
         }

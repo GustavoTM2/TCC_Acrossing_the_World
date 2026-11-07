@@ -193,6 +193,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
                 {
                     case 0:
                         Require(stage.player.GetComponent<CharacterController>().isGrounded,"Lucas apoiado no chão");
+                        Require(stage.InteractionPrompt.Contains("guia"), "Guia acessível na chegada");
                         ReportFeet();
                         stage.OpenDialogue(true);
                         stage.ContinueExploring();
@@ -211,6 +212,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
                         stage.AdvanceDialogue();
                         Require(stage.State == BrazilState.Exploring && !stage.HasPrize, "Lembrete termina sem entregar prêmio");
                         stage.player.PlaceAt(stage.challengeAnchor.position);
+                        Require(stage.InteractionPrompt.Contains("morador"), "Morador acessível junto à bola");
                         stage.OpenDialogue(false);
                         Require(stage.LineCount==6,"Seis falas do morador");
                         break;
@@ -250,7 +252,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
                         Require(!stage.BlocksMovement && stage.player.animator.enabled,"Caminhada e animação liberadas");
                         TestBrazilFarewells();
                         TestMovement();
-                        File.WriteAllText(Path.Combine(Output,"resultado.txt"),"APROVADO — Unity " + Application.unityVersion + "\nRegras: toque cedo/tarde, ausência de toque, repetição, dez acertos.\nFluxo: cinco falas do guia, seis do morador, instruções, falha, nova tentativa, prêmio único, continuar.\nFísica: apoio no chão, movimento lateral/profundidade e quatro paredes.\nApresentação: oito capturas em Play e imagem 3D do berimbau.\n");
+                        File.WriteAllText(Path.Combine(Output,"resultado.txt"),"APROVADO — Unity " + Application.unityVersion + "\nRegras: toque cedo/tarde, ausência de toque, repetição, dez acertos.\nFluxo: cinco falas do guia, seis do morador, instruções, falha, nova tentativa, prêmio único, continuar.\nFísica: apoio no chão, movimento lateral/profundidade e quatro paredes.\nApresentação: textura 3D do berimbau validada; capturas de tela dependem de uma Game View visível.\n");
                         break;
                     case 9:
                         stage.player.PlaceAt(stage.guide.position + Vector3.right);
@@ -292,7 +294,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
                 foreach(var vertex in mesh.vertices) minimum=Mathf.Min(minimum,renderer.transform.TransformPoint(vertex).y);
                 Object.DestroyImmediate(mesh);
             }
-            var terrain=Object.FindAnyObjectByType<Terrain>();
+            var terrain=BrazilBeachFraming.BeachTerrain();
             File.WriteAllText(Path.Combine(Output,"apoio-lucas.txt"),"Menor vértice: " + minimum + "\nChão: " + terrain.SampleHeight(stage.player.transform.position) + "\nRaiz: " + stage.player.transform.position);
         }
         private static void Capture(string name)

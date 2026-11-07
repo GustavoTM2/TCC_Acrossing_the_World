@@ -8,7 +8,7 @@ namespace CrossingTheWorld.TCCEgypt
         private readonly Color gold = new Color(0.86f, 0.7f, 0.4f);
         private readonly Color ink = new Color(0.07f, 0.11f, 0.14f, 0.97f);
         private Texture2D rounded;
-        private GUIStyle panel, small, body, speaker, heading, button;
+        private GUIStyle panel, small, body, speaker, heading, button, menuButton;
 
         // Preparo os estilos de texto, botões e o fundo arredondado das caixas.
         private void Prepare()
@@ -34,6 +34,9 @@ namespace CrossingTheWorld.TCCEgypt
             foreach (GUIStyleState state in new[] { button.normal, button.hover, button.active, button.focused })
             { state.background = rounded; state.textColor = new Color(0.08f, 0.12f, 0.14f); }
             button.onNormal.background = rounded;
+            menuButton = new GUIStyle(button);
+            menuButton.normal.textColor = gold;
+            menuButton.focused.textColor = gold;
         }
 
         private static GUIStyle Text(int size, Color color, bool bold = false)
@@ -72,6 +75,27 @@ namespace CrossingTheWorld.TCCEgypt
             bool pressed = GUI.Button(rect, label, button);
             GUI.backgroundColor = Color.white;
             return pressed;
+        }
+
+        // O mesmo botão permite sair das duas fases sem precisar conquistar o artefato.
+        public bool DrawMenuButton(bool available = true)
+        {
+            Prepare();
+            Color previousColor = GUI.color, previousBackground = GUI.backgroundColor;
+            bool previousEnabled = GUI.enabled;
+            var area = new Rect(708, 26, 218, 42);
+            GUI.enabled = previousEnabled && available;
+            GUI.color = Color.white;
+            GUI.backgroundColor = Color.white;
+            Fill(area, new Color(gold.r, gold.g, gold.b, .55f));
+            bool hover = available && area.Contains(Event.current.mousePosition);
+            GUI.backgroundColor = hover ? gold : new Color(ink.r, ink.g, ink.b, .82f);
+            bool clicked = GUI.Button(new Rect(area.x + 1, area.y + 1, area.width - 2, area.height - 2),
+                "Voltar ao menu", menuButton);
+            GUI.enabled = previousEnabled;
+            GUI.color = previousColor;
+            GUI.backgroundColor = previousBackground;
+            return clicked;
         }
 
         // Egito e Brasil usam a mesma caixa para os avisos de interação.
@@ -127,6 +151,8 @@ namespace CrossingTheWorld.TCCEgypt
                     GUI.Label(new Rect(1074, 48, 170, 28), "ARTEFATO", small);
                     GUI.Label(new Rect(1074, 75, 170, 55), "Velho Escaravelho", new GUIStyle(speaker) { fontSize = 19 });
                 }
+
+                if (DrawMenuButton(!stage.IsDeliveringScarab)) stage.ReturnToMenu();
 
                 // Na conversa, mostro quem está falando, o texto e o botão para continuar.
                 if (stage.DialogueIsOpen && line != null)

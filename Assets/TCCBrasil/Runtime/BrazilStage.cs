@@ -32,6 +32,8 @@ namespace CrossingTheWorld.TCCBrazil
         public string Objective => HasPrize ? "Berimbau conquistado — fase concluída." :
             State == BrazilState.Playing || State == BrazilState.Countdown ? "Complete 10 embaixadinhas. Aperte Espaço na faixa verde." :
             !GuideFinished ? "Converse com o guia da Horizon Travel." : "Siga pela praia e converse com o morador sobre o desafio.";
+        // A bola em repouso acompanha a orientação da área de embaixadinhas.
+        public Vector3 BallRestPosition => challengeAnchor.position + player.horizontalAxis * .55f - player.depthAxis * .12f + Vector3.up * .13f;
         private Vector3 normalOffset, normalLook;
         private float normalFov, failureAge;
         private bool cameraPrepared;
@@ -146,12 +148,12 @@ namespace CrossingTheWorld.TCCBrazil
             if (State != BrazilState.Ready && State != BrazilState.Failed) return;
             Challenge.Begin(); Countdown = 3; State = BrazilState.Countdown;
             player.PlaceAt(challengeAnchor.position);
-            player.visual.rotation = Quaternion.LookRotation(Vector3.forward) * Quaternion.Euler(0, player.visualYawOffset, 0);
+            player.visual.rotation = Quaternion.LookRotation(player.horizontalAxis) * Quaternion.Euler(0, player.visualYawOffset, 0);
             if (followCamera != null)
             {
-                followCamera.offset = new Vector3(6.5f, 2.8f, 0);
-                followCamera.lookOffset = new Vector3(0, 1.1f, .45f);
-                followCamera.GetComponent<Camera>().fieldOfView = 50;
+                followCamera.offset = new Vector3(6, 2.7f, -6.42f);
+                followCamera.lookOffset = Vector3.up * 1.1f + player.horizontalAxis * .45f;
+                followCamera.GetComponent<Camera>().fieldOfView = 55;
             }
         }
 
@@ -199,11 +201,9 @@ namespace CrossingTheWorld.TCCBrazil
         private void UpdateBall()
         {
             if (ball == null || challengeAnchor == null) return;
-            bool playing = State == BrazilState.Playing;
-            float phase = Challenge.Phase;
-            float height = playing ? .28f + 1.35f * Mathf.Sin(Mathf.Clamp01(phase / Mathf.Max(.01f,Challenge.WindowCenter)) * Mathf.PI) : .08f;
-            ball.position = challengeAnchor.position + new Vector3(.12f, height, .55f);
-            if (playing) ball.Rotate(110 * Time.deltaTime, 35 * Time.deltaTime, 0, Space.World);
+            // A apresentação acontece no LateUpdate, depois de posicionar os ossos.
+            if (kickPose != null) return;
+            ball.position = BallRestPosition;
         }
     }
 }
