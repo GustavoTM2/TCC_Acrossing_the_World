@@ -61,3 +61,14 @@ Os testes usam as chaves `CrossingTheWorld.Tests.Menu.*` e as apagam ao terminar
 ## Atualização de 04/11/2026
 
 Validação de retorno atualizada para exigir uma partida nova, conforme solicitado. Em 05/11/2026, o teste integrado passou na Unity 6000.5.7f1: ações de seleção, destaque, viagens, conclusão de Brasil e Egito e reinício ao voltar ao menu. O teste aciona os métodos do menu diretamente; não simula o teclado físico.
+
+## Exploração liberada em 05/11/2026
+
+Itália e Japão agora abrem cenas de exploração pelo menu: Sofia nas pontes e Kenji no templo. As janelas exibem EXPLORAR e imagens dos cenários. Esc ou Voltar ao menu retorna à escolha de países.
+
+
+## Retorno durante as fases — 06/11/2026
+
+Brasil e Egito, tanto no exterior quanto dentro da pirâmide, exibem o mesmo botão Voltar ao menu no alto da tela. Ele tem fundo escuro semitransparente, contorno e texto dourados e destaque ao passar o mouse. O botão usa o retorno já existente com transição preta; o menu reinicia o progresso para permitir uma nova partida. Durante a breve entrega do escaravelho, o botão fica desabilitado até a animação terminar.
+
+Verificação integrada aprovada na Unity 6000.5.7f1: retorno do Brasil e do Egito, revisita sem conquistas e transições. Interface conferida em capturas do jogo.

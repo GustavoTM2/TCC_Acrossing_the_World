@@ -46,10 +46,17 @@ namespace CrossingTheWorld.TCCMenu.Editor
                 {
                     SessionState.SetBool(Key, false);
                     Debug.Log("TRAVEL_MENU_VALIDATION_OK");
-                    EditorApplication.Exit(0);
+                    if (SessionState.GetBool(Key + ".LeaveOpen", false))
+                    {
+                        SessionState.SetBool(Key + ".LeaveOpen", false);
+                        EditorApplication.delayCall += CrossingTheWorld.TCCBrazil.Editor.BrazilPlayPreview.OpenForUser;
+                    }
+                    else EditorApplication.Exit(0);
                 }
             };
         }
+
+        public static void RunAndLeaveOpen() { SessionState.SetBool(Key + ".LeaveOpen", true); Run(); }
 
         public static void BuildAndRun() { TravelMenuSetup.Build(); Run(); }
         public static void Run()
@@ -133,10 +140,8 @@ namespace CrossingTheWorld.TCCMenu.Editor
 #endif
                         menu.cards[2].GetComponent<MenuPointer>().OnPointerEnter(new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current));
                         Require(menu.CountryIndex == 2, "Mouse muda o destaque do país");
-                        menu.Select(2, true); menu.ConfirmSelection();
-                        Require(!EgyptSceneTransition.IsBusy && menu.ChoosingCountry, "Itália em breve não carrega cena");
-                        menu.Select(3, true); menu.ConfirmSelection();
-                        Require(!EgyptSceneTransition.IsBusy, "Japão em breve não carrega cena");
+                        Require(Application.CanStreamedLevelBeLoaded("Assets/TCCExploracao/Scenes/Italia_Exploracao.unity"), "Exploração da Itália disponível");
+                        Require(Application.CanStreamedLevelBeLoaded("Assets/TCCExploracao/Scenes/Japao_Exploracao.unity"), "Exploração do Japão disponível");
                         menu.Select(1, true);
                         break;
                     case 3:
@@ -161,7 +166,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
                     case 6:
                         Require(menu != null, "Retorno do Brasil ao menu");
                         menu.ShowDestinations();
-                        Require(menu.countryStatus[1].text == "DISPONÍVEL", "Brasil reiniciado ao voltar ao menu");
+                        Require(menu.countryStatus[1].text == "" && !TravelProgress.BrazilGuide && !TravelProgress.BrazilPrize, "Brasil reiniciado ao voltar ao menu");
                         menu.ClickOption(1, true);
                         break;
                     case 7:
@@ -192,7 +197,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
                     case 12:
                         Require(menu != null, "Retorno do Egito ao menu");
                         menu.ShowDestinations();
-                        Require(menu.countryStatus[0].text == "DISPONÍVEL" && menu.countryStatus[1].text == "DISPONÍVEL", "Destinos reiniciados");
+                        Require(menu.countryStatus[0].text == "" && TravelProgress.EgyptStep == EgyptQuestStep.MeetGuide && menu.countryStatus[1].text == "" && !TravelProgress.BrazilGuide && !TravelProgress.BrazilPrize, "Destinos reiniciados");
                         break;
                     case 13:
                         EgyptStage.Progress.Reset();

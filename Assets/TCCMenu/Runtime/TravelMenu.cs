@@ -89,10 +89,10 @@ namespace CrossingTheWorld.TCCMenu
                 else ShowNotice("Esta opção será adicionada em breve.");
                 return;
             }
-            if (CountryIndex >= 2) { ShowNotice("Este destino estará disponível em breve."); return; }
-            string path = CountryIndex == 0 ? EgyptScene : BrazilScene;
+            string[] scenes = { EgyptScene, BrazilScene, "Assets/TCCExploracao/Scenes/Italia_Exploracao.unity", "Assets/TCCExploracao/Scenes/Japao_Exploracao.unity" };
+            string path = scenes[CountryIndex];
             if (!Application.CanStreamedLevelBeLoaded(path)) { ShowNotice("Não foi possível abrir este destino."); return; }
-            EgyptSceneTransition.Load(path, null, CountryIndex == 0 ? "Viajando para o Egito..." : "Viajando para o Brasil...");
+            EgyptSceneTransition.Load(path, null, "Viajando para " + new[] { "o Egito", "o Brasil", "a Itália", "o Japão" }[CountryIndex] + "...");
         }
 
         // O clique e o teclado usam a mesma ação para não terem comportamentos diferentes.
@@ -117,8 +117,8 @@ namespace CrossingTheWorld.TCCMenu
             ChoosingCountry = true;
             mainPage.SetActive(false); destinationsPage.SetActive(true);
             notice.text = "";
-            countryStatus[0].text = TravelProgress.EgyptStep == EgyptQuestStep.Complete ? "CONCLUÍDO" : "DISPONÍVEL";
-            countryStatus[1].text = TravelProgress.BrazilPrize ? "CONCLUÍDO" : "DISPONÍVEL";
+            countryStatus[0].text = TravelProgress.EgyptStep == EgyptQuestStep.Complete ? "CONCLUÍDO" : "";
+            countryStatus[1].text = TravelProgress.BrazilPrize ? "CONCLUÍDO" : "";
             UpdateSelection();
         }
 

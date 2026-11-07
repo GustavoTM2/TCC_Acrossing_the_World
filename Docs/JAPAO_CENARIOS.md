@@ -9,3 +9,7 @@ Esta entrega integra os mapas. Ainda não há personagem controlável, diálogos
 As pastas Japao, BuddhaHall e YughuesFreeGroundMaterials acompanham o material enviado pela equipe.
 
 Verificação em 05/11/2026: ambos os mapas foram abertos e renderizados na Unity 6000.5.7f1. Exterior com construções e piso de pedra; interior com colunas, lanternas e estátuas.
+
+## Atualização — exploração com Kenji
+
+A cena Assets/TCCExploracao/Scenes/Japao_Exploracao.unity acrescenta Kenji, caminhada, câmera e limites ao mapa exterior. Ela está acessível pelo menu. A cena original e o interior continuam preservados; diálogos e desafios permanecem para outra etapa.

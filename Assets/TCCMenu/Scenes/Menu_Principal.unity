@@ -264,7 +264,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Em desenvolvimento
+  m_Text: Pontes
 --- !u!222 &13829911
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -502,7 +502,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EM BREVE
+  m_Text: EXPLORAR
 --- !u!1 &84747568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,7 +1413,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Em desenvolvimento
+  m_Text: Templo
 --- !u!222 &424867373
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2289,20 +2289,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0.64, g: 0.68, b: 0.68, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 74aca4570a1e60c4c805254f7c829cdf, type: 3}
+  m_Texture: {fileID: 2800000, guid: 5bf5a2023b86a6f458d179a9faac3178, type: 3}
   m_UVRect:
     serializedVersion: 2
-    x: 0.81
-    y: 0.57
-    width: 0.18
-    height: 0.32
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &745868293
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3400,7 +3400,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "DISPON\xCDVEL"
+  m_Text: ""
 --- !u!114 &858203047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3764,7 +3764,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "DISPON\xCDVEL"
+  m_Text: ""
 --- !u!1 &1216271398
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,7 +4051,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EM BREVE
+  m_Text: EXPLORAR
 --- !u!1 &1270358137
 GameObject:
   m_ObjectHideFlags: 0
@@ -4187,7 +4187,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 42
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -4900,7 +4900,7 @@ MonoBehaviour:
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 44
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -4958,20 +4958,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
-  m_Color: {r: 0.64, g: 0.68, b: 0.68, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 74aca4570a1e60c4c805254f7c829cdf, type: 3}
+  m_Texture: {fileID: 2800000, guid: 4f616a699805ce249a78fe59a63f0b18, type: 3}
   m_UVRect:
     serializedVersion: 2
-    x: 0.54
-    y: 0.63
-    width: 0.17
-    height: 0.3
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &1683500042
 CanvasRenderer:
   m_ObjectHideFlags: 0

@@ -93,7 +93,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
             menu.cards = new RectTransform[4]; menu.cardBorders = new Image[4];
             menu.countryLabels = new Text[4]; menu.countryStatus = new Text[4];
             string[] names = { "EGITO", "BRASIL", "ITÁLIA", "JAPÃO" };
-            string[] locations = { "Areias do Tempo", "Rio de Janeiro", "Em desenvolvimento", "Em desenvolvimento" };
+            string[] locations = { "Areias do Tempo", "Rio de Janeiro", "Pontes", "Templo" };
             for (int i = 0; i < 4; i++)
             {
                 RectTransform card = Rect(names[i], destinations, 100 + i * 370, 310, 340, 420);
@@ -103,15 +103,12 @@ namespace CrossingTheWorld.TCCMenu.Editor
                 menu.cards[i] = card;
                 menu.cardBorders[i] = Box("Borda", card, 0, 0, 340, 420, Gold);
                 Box("Fundo", card, 3, 3, 334, 414, new Color(.035f, .065f, .08f));
-                Texture2D preview = i < 2 ? AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Art/" + (i == 0 ? "Egito.png" : "Brasil.png")) : background;
+                Texture2D preview = i < 2 ? AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Art/" + (i == 0 ? "Egito.png" : "Brasil.png")) : AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCExploracao/Generated/" + (i == 2 ? "Italia" : "Japao") + "_Previa.png");
                 RawImage picture = Picture("Previa", card, 10, 10, 320, 255, preview);
-                // Os destinos ainda não prontos usam ilustrações provisórias do mapa, identificadas como Em breve.
-                picture.uvRect = i == 2 ? new Rect(.54f, .63f, .17f, .3f)
-                    : i == 3 ? new Rect(.81f, .57f, .18f, .32f) : Crop(preview, 320f / 255f);
-                if (i >= 2) picture.color = new Color(.64f, .68f, .68f);
+                picture.uvRect = Crop(preview, 320f / 255f);
                 menu.countryLabels[i] = Label("Pais", card, 10, 285, 320, 48, names[i], serif, 33, Cream);
                 Label("Local", card, 10, 335, 320, 30, locations[i], body, 20, Cream);
-                menu.countryStatus[i] = Label("Estado", card, 10, 380, 320, 24, i < 2 ? "DISPONÍVEL" : "EM BREVE", body, 16, i < 2 ? Gold : new Color(.65f, .67f, .66f));
+                menu.countryStatus[i] = Label("Estado", card, 10, 380, 320, 24, i < 2 ? "" : "EXPLORAR", body, 16, i < 2 ? Gold : new Color(.65f, .67f, .66f));
                 MakeButton(card, menu, i, true);
             }
             var back = Rect("Voltar", destinations, 100, 818, 180, 48);
