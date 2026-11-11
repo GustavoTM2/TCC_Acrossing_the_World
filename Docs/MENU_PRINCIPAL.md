@@ -1,14 +1,14 @@
-# Menu principal — primeira versão
+# Menu principal — funcionamento e histórico
 
 Unity usada: **6000.5.7f1**. Abra `Assets/TCCMenu/Scenes/Menu_Principal.unity` e aperte Play, ou use **TCC → Menu → Jogar pelo menu**. A cena é a primeira da lista de cenas do projeto. A cena antiga `Assets/Scenes/menu.unity` foi preservada.
 
-## O que foi combinado
+## Funcionamento atual
 
 - Fundo parado baseado na imagem enviada pela equipe, sem pulsação.
 - Jogar, Opções, Créditos e Sair. A opção selecionada ganha texto maior, cor dourada e uma bússola ao lado.
 - Setas para cima/baixo ou W/S selecionam; Enter confirma. O mouse também seleciona e clica.
 - Jogar abre quatro janelas lado a lado. Setas para esquerda/direita ou A/D escolhem o país; Enter viaja; Esc volta.
-- Egito e Brasil podem ser escolhidos em qualquer ordem. Itália e Japão ficam como Em breve.
+- Egito e Brasil podem ser escolhidos em qualquer ordem. Itália e Japão abrem cenas de exploração, com indicação EXPLORAR.
 - Opções, Créditos e Sair ainda não executam suas funções; apenas mostram um aviso breve.
 - As telas de conquista das duas fases agora possuem Voltar para o menu funcional.
 
@@ -37,7 +37,7 @@ O progresso é mantido apenas durante a viagem, inclusive na passagem entre exte
 
 - `Assets/TCCMenu/Art/Menu_Fundo.png`: fundo preparado a partir da imagem enviada. Os textos dos botões ficam separados na Unity.
 - `Assets/TCCMenu/Art/Bussola.png`: bússola com transparência para acompanhar a seleção.
-- `Assets/TCCMenu/Art/Egito.png` e `Brasil.png`: capturas dos cenários do projeto. As janelas Itália/Japão usam recortes ilustrativos do mapa como prévias provisórias, com o aviso Em breve; não representam fases finalizadas.
+- `Assets/TCCMenu/Art/Egito.png` e `Brasil.png`: capturas dos cenários do projeto. As janelas Itália/Japão usam imagens dos cenários e a indicação EXPLORAR, conforme a atualização de 05/11/2026.
 - Botões usam [Cinzel, do repositório Google Fonts](https://github.com/google/fonts/tree/main/ofl/cinzel). A licença está em `Assets/TCCMenu/Fonts/OFL.txt`. Os textos auxiliares usam a Liberation Sans já presente no projeto.
 
 As duas artes preparadas foram editadas com a ferramenta integrada image_gen. Prompts utilizados:
@@ -52,7 +52,11 @@ As duas artes preparadas foram editadas com a ferramenta integrada image_gen. Pr
 
 Esta entrega é voltada ao Play no Editor. A pendência anterior das configurações URP para exportar o executável continua documentada em `EGITO_AJUSTES_VISUAIS.md`.
 
-## Validação em 26/10/2026
+## Histórico de validação
+
+Os registros abaixo descrevem verificações anteriores, não testes executados nesta revisão documental. O comportamento atual é resumido no início deste guia.
+
+### Validação em 26/10/2026
 
 O teste em Play na Unity 6000.5.7f1 passou com W/S, A/D, seta para baixo, Enter e Esc simulados no Input System; seleção circular; destaque por mouse; cliques dos botões; textos selecionados cabendo na largura; destinos Em breve sem carga; viagem ao Brasil antes do Egito; conclusão e retorno de ambas as fases; e revisita sem entrega duplicada. Sete capturas foram conferidas, incluindo tela inicial, seleção de Opções, países e as duas conquistas.
 
@@ -64,7 +68,7 @@ Validação de retorno atualizada para exigir uma partida nova, conforme solicit
 
 ## Exploração liberada em 05/11/2026
 
-Itália e Japão agora abrem cenas de exploração pelo menu: Sofia nas pontes e Kenji no templo. As janelas exibem EXPLORAR e imagens dos cenários. Esc ou Voltar ao menu retorna à escolha de países.
+Itália e Japão agora abrem cenas de exploração pelo menu: Sofia nas pontes e Kenji no templo. As janelas exibem EXPLORAR e imagens dos cenários. Esc ou Voltar ao menu carrega o menu principal; selecione Jogar para abrir novamente a escolha de países.
 
 
 ## Retorno durante as fases — 06/11/2026
@@ -72,3 +76,4 @@ Itália e Japão agora abrem cenas de exploração pelo menu: Sofia nas pontes e
 Brasil e Egito, tanto no exterior quanto dentro da pirâmide, exibem o mesmo botão Voltar ao menu no alto da tela. Ele tem fundo escuro semitransparente, contorno e texto dourados e destaque ao passar o mouse. O botão usa o retorno já existente com transição preta; o menu reinicia o progresso para permitir uma nova partida. Durante a breve entrega do escaravelho, o botão fica desabilitado até a animação terminar.
 
 Verificação integrada aprovada na Unity 6000.5.7f1: retorno do Brasil e do Egito, revisita sem conquistas e transições. Interface conferida em capturas do jogo.
+
