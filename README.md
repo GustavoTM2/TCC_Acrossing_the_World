@@ -2,7 +2,27 @@
 
 Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito contém diálogos e a conquista de um artefato; o Brasil reúne exploração da praia, guia, morador e um desafio de embaixadinhas com o berimbau como prêmio.
 
+## Visão técnica
+
+**Unity 6000.5.7f1 · C# · projeto em equipe**
+
+| Destino | Funcionalidades documentadas |
+|---|---|
+| Egito | Exploração, diálogos, missão e conquista do escaravelho |
+| Brasil | Exploração, diálogos e desafio de dez embaixadinhas |
+| Itália e Japão | Exploração de cenários; sem diálogos, desafios ou recompensas nesta etapa |
+
+**Leitura rápida:** [guia da documentação](Docs/README.md) · [arquitetura e roteiro técnico](Docs/ARQUITETURA.md) · [menu](Docs/MENU_PRINCIPAL.md)
+
+As funcionalidades são apresentadas como conteúdo do projeto em equipe. Gustavo (GustavoTM2) atuou na programação da gamificação, conforme sua declaração. Isso não implica autoria exclusiva de todos os componentes ou assets.
+
 ## Abrir e testar
+
+Clone o repositório antes de abrir:
+
+```sh
+git clone https://github.com/GustavoTM2/TCC_Acrossing_the_World.git
+```
 
 1. No Unity Hub, adicione a pasta deste repositório como projeto existente.
 2. A versão de desenvolvimento é **Unity 6000.5.7f1**, com **URP 17.5.0**, conforme solicitado pela equipe. A exploração do Brasil foi testada em Play nessa versão; as duas cenas do Egito também passaram pela verificação de referências, chão e lógica de diálogo.
@@ -10,7 +30,7 @@ Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito 
 4. Abra `Assets/TCCMenu/Scenes/Menu_Principal.unity` e entre em Play, ou use **TCC → Menu → Jogar pelo menu**.
 5. Escolha Jogar e entre no Egito ou no Brasil. Também é possível abrir diretamente as cenas jogáveis em `Assets/TCCEgito/Scenes` e `Assets/TCCBrasil/Scenes`.
 
-O menu usa W/S ou setas verticais, Enter e mouse. Na seleção de países, use A/D ou setas horizontais; Esc volta. Itália/Japão estão como Em breve. Opções, Créditos e Sair serão implementados depois. Veja [o guia do menu](Docs/MENU_PRINCIPAL.md).
+O menu usa W/S ou setas verticais, Enter e mouse. Na seleção de países, use A/D ou setas horizontais; Esc volta. Itália e Japão abrem cenas de exploração, sem diálogos, desafios ou recompensas nesta etapa. Opções, Créditos e Sair serão implementados depois. Veja [o guia do menu](Docs/MENU_PRINCIPAL.md).
 
 ## Controles
 
@@ -60,13 +80,13 @@ A integração e os testes estão descritos em [Docs/BRASIL_EXPLORACAO.md](Docs/
 - Vegetação com materiais locais em tons secos e terrosos; Amira aproximada da câmera no exterior.
 - Exploração de toda a sala interna e conclusão com **Continuar a fase** e **Voltar para o menu**.
 
-O progresso das missões e as conquistas são salvos localmente com PlayerPrefs. Ao revisitar um destino, o personagem volta ao ponto de entrada, com suas conquistas preservadas. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
+O progresso usa PlayerPrefs durante a viagem e é preservado na passagem entre exterior e interior do Egito. Ao iniciar uma nova execução ou carregar o menu, TravelProgress.Reset limpa o progresso; voltar a um destino pelo menu começa uma nova partida. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
 
 ## Próximas entregas planejadas
 
 - Revisar a experiência completa com a equipe e confirmar a execução no Unity da escola.
 - Refinar a animação de embaixadinha quando o clip definitivo estiver disponível.
-- Implementar Opções, Créditos e Sair; desenvolver as fases da Itália e do Japão.
+- Implementar Opções, Créditos e Sair; ampliar as cenas de exploração da Itália e do Japão.
 
 ## Versionamento
 
@@ -77,3 +97,14 @@ O progresso das missões e as conquistas são salvos localmente com PlayerPrefs.
 A causa do interior vazio e as alterações nos scripts estão descritas em [Docs/EGITO_CORRECOES.md](Docs/EGITO_CORRECOES.md). Os testes físicos e em Play verificaram o caminho até a múmia, a ordem dos diálogos, o bloqueio durante a transição, a entrega animada, a recompensa única e o retorno ao exterior com o progresso preservado.
 
 Os ajustes de altura, transição e escaravelho de 19/10/2026 estão registrados em [Docs/EGITO_AJUSTES_VISUAIS.md](Docs/EGITO_AJUSTES_VISUAIS.md), incluindo os testes em Play e a pendência de configuração que bloqueou a tentativa de exportar um executável no Unity 6000.5.7f1.
+
+## Escopo de validação e limitações
+
+Os testes em Play citados neste documento são registros anteriores da equipe. Nesta revisão de documentação foi feita leitura estática dos arquivos; o jogo e o build não foram executados novamente. A presença do Unity Test Framework no manifesto não comprova cobertura automatizada.
+
+Itália ainda usa o cenário base com pontes e chão sem acabamento visual, conforme [o registro de exploração](Docs/EXPLORACAO_JAPAO_ITALIA.md). A exportação do executável tem uma pendência histórica documentada; não há confirmação nesta revisão de que ela tenha sido resolvida.
+
+## Créditos e licença
+
+Projeto em equipe. Preserve os créditos existentes e consulte [LICENSE](LICENSE), que contém o aviso MIT com copyright de Guilherme-Nunes777. Recursos visuais e fontes podem ter termos próprios; os créditos da fonte Cinzel estão no [guia do menu](Docs/MENU_PRINCIPAL.md). Esta revisão não altera licenças nem atribui a Gustavo autoria exclusiva do código ou dos assets.
+
