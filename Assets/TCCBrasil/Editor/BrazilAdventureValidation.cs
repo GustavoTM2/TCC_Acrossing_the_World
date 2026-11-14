@@ -40,10 +40,17 @@ namespace CrossingTheWorld.TCCBrazil.Editor
                     ClearTestSave();
                     SessionState.SetBool(Key,false);
                     Debug.Log("BRAZIL_ADVENTURE_PLAY_OK");
-                    EditorApplication.Exit(0);
+                    if (SessionState.GetBool(Key + ".LeaveOpen", false))
+                    {
+                        SessionState.SetBool(Key + ".LeaveOpen", false);
+                        EditorApplication.delayCall += BrazilPlayPreview.OpenForUser;
+                    }
+                    else EditorApplication.Exit(0);
                 }
             };
         }
+
+        public static void RunAndLeaveOpen() { SessionState.SetBool(Key + ".LeaveOpen", true); Run(); }
 
         public static void Run()
         {
