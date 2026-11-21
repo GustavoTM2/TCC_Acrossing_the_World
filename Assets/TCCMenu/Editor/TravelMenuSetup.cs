@@ -96,19 +96,19 @@ namespace CrossingTheWorld.TCCMenu.Editor
             string[] locations = { "Areias do Tempo", "Rio de Janeiro", "Pontes", "Templo" };
             for (int i = 0; i < 4; i++)
             {
-                RectTransform card = Rect(names[i], destinations, 100 + i * 370, 310, 340, 420);
-                // O pivô central permite aumentar a janela sem empurrar as vizinhas.
+                RectTransform card = Rect(names[i], destinations, 100 + i * 370, 310, 340, 480);
+                // Cards quadrados na área de prévia; mantém a seleção por teclado e mouse.
                 card.pivot = new Vector2(.5f, .5f);
-                card.anchoredPosition += new Vector2(170, -210);
+                card.anchoredPosition += new Vector2(170, -240);
                 menu.cards[i] = card;
-                menu.cardBorders[i] = Box("Borda", card, 0, 0, 340, 420, Gold);
-                Box("Fundo", card, 3, 3, 334, 414, new Color(.035f, .065f, .08f));
+                menu.cardBorders[i] = Box("Borda", card, 0, 0, 340, 480, Gold);
+                Box("Fundo", card, 3, 3, 334, 474, new Color(.035f, .065f, .08f));
                 Texture2D preview = i < 2 ? AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Art/" + (i == 0 ? "Egito.png" : "Brasil.png")) : AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCExploracao/Generated/" + (i == 2 ? "Italia" : "Japao") + "_Previa.png");
-                RawImage picture = Picture("Previa", card, 10, 10, 320, 255, preview);
-                picture.uvRect = Crop(preview, 320f / 255f);
-                menu.countryLabels[i] = Label("Pais", card, 10, 285, 320, 48, names[i], serif, 33, Cream);
-                Label("Local", card, 10, 335, 320, 30, locations[i], body, 20, Cream);
-                menu.countryStatus[i] = Label("Estado", card, 10, 380, 320, 24, i < 2 ? "" : "EXPLORAR", body, 16, i < 2 ? Gold : new Color(.65f, .67f, .66f));
+                RawImage picture = Picture("Previa", card, 10, 10, 320, 320, preview);
+                picture.uvRect = new Rect(0, 0, 1, 1);
+                menu.countryLabels[i] = Label("Pais", card, 10, 338, 320, 42, names[i], serif, 33, Cream);
+                Label("Local", card, 10, 384, 320, 30, locations[i], body, 20, Cream);
+                menu.countryStatus[i] = Label("Estado", card, 10, 436, 320, 24, i < 2 ? "" : "EXPLORAR", body, 16, i < 2 ? Gold : new Color(.65f, .67f, .66f));
                 MakeButton(card, menu, i, true);
             }
             var back = Rect("Voltar", destinations, 100, 818, 180, 48);
