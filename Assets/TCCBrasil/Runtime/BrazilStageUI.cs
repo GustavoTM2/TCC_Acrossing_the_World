@@ -1,5 +1,6 @@
 using UnityEngine;
 using CrossingTheWorld.TCCEgypt;
+using CrossingTheWorld.TCCAudio;
 
 namespace CrossingTheWorld.TCCBrazil
 {
@@ -7,11 +8,14 @@ namespace CrossingTheWorld.TCCBrazil
     public sealed class BrazilStageUI : MonoBehaviour
     {
         private BrazilStage stage;
-        private readonly EgyptStageUI interactionUI = new EgyptStageUI();
+        private readonly EgyptStageUI interactionUI = new EgyptStageUI
+        {
+            ControlsAccent = new Color(.26f, .74f, .51f)
+        };
         private GUIStyle body, small, title, large, button, panel, phaseTitle, objective, artifactLabel, artifactName;
         private Texture2D rounded;
         private readonly Color ink = new Color(.07f, .11f, .14f, .97f);
-        private readonly Color gold = new Color(.86f, .7f, .4f);
+        private readonly Color gold = new Color(.26f, .74f, .51f);
         private readonly Color green = new Color(.16f, .72f, .51f);
         private void Awake() { stage = GetComponent<BrazilStage>(); }
 
@@ -56,20 +60,27 @@ namespace CrossingTheWorld.TCCBrazil
 
         private void OnGUI()
         {
-            if (stage == null || EgyptSceneTransition.IsBusy) return;
+            if (stage == null || EgyptSceneTransition.IsBusy || StageExperience.IsPaused) return;
             Prepare();
             Matrix4x4 previous = GUI.matrix;
             float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
             GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280 * scale) / 2, (Screen.height - 720 * scale) / 2, 0), Quaternion.identity, Vector3.one * scale);
-            Panel(new Rect(24, 22, 640, 100));
-            Text(new Rect(46, 35, 590, 28), "BRASIL  /  RIO DE JANEIRO", phaseTitle, gold);
-            Text(new Rect(46, 72, 590, 42), stage.Objective, objective, Color.white);
-            if (stage.HasPrize && stage.State != BrazilState.Reward) DrawSmallPrize();
-            if (interactionUI.DrawMenuButton()) stage.ReturnToMenu();
+            Panel(new Rect(24, 22, 610, 100));
+            Text(new Rect(46, 35, 558, 28), "BRASIL  /  RIO DE JANEIRO", phaseTitle, gold);
+            Text(new Rect(46, 72, 557, 42), stage.Objective, objective, Color.white);
+            // O placar substitui o cartão do prêmio durante as embaixadinhas.
+            // Desenhar os dois ao mesmo tempo causava sobreposição no canto direito.
+            if (stage.HasPrize && stage.State != BrazilState.Reward &&
+                stage.State != BrazilState.Playing && stage.State != BrazilState.Countdown)
+                DrawSmallPrize();
             switch (stage.State)
             {
                 case BrazilState.Exploring:
-                    interactionUI.DrawExplorationControls("A/D · lados     W/S · fundo/frente     E/Enter · interagir");
+                    interactionUI.DrawExplorationControls(
+                        new StageControlPanel.Control("A / D", "Esquerda / direita"),
+                        new StageControlPanel.Control("S / W", "Cima / baixo"),
+                        new StageControlPanel.Control("E / Enter", "Interagir"),
+                        new StageControlPanel.Control("Esc", "Menu da fase"));
                     interactionUI.DrawInteractionPrompt(stage.InteractionPrompt);
                     break;
                 case BrazilState.Dialogue:
@@ -77,7 +88,7 @@ namespace CrossingTheWorld.TCCBrazil
                     Text(new Rect(124, 443, 870, 38), stage.Speaker, title, gold);
                     Text(new Rect(1080, 450, 85, 25), (stage.LineIndex + 1) + " / " + stage.LineCount, small, Color.white);
                     Text(new Rect(124, 498, 1020, 120), stage.DialogueText, body, Color.white);
-                    Text(new Rect(124, 643, 430, 28), "E ou Enter para continuar · Esc para sair", small, Color.white);
+                    Text(new Rect(124, 643, 710, 28), "E / Enter · continuar    Esc · menu da fase", small, Color.white);
                     if (Button(new Rect(908, 630, 245, 43), "Continuar  →")) stage.AdvanceDialogue();
                     break;
                 case BrazilState.Ready:
@@ -102,7 +113,7 @@ namespace CrossingTheWorld.TCCBrazil
                     GUI.color = new Color(.25f,.33f,.36f); GUI.DrawTexture(bar, Texture2D.whiteTexture);
                     GUI.color = green; GUI.DrawTexture(new Rect(bar.x + bar.width * stage.Challenge.WindowStart, bar.y, bar.width * (stage.Challenge.WindowEnd - stage.Challenge.WindowStart), bar.height), Texture2D.whiteTexture);
                     GUI.color = gold; GUI.DrawTexture(new Rect(bar.x + bar.width * Mathf.Clamp01(stage.Challenge.Phase) - 4, bar.y - 7, 8, 40), Texture2D.whiteTexture); GUI.color = Color.white;
-                    Text(new Rect(282, 654, 710, 26), "Um toque por embaixadinha   •   Esc: sair do desafio", small, Color.white);
+                    Text(new Rect(282, 654, 710, 26), "Um toque por embaixadinha   •   Esc: menu da fase", small, Color.white);
                     break;
                 case BrazilState.Failed:
                     Panel(new Rect(300, 215, 680, 370));
@@ -124,8 +135,7 @@ namespace CrossingTheWorld.TCCBrazil
                 GUI.DrawTexture(new Rect(220, 245, 250, 355), stage.rewardDisplay.PreviewTexture, ScaleMode.ScaleToFit, true);
             Text(new Rect(514, 260, 530, 45), "Berimbau antigo", title, Color.white);
             Text(new Rect(514, 322, 520, 160), "O berimbau que animava as rodas de capoeira do avô do morador agora acompanha sua viagem.\n\nMais uma história para levar pelo mundo!", body, Color.white);
-            if (Button(new Rect(514, 520, 520, 52), "Continuar na praia")) stage.ContinueExploring();
-            if (Button(new Rect(514, 589, 520, 42), "Voltar para o menu")) stage.ReturnToMenu();
+            if (Button(new Rect(514, 545, 520, 54), "Continuar na praia")) stage.ContinueExploring();
         }
         private void DrawSmallPrize()
         {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using CrossingTheWorld.TCCMenu;
 using CrossingTheWorld.TCCEgypt;
+using CrossingTheWorld.TCCAudio;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -9,6 +10,8 @@ namespace CrossingTheWorld.TCCExploration {
  public sealed class ExplorationStage : MonoBehaviour {
   public string title;
   private void Update() {
+   // Fases novas possuem HUD e menu Esc próprios. Não interceptar as teclas.
+   if (StageExperience.IsCountry) return;
 #if ENABLE_INPUT_SYSTEM
    if(Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) ReturnToMenu();
 #elif ENABLE_LEGACY_INPUT_MANAGER
@@ -17,7 +20,7 @@ namespace CrossingTheWorld.TCCExploration {
   }
   public void ReturnToMenu() { if(!EgyptSceneTransition.IsBusy) EgyptSceneTransition.Load(TravelMenu.ScenePath,null,"Voltando ao menu..."); }
   private void OnGUI() {
-   if(EgyptSceneTransition.IsBusy) return;
+   if(EgyptSceneTransition.IsBusy || StageExperience.IsCountry) return;
    var previous=GUI.matrix; GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,new Vector3(Screen.width/1600f,Screen.height/900f,1));
    var label=new GUIStyle(GUI.skin.label){fontSize=22,fontStyle=FontStyle.Bold}; label.normal.textColor=new Color(1,.76f,.37f);
    GUI.Box(new Rect(40,30,570,92),GUIContent.none); GUI.Label(new Rect(58,42,540,32),title,label);

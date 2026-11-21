@@ -1,0 +1,21 @@
+OK resource MongeOkoizume.fbx
+OK resource MongeOkoizume.png
+OK resource KatanaOkoizume.fbx
+OK resource KatanaOkoizume.png
+OK FBX binario MongeOkoizume.fbx
+OK FBX binario KatanaOkoizume.fbx
+OK PNG valido MongeOkoizume.png
+OK PNG valido KatanaOkoizume.png
+OK Templo real ligado
+OK Kenji ligado
+OK Monge ligado
+OK Katana ligada
+OK Dialogo Okoizume
+OK Recompensa animada
+OK HUD 3D da katana
+OK Despedida obrigatoria
+OK Progresso salvo
+OK Pausa por Esc
+OK Transicao ao templo
+OK Retorno ao exterior
+TOTAL 20/20

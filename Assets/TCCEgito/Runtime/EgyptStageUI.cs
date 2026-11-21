@@ -1,4 +1,5 @@
 using UnityEngine;
+using CrossingTheWorld.TCCAudio;
 
 namespace CrossingTheWorld.TCCEgypt
 {
@@ -6,9 +7,11 @@ namespace CrossingTheWorld.TCCEgypt
     internal sealed class EgyptStageUI
     {
         private readonly Color gold = new Color(0.86f, 0.7f, 0.4f);
+        // O Brasil reutiliza este painel com a cor verde da sua própria fase.
+        public Color ControlsAccent = new Color(.86f, .7f, .4f);
         private readonly Color ink = new Color(0.07f, 0.11f, 0.14f, 0.97f);
         private Texture2D rounded;
-        private GUIStyle panel, small, body, speaker, heading, button, menuButton;
+        private GUIStyle panel, small, body, speaker, heading, button;
 
         // Preparo os estilos de texto, botões e o fundo arredondado das caixas.
         private void Prepare()
@@ -34,9 +37,6 @@ namespace CrossingTheWorld.TCCEgypt
             foreach (GUIStyleState state in new[] { button.normal, button.hover, button.active, button.focused })
             { state.background = rounded; state.textColor = new Color(0.08f, 0.12f, 0.14f); }
             button.onNormal.background = rounded;
-            menuButton = new GUIStyle(button);
-            menuButton.normal.textColor = gold;
-            menuButton.focused.textColor = gold;
         }
 
         private static GUIStyle Text(int size, Color color, bool bold = false)
@@ -58,7 +58,7 @@ namespace CrossingTheWorld.TCCEgypt
         private void Panel(Rect rect)
         {
             Fill(new Rect(rect.x + 3, rect.y + 5, rect.width, rect.height), new Color(0, 0, 0, 0.32f));
-            Fill(rect, new Color(gold.r, gold.g, gold.b, 0.65f));
+            Fill(rect, new Color(ControlsAccent.r, ControlsAccent.g, ControlsAccent.b, 0.65f));
             Fill(new Rect(rect.x + 1, rect.y + 1, rect.width - 2, rect.height - 2), ink);
         }
 
@@ -77,27 +77,6 @@ namespace CrossingTheWorld.TCCEgypt
             return pressed;
         }
 
-        // O mesmo botão permite sair das duas fases sem precisar conquistar o artefato.
-        public bool DrawMenuButton(bool available = true)
-        {
-            Prepare();
-            Color previousColor = GUI.color, previousBackground = GUI.backgroundColor;
-            bool previousEnabled = GUI.enabled;
-            var area = new Rect(708, 26, 218, 42);
-            GUI.enabled = previousEnabled && available;
-            GUI.color = Color.white;
-            GUI.backgroundColor = Color.white;
-            Fill(area, new Color(gold.r, gold.g, gold.b, .55f));
-            bool hover = available && area.Contains(Event.current.mousePosition);
-            GUI.backgroundColor = hover ? gold : new Color(ink.r, ink.g, ink.b, .82f);
-            bool clicked = GUI.Button(new Rect(area.x + 1, area.y + 1, area.width - 2, area.height - 2),
-                "Voltar ao menu", menuButton);
-            GUI.enabled = previousEnabled;
-            GUI.color = previousColor;
-            GUI.backgroundColor = previousBackground;
-            return clicked;
-        }
-
         // Egito e Brasil usam a mesma caixa para os avisos de interação.
         // A interface que chama este método já aplica a escala de 1280 por 720.
         public void DrawInteractionPrompt(string status)
@@ -107,28 +86,28 @@ namespace CrossingTheWorld.TCCEgypt
             Color oldColor = GUI.color, oldBackground = GUI.backgroundColor;
             GUI.color = Color.white;
             GUI.backgroundColor = Color.white;
-            Panel(new Rect(220, 592, 840, 63));
-            GUI.Label(new Rect(244, 609, 792, 38), status,
-                new GUIStyle(body) { fontSize = 19, alignment = TextAnchor.MiddleCenter });
+            // Mesmo padrão usado nas demais fases: interação no centro inferior,
+            // sem tocar no quadro fixo de controles à esquerda.
+            Panel(new Rect(385, 608, 620, 65));
+            GUI.Label(new Rect(403, 619, 583, 42), status,
+                new GUIStyle(body) { fontSize = 18, alignment = TextAnchor.MiddleCenter });
             GUI.color = oldColor;
             GUI.backgroundColor = oldBackground;
         }
 
-        public void DrawExplorationControls(string controls)
+        public void DrawExplorationControls(params StageControlPanel.Control[] rows)
         {
-            Prepare();
-            Color oldColor = GUI.color, oldBackground = GUI.backgroundColor;
-            GUI.color = Color.white;
-            GUI.backgroundColor = Color.white;
-            Fill(new Rect(24, 672, 800, 30), new Color(ink.r, ink.g, ink.b, 0.8f));
-            GUI.Label(new Rect(38, 679, 774, 22), controls, small);
-            GUI.color = oldColor;
-            GUI.backgroundColor = oldBackground;
+            // Linhas reais em duas colunas: mesmo tamanho, respiro e centralização.
+            // O quadro fica à esquerda, sem invadir a interação inferior central.
+            int count = rows != null ? rows.Length : 0;
+            StageControlPanel.Draw(new Rect(24, count > 4 ? 539 : 561,
+                342, count > 4 ? 162 : 140), ControlsAccent, rows);
         }
 
         // Aqui desenho os objetivos, avisos, diálogos e a mensagem de conclusão.
         public void Draw(EgyptStage stage, string objective, string status, EgyptLine line, int index, int count)
         {
+            if (StageExperience.IsPaused) return;
             Prepare();
             Matrix4x4 oldMatrix = GUI.matrix;
             Color oldColor = GUI.color, oldBackground = GUI.backgroundColor;
@@ -140,10 +119,10 @@ namespace CrossingTheWorld.TCCEgypt
             GUI.backgroundColor = Color.white;
             try
             {
-                Panel(new Rect(24, 22, 640, 100));
-                GUI.Label(new Rect(46, 35, 590, 24), "EGITO  /  AREIAS DO TEMPO", speaker);
+                Panel(new Rect(24, 22, 610, 100));
+                GUI.Label(new Rect(46, 35, 558, 24), "EGITO  /  AREIAS DO TEMPO", speaker);
                 GUIStyle objectiveStyle = new GUIStyle(body) { fontSize = 18 };
-                GUI.Label(new Rect(46, 72, 590, 42), objective, objectiveStyle);
+                GUI.Label(new Rect(46, 72, 557, 42), objective, objectiveStyle);
                 if (EgyptStage.Progress.HasScarab && !stage.CompletionIsOpen)
                 {
                     Panel(new Rect(944, 24, 312, 124));
@@ -152,7 +131,6 @@ namespace CrossingTheWorld.TCCEgypt
                     GUI.Label(new Rect(1074, 75, 170, 55), "Velho Escaravelho", new GUIStyle(speaker) { fontSize = 19 });
                 }
 
-                if (DrawMenuButton(!stage.IsDeliveringScarab)) stage.ReturnToMenu();
 
                 // Na conversa, mostro quem está falando, o texto e o botão para continuar.
                 if (stage.DialogueIsOpen && line != null)
@@ -185,14 +163,18 @@ namespace CrossingTheWorld.TCCEgypt
                     DrawScarab(new Rect(274, 260, 236, 236), stage.ScarabPreview);
                     GUI.Label(new Rect(534, 278, 458, 48), "Velho Escaravelho", heading);
                     GUI.Label(new Rect(534, 342, 450, 132), "Amira aprendeu que ouvir, respeitar e confiar nas pessoas torna a viagem mais rica.", body);
-                    if (Button(new Rect(278, 536, 342, 44), "Voltar para o menu")) stage.ReturnToMenu();
-                    if (Button(new Rect(660, 536, 342, 44), "Continuar a fase")) stage.CloseCompletion();
+                    if (Button(new Rect(470, 536, 342, 44), "Continuar a fase")) stage.CloseCompletion();
                     GUI.Label(new Rect(278, 592, 724, 28), "Sua conquista foi salva neste computador.", small);
                 }
                 else
                 {
                     DrawInteractionPrompt(status);
-                    DrawExplorationControls("A/D · lados     W/S · fundo/frente     Espaço · pular     E/Enter · interagir");
+                    DrawExplorationControls(
+                        new StageControlPanel.Control("A / D", "Esquerda / direita"),
+                        new StageControlPanel.Control("S / W", "Cima / baixo"),
+                        new StageControlPanel.Control("Espaço", "Pular"),
+                        new StageControlPanel.Control("E / Enter", "Interagir"),
+                        new StageControlPanel.Control("Esc", "Menu da fase"));
                 }
             }
             finally { GUI.matrix = oldMatrix; GUI.color = oldColor; GUI.backgroundColor = oldBackground; }

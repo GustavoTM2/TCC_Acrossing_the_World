@@ -1,0 +1,32 @@
+﻿OK Audio Menu_Viagem
+OK Audio Egito_Deserto
+OK Audio Egito_Piramide
+OK Audio Brasil_Praia
+OK Audio Brasil_Embaixadinhas
+OK Audio Italia_Cidade
+OK Audio Italia_Restaurante
+OK Audio Italia_Pizzaria_Desafio
+OK Audio Japao_Jardim
+OK Audio Japao_Templo
+OK Build Assets/TCCMenu/Scenes/Menu_Principal.unity
+OK Build Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity
+OK Build Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity
+OK Build Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity
+OK Build Assets/TCCItalia/Scenes/ITALIA_RUA.unity
+OK Build Assets/TCCItalia/Scenes/ITALIA_RESTAURANTE.unity
+OK Build Assets/TCCJapao/Scenes/JAPAO_EXTERNO.unity
+OK Build Assets/TCCJapao/Scenes/JAPAO_INTERIOR.unity
+OK ESC global
+OK Tempo pausado
+OK Menu principal ao sair
+OK Volume salvo
+OK Luz salva
+OK Fade entre musicas
+OK HUD pause TCCEgito\Runtime\EgyptStageUI.cs
+OK HUD pause TCCBrasil\Runtime\BrazilStageUI.cs
+OK HUD pause TCCItalia\Scripts\ItaliaFase.cs
+OK HUD pause TCCJapao\Runtime\JapanQuest.cs
+OK Botao solto Egito removido
+OK Botao solto Italia removido
+OK Botao solto Brasil removido
+TOTAL 31/31

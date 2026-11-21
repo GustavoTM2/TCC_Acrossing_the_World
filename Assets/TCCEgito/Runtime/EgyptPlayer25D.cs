@@ -14,7 +14,7 @@ namespace CrossingTheWorld.TCCEgypt
         public float visualYawOffset;
         [Tooltip("Direção no mundo correspondente a D/seta direita.")]
         public Vector3 movementAxis = Vector3.left;
-        [Tooltip("Direção correspondente a W/seta para cima: afasta-se da câmera.")]
+        [Tooltip("Direção da profundidade no mundo. No Egito, S avança para o fundo e W volta; setas mantêm o sentido normal.")]
         public Vector3 depthAxis = Vector3.back;
         [Range(0.1f, 1f)] public float depthSpeedMultiplier = 0.65f;
         [Min(0.1f)] public float speed = 4f;
@@ -60,7 +60,7 @@ namespace CrossingTheWorld.TCCEgypt
         // Leio o teclado a cada quadro e envio os comandos para a movimentação.
         private void Update()
         {
-            TickMovement(new Vector2(EgyptInput.Horizontal, EgyptInput.Depth), EgyptInput.JumpPressed, Time.deltaTime);
+            TickMovement(new Vector2(EgyptInput.Horizontal, EgyptInput.EgyptDepth), EgyptInput.JumpPressed, Time.deltaTime);
         }
 
         // Também permite conduzir a personagem em sequências e nos testes físicos do Editor.
@@ -71,12 +71,13 @@ namespace CrossingTheWorld.TCCEgypt
             // Durante diálogos, transições ou entrega do item, Amira fica parada.
             if (stage != null && stage.BlocksMovement)
             {
-                if (animator != null) animator.SetFloat("Speed", 0);
-                return;
+                // Continua sujeito à gravidade; só a movimentação horizontal e o pulo são bloqueados.
+                input = Vector2.zero;
+                jump = false;
             }
             // Evito que andar na diagonal aumente a velocidade.
             input = Vector2.ClampMagnitude(input, 1f);
-            Vector3 planarVelocity = (movementAxis * input.x + depthAxis * input.y * depthSpeedMultiplier) * speed;
+            Vector3 planarVelocity = EgyptInput.GroundDirection(input, movementAxis, depthAxis, depthSpeedMultiplier) * speed;
             if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2f;
             // Amira só pode iniciar um pulo quando está no chão.
             if (controller.isGrounded && jump && jumpHeight > 0)
@@ -87,9 +88,9 @@ namespace CrossingTheWorld.TCCEgypt
 
             // Ajusto a direção do modelo e a animação de acordo com o movimento.
             if (visual != null && planarVelocity.sqrMagnitude > 0.001f)
-                visual.rotation = Quaternion.LookRotation(planarVelocity, Vector3.up)
-                    * Quaternion.Euler(0, visualYawOffset, 0);
-            if (animator != null) animator.SetFloat("Speed", planarVelocity.magnitude / Mathf.Max(0.01f, speed));
+                visual.rotation = Quaternion.RotateTowards(visual.rotation, Quaternion.LookRotation(planarVelocity, Vector3.up)
+                    * Quaternion.Euler(0, visualYawOffset, 0), 720f * deltaTime);
+            if (animator != null) animator.SetFloat("Speed", input.sqrMagnitude > 0f ? Vector3.ProjectOnPlane(controller.velocity, Vector3.up).magnitude / Mathf.Max(.01f, speed) : 0f, .07f, deltaTime);
             if (transform.position.y < respawnBelowY) Respawn();
         }
 

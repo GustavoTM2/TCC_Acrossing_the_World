@@ -1,0 +1,30 @@
+OK Novo componente de HUD presente
+OK Novo componente com .meta valido
+OK HUD possui titulo centralizado
+OK HUD possui colunas reais de tecla e acao
+OK HUD restaura cores GUI
+OK HUD responsiva ao total de linhas do Egito
+OK Egito usa novo painel
+OK Brasil usa novo painel via EgyptStageUI
+OK Japao usa novo painel
+OK Italia usa novo painel
+OK Texto antigo quebrado por espacos removido
+OK Brasil possui cor verde na HUD
+OK Egito possui cor areia na HUD
+OK Italia possui cor terracota na HUD
+OK Japao possui cor vermelha na HUD
+OK Nova propriedade de movimento de Brasil e Japao
+OK Brasil inteiro usa W/S invertidos
+OK Japao externo usa mesmo controlador de movimento do Brasil
+OK Japao interno usa mesmo controlador de movimento do Brasil
+OK HUD Brasil indica S/W
+OK HUD Japao indica S/W
+OK HUD Egito indica S/W
+OK Italia inverte so interior teclado moderno
+OK Italia inverte so interior teclado legado
+OK Italia HUD distingue rua e restaurante
+OK Setas mantidas em sentido convencional Italia
+OK Setas mantidas em sentido convencional Brasil
+OK Brasil HUD legada nao se sobrepoe
+OK Esc integra painel inferior das quatro fases
+TOTAL 29/29

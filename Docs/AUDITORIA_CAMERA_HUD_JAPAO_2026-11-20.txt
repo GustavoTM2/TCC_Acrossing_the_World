@@ -1,0 +1,25 @@
+OK Camera_Exploracao permanece ativa e tagged MainCamera
+OK Controlador antigo desabilitado
+OK Novo componente de camera anexado
+OK GUID corresponde ao arquivo meta
+OK Camera aponta ao Kenji
+OK Camera usa limites invisiveis
+OK Enquadramento editor ja corrigido
+OK Camera FOV estreito
+OK Follow suave por SmoothDamp
+OK Segue movimento de profundidade
+OK Clamps horizontal e vertical
+OK Protege camera contra paredes
+OK Previne vazamento em monitores ultrawide
+OK Camera configurada automaticamente pelo JapanQuest
+OK Manter o guia italiano
+OK Manter entrada do templo
+OK HUD usa dimensoes proporcionais
+OK HUD informacoes superior esquerda
+OK HUD controles inferior esquerda
+OK Prompt de interacao sem sobreposicao
+OK Premio gira no canto superior direito
+OK Hint ESC movido para centro superior
+OK HUD oculto quando menu ESC aberto
+OK Camera MonoBehaviour fileID unico
+TOTAL 24/24

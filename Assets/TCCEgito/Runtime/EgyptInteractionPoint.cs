@@ -18,8 +18,15 @@ namespace CrossingTheWorld.TCCEgypt
         public bool CanInteractFrom(Vector3 playerPosition)
         {
             Vector3 difference = playerPosition - Position;
-            return difference.sqrMagnitude <= radius * radius
-                && (maxHeightDifference <= 0 || Mathf.Abs(difference.y) <= maxHeightDifference);
+            // A porta da pirâmide fica em uma área com degraus e piso irregular.
+            // Para portas, a proximidade depende do plano horizontal, e não da
+            // elevação do personagem acima do marcador da entrada.
+            float horizontalDistance = new Vector2(difference.x, difference.z).sqrMagnitude;
+            bool portal = kind == EgyptPointKind.Entrance || kind == EgyptPointKind.Exit;
+            float distance = portal ? horizontalDistance : difference.sqrMagnitude;
+            return distance <= radius * radius
+                && (portal || maxHeightDifference <= 0 ||
+                    Mathf.Abs(difference.y) <= maxHeightDifference);
         }
         // Escolho o aviso que aparece na tela conforme o tipo de interação.
         public string Prompt
@@ -29,9 +36,9 @@ namespace CrossingTheWorld.TCCEgypt
                 switch (kind)
                 {
                     case EgyptPointKind.Guide: return "E — Conversar com o guia";
-                    case EgyptPointKind.Entrance: return "E — Entrar na pirâmide";
+                    case EgyptPointKind.Entrance: return "E / Enter — Entrar na pirâmide";
                     case EgyptPointKind.Mummy: return "E — Conversar com Rami, a múmia";
-                    default: return "E — Voltar ao exterior";
+                    default: return "E / Enter — Voltar ao exterior";
                 }
             }
         }

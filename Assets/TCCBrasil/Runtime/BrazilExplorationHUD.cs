@@ -1,4 +1,5 @@
 using UnityEngine;
+using CrossingTheWorld.TCCAudio;
 
 namespace CrossingTheWorld.TCCBrazil
 {
@@ -10,6 +11,8 @@ namespace CrossingTheWorld.TCCBrazil
         // Aqui desenho o título da fase e as instruções dos controles na tela.
         private void OnGUI()
         {
+            // Impede duplicação com a HUD oficial BrazilStageUI.
+            if (StageExperience.IsCountry) return;
             // Preparo os estilos uma vez e reutilizo nas próximas chamadas.
             if (title == null)
             {

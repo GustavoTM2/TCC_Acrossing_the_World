@@ -1,9 +1,7 @@
 using UnityEngine;
 using CrossingTheWorld.TCCEgypt;
 using CrossingTheWorld.TCCMenu;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
+using CrossingTheWorld.TCCAudio;
 
 namespace CrossingTheWorld.TCCBrazil
 {
@@ -96,14 +94,7 @@ namespace CrossingTheWorld.TCCBrazil
 
         private void Update()
         {
-            if (EgyptSceneTransition.IsBusy) return;
-            bool escape = false;
-#if ENABLE_INPUT_SYSTEM
-            escape = Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame;
-#elif ENABLE_LEGACY_INPUT_MANAGER
-            escape = Input.GetKeyDown(KeyCode.Escape);
-#endif
-            if (escape && State != BrazilState.Exploring && State != BrazilState.Reward) { ContinueExploring(); return; }
+            if (EgyptSceneTransition.IsBusy || StageExperience.IsPaused) return;
             if (State == BrazilState.Exploring && EgyptInput.InteractPressed)
             {
                 if (Near(guide)) OpenDialogue(true);

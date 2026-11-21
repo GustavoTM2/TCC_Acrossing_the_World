@@ -1,0 +1,21 @@
+OK Komainu na Hierarquia externa
+OK Komainu posicionado proximo ao torii
+OK Script do guardiao presente
+OK Guardiao fala
+OK Par de estatuas com bocas diferentes
+OK Prefab opcional Komainu Asset Store
+OK Nao instancia guia humano
+OK Monge FBX encontrado
+OK Monge Textura encontrada
+OK Katana FBX encontrada
+OK Katana textura encontrada
+OK Monge carregado por Resources
+OK Katana carregada por Resources
+OK UI inclui recompensa e dialogos
+OK Historia ficticia Okoizume
+OK Saida bloqueada ate dialogo final
+OK Trilha e menu Esc preservados
+OK Templo original preservado
+OK Cena externa no Build
+OK Cena interna no Build
+TOTAL 20/20

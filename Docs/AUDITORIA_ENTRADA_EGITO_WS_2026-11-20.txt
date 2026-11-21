@@ -1,0 +1,19 @@
+OK Portal externo movido para area acessivel
+OK Raio da porta externa ampliado
+OK Porta continua tipo Entrance
+OK Portal interno tem raio 3.0
+OK Proximidade para portas usa distancia horizontal
+OK Ponto de entrada referenciado por Interactor
+OK Guia continua referenciado por Interactor
+OK Cena interior incluida no build
+OK Cena exterior incluida no build
+OK Porta carrega cena interior correta
+OK Entrada ainda exige conversa guia
+OK Egito leitura invertida W/S
+OK Amira utiliza EgyptDepth
+OK Brasil mantÃ©m leitura original Depth
+OK S/W aparecem corretamente na HUD egÃ­pcia
+OK E/Enter ainda interage com o portal
+OK Saida do interior continua funcionando
+OK A mudanÃ§a nao atingiu scripts do Brasil
+TOTAL 18/18

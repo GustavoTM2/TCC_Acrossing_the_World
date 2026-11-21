@@ -1,0 +1,16 @@
+﻿OK Destino Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity
+OK Destino Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity
+OK Destino Assets/TCCItalia/Scenes/ITALIA_RUA.unity
+OK Destino Assets/TCCJapao/Scenes/JAPAO_EXTERNO.unity
+OK Menu é a cena inicial
+OK Oito botoes de selecao ligados
+OK Botao de retorno da selecao ligado
+OK Menu JOGAR/opcoes/creditos/sair
+OK Opcoes: volume, fullscreen, qualidade
+OK Creditos navegaveis
+OK Sair com confirmacao
+OK Egito volta menu
+OK Brasil volta menu
+OK Italia volta menu tambem no minigame
+OK Japao volta menu
+TOTAL 15/15

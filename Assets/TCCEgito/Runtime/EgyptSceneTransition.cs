@@ -30,7 +30,7 @@ namespace CrossingTheWorld.TCCEgypt
             }
             if (instance == null)
             {
-                instance = FindFirstObjectByType<EgyptSceneTransition>();
+                instance = FindAnyObjectByType<EgyptSceneTransition>();
                 if (instance == null) instance = new GameObject("Transicao_Egito").AddComponent<EgyptSceneTransition>();
                 // Mantenho este objeto durante a troca de cena para a tela preta continuar aparecendo.
                 DontDestroyOnLoad(instance.gameObject);

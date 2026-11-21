@@ -73,7 +73,7 @@ public static class ExplorationSetup {
   var clip=Object.Instantiate(AssetDatabase.LoadAllAssetsAtPath(modelPath).OfType<AnimationClip>().First(c=>!c.name.StartsWith("__preview")));
   var settings=AnimationUtility.GetAnimationClipSettings(clip);settings.loopTime=true;settings.keepOriginalPositionXZ=true;settings.keepOriginalPositionY=true;AnimationUtility.SetAnimationClipSettings(clip,settings);AssetDatabase.CreateAsset(clip,generated+"_Caminhada.anim");
   var controller=AnimatorController.CreateAnimatorControllerAtPath(generated+".controller");controller.AddParameter("Speed",AnimatorControllerParameterType.Float);var sm=controller.layers[0].stateMachine;
-  var idle=sm.AddState("Parado");idle.motion=clip;idle.speed=0;var walk=sm.AddState("Caminhando");walk.motion=clip;sm.defaultState=idle;
+  var idle=sm.AddState("Parado");idle.motion=AssetDatabase.LoadAssetAtPath<AnimationClip>(name=="Kenji"?generated+"_Repouso.anim":"Assets/TCCItalia/Scripts/Resources/ItaliaPronta/SofiaParadaRestaurante.anim");idle.speed=1;var walk=sm.AddState("Caminhando");walk.motion=clip;sm.defaultState=idle;
   var start=idle.AddTransition(walk);start.hasExitTime=false;start.duration=.12f;start.AddCondition(AnimatorConditionMode.Greater,.05f,"Speed");var stop=walk.AddTransition(idle);stop.hasExitTime=false;stop.duration=.12f;stop.AddCondition(AnimatorConditionMode.Less,.05f,"Speed");
   animator.runtimeAnimatorController=controller;animator.applyRootMotion=false;player.animator=animator;player.visual=pivot.transform;return player;
  }

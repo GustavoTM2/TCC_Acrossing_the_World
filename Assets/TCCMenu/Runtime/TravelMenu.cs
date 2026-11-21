@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 namespace CrossingTheWorld.TCCMenu
 {
     // Este script escolhe a opção, troca as duas telas e abre o país selecionado.
-    public sealed class TravelMenu : MonoBehaviour
+    public sealed partial class TravelMenu : MonoBehaviour
     {
         public const string ScenePath = "Assets/TCCMenu/Scenes/Menu_Principal.unity";
         public const string EgyptScene = "Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity";
@@ -31,7 +31,8 @@ namespace CrossingTheWorld.TCCMenu
             Time.timeScale = 1;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            TravelProgress.Reset();
+            // Restaura as preferências e mostra o menu principal.
+            RestorePreferences();
             ShowMain();
         }
 
@@ -57,7 +58,16 @@ namespace CrossingTheWorld.TCCMenu
             confirm = Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter);
             back = Input.GetKeyDown(KeyCode.Escape);
 #endif
+            if (OverlayVisible)
+            {
+                if (back) { ShowMain(); return; }
+                if (previous) MoveOverlaySelection(-1);
+                else if (next) MoveOverlaySelection(1);
+                if (confirm) ConfirmOverlaySelection();
+                return;
+            }
             if (back && ChoosingCountry) { ShowMain(); return; }
+            if (back) { OpenQuitConfirmation(); return; }
             if (previous) MoveSelection(-1);
             else if (next) MoveSelection(1);
             if (confirm) ConfirmSelection();
@@ -66,13 +76,13 @@ namespace CrossingTheWorld.TCCMenu
         // O resto da divisão faz a seleção voltar ao início quando chega à última opção.
         public void MoveSelection(int direction)
         {
-            if (EgyptSceneTransition.IsBusy) return;
+            if (EgyptSceneTransition.IsBusy || OverlayVisible) return;
             Select((ChoosingCountry ? CountryIndex : MainIndex) + direction, ChoosingCountry);
         }
 
         public void Select(int index, bool country)
         {
-            if (EgyptSceneTransition.IsBusy || country != ChoosingCountry) return;
+            if (EgyptSceneTransition.IsBusy || OverlayVisible || country != ChoosingCountry) return;
             index = (index % 4 + 4) % 4;
             if (country) CountryIndex = index;
             else MainIndex = index;
@@ -82,14 +92,19 @@ namespace CrossingTheWorld.TCCMenu
 
         public void ConfirmSelection()
         {
-            if (EgyptSceneTransition.IsBusy) return;
+            if (EgyptSceneTransition.IsBusy || OverlayVisible) return;
             if (!ChoosingCountry)
             {
-                if (MainIndex == 0) ShowDestinations();
-                else ShowNotice("Esta opção será adicionada em breve.");
+                switch (MainIndex)
+                {
+                    case 0: ShowDestinations(); break;
+                    case 1: OpenOptions(); break;
+                    case 2: OpenCredits(); break;
+                    case 3: OpenQuitConfirmation(); break;
+                }
                 return;
             }
-            string[] scenes = { EgyptScene, BrazilScene, "Assets/TCCExploracao/Scenes/Italia_Exploracao.unity", "Assets/TCCExploracao/Scenes/Japao_Exploracao.unity" };
+            string[] scenes = { EgyptScene, BrazilScene, "Assets/TCCItalia/Scenes/ITALIA_RUA.unity", "Assets/TCCJapao/Scenes/JAPAO_EXTERNO.unity" };
             string path = scenes[CountryIndex];
             if (!Application.CanStreamedLevelBeLoaded(path)) { ShowNotice("Não foi possível abrir este destino."); return; }
             EgyptSceneTransition.Load(path, null, "Viajando para " + new[] { "o Egito", "o Brasil", "a Itália", "o Japão" }[CountryIndex] + "...");
@@ -98,13 +113,14 @@ namespace CrossingTheWorld.TCCMenu
         // O clique e o teclado usam a mesma ação para não terem comportamentos diferentes.
         public void ClickOption(int index, bool country)
         {
-            if (country != ChoosingCountry || EgyptSceneTransition.IsBusy) return;
+            if (country != ChoosingCountry || EgyptSceneTransition.IsBusy || OverlayVisible) return;
             Select(index, country);
             ConfirmSelection();
         }
 
         public void ShowMain()
         {
+            SetOverlay(MenuOverlay.None);
             ChoosingCountry = false;
             mainPage.SetActive(true); destinationsPage.SetActive(false);
             notice.text = "";
@@ -113,12 +129,15 @@ namespace CrossingTheWorld.TCCMenu
 
         public void ShowDestinations()
         {
-            if (EgyptSceneTransition.IsBusy) return;
+            if (EgyptSceneTransition.IsBusy || OverlayVisible) return;
+            activeOverlay = MenuOverlay.None;
             ChoosingCountry = true;
             mainPage.SetActive(false); destinationsPage.SetActive(true);
             notice.text = "";
             countryStatus[0].text = TravelProgress.EgyptStep == EgyptQuestStep.Complete ? "CONCLUÍDO" : "";
             countryStatus[1].text = TravelProgress.BrazilPrize ? "CONCLUÍDO" : "";
+            countryStatus[2].text = TravelProgress.ItalyPrize ? "CONCLUÍDO" : "";
+            countryStatus[3].text = TravelProgress.JapanPrize ? "CONCLUÍDO" : "";
             UpdateSelection();
         }
 

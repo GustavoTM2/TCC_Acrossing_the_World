@@ -1,0 +1,13 @@
+OK Guia instanciado como prefab real na cena
+OK Guia exibido na Hierarchy antes do Play
+OK Fonte original do modelo italiano
+OK Nome do GameObject editavel
+OK Modelo na frente de Kenji
+OK Marcador de interacao junto ao guia
+OK Distancia inicial dentro do raio de interacao
+OK Runtime reaproveita guia sem duplicar
+OK Runtime tem fallback do arquivo do guia
+OK Runtime habilita renderizadores do guia
+OK Objetivo continua pedindo dialogo do guia
+OK Cena continua contendo camera e entrada
+TOTAL 12/12

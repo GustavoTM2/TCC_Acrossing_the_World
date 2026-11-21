@@ -1,0 +1,22 @@
+RELATORIO DE RESTAURACAO - JAPAO
+Original: C:\Users\User\Desktop\TCC_Acrossing_the_World_JAPAO\TCC_Acrossing_the_World-main\Assets
+Final: C:\Users\User\Downloads\TCC_Acrossing_the_World-main\TCC_Acrossing_the_World-main\Assets
+ORIGINAIS Japao: 237 arquivos, 0 ausentes
+ORIGINAIS BuddhaHall: 44 arquivos, 0 ausentes
+ORIGINAIS TCCExploracao\Art\Kenji: 4 arquivos, 0 ausentes
+ORIGINAIS TCCExploracao\Generated: 18 arquivos, 0 ausentes
+CENA ORIGINAL Scenes\Japao.unity idêntica=True
+CENA ORIGINAL Scenes\Japao (interior) 1.unity idêntica=True
+CENA ORIGINAL TCCExploracao\Scenes\Japao_Exploracao.unity idêntica=True
+PREFAB ORIGINAL TEMPLO EXTERNO (Japanese_Temple): True
+MODELO ORIGINAL TEMPLO INTERNO (BuddhaHall): True
+KENJI JOGAVEL INTERIOR: True
+KENJI JOGAVEL EXTERIOR: True
+QUEST EXTERIOR: True
+QUEST INTERIOR: True
+MARCADOR ENTRADA PORTA REAL (x371.5 z942): True
+MARCADOR SAIDA PORTA FRENTE (x0 z8.6): True
+COLISAO DO TEMPLO ORIGINAL PROGRAMADA: True
+MENU E PAUSA PRESERVADOS: True
+KATANA INTEGRADA NA MISSAO: False / True
+NOTA: Nenhum modelo FBX/OBJ da katana foi encontrado no projeto original do Desktop; a recompensa do TCCJapao continua baseada em primitivas 3D.

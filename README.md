@@ -10,7 +10,8 @@ Projeto de aventura e exploração em Unity ligado ao turismo cultural. O Egito 
 |---|---|
 | Egito | Exploração, diálogos, missão e conquista do escaravelho |
 | Brasil | Exploração, diálogos e desafio de dez embaixadinhas |
-| Itália e Japão | Exploração de cenários; sem diálogos, desafios ou recompensas nesta etapa |
+| Itália | Rua, guia turístico, restaurante, minigame de pizza e conquista da Ferrari F40 |
+| Japão | Exterior, guia, templo, monge, katana e diálogo final |
 
 **Leitura rápida:** [guia da documentação](Docs/README.md) · [arquitetura e roteiro técnico](Docs/ARQUITETURA.md) · [menu](Docs/MENU_PRINCIPAL.md)
 
@@ -28,9 +29,9 @@ git clone https://github.com/GustavoTM2/TCC_Acrossing_the_World.git
 2. A versão de desenvolvimento é **Unity 6000.5.7f1**, com **URP 17.5.0**, conforme solicitado pela equipe. A exploração do Brasil foi testada em Play nessa versão; as duas cenas do Egito também passaram pela verificação de referências, chão e lógica de diálogo.
 3. Aguarde a importação dos assets e a compilação dos scripts.
 4. Abra `Assets/TCCMenu/Scenes/Menu_Principal.unity` e entre em Play, ou use **TCC → Menu → Jogar pelo menu**.
-5. Escolha Jogar e entre no Egito ou no Brasil. Também é possível abrir diretamente as cenas jogáveis em `Assets/TCCEgito/Scenes` e `Assets/TCCBrasil/Scenes`.
+5. Escolha **Jogar** e entre no Egito, Brasil, Itália ou Japão. Também é possível abrir diretamente as cenas jogáveis nas pastas `Assets/TCCEgito/Scenes`, `Assets/TCCBrasil/Scenes`, `Assets/TCCItalia/Scenes` e `Assets/TCCJapao/Scenes`.
 
-O menu usa W/S ou setas verticais, Enter e mouse. Na seleção de países, use A/D ou setas horizontais; Esc volta. Itália e Japão abrem cenas de exploração, sem diálogos, desafios ou recompensas nesta etapa. Opções, Créditos e Sair serão implementados depois. Veja [o guia do menu](Docs/MENU_PRINCIPAL.md).
+O menu usa W/S ou setas verticais, Enter e mouse. Na seleção de países, use A/D ou setas horizontais; Esc volta. Itália e Japão possuem suas próprias missões. Os botões Opções, Créditos e Sair estão implementados. As fases e o menu têm trilhas instrumentais próprias; Esc abre o menu de pausa com Continuar, Volume, Luminosidade e Voltar ao menu principal. Veja [o registro das trilhas e da pausa](Docs/TRILHAS_PAUSA_HUD_2026-11-20.md). Veja [o guia do menu](Docs/MENU_PRINCIPAL.md).
 
 ## Controles
 
@@ -40,7 +41,7 @@ O menu usa W/S ou setas verticais, Enter e mouse. Na seleção de países, use A
 | W/S ou setas cima/baixo | Andar para o fundo ou para a frente |
 | Espaço | Pular no Egito; iniciar e acertar as embaixadinhas no Brasil |
 | E/Enter | Interagir e avançar as falas |
-| Esc | Fechar conversa ou sair do desafio no Brasil |
+| Esc | Abrir/fechar o menu de pausa da fase (volume, luminosidade, continuar e voltar ao menu principal) |
 
 No Brasil, converse primeiro com o guia. Depois siga pela praia até o morador, leia as instruções e complete dez toques seguidos na faixa verde. A faixa verde muda de posição e largura a cada acerto. Solte Espaço entre os toques. É possível tentar novamente após uma falha.
 
@@ -80,13 +81,13 @@ A integração e os testes estão descritos em [Docs/BRASIL_EXPLORACAO.md](Docs/
 - Vegetação com materiais locais em tons secos e terrosos; Amira aproximada da câmera no exterior.
 - Exploração de toda a sala interna e conclusão com **Continuar a fase** e **Voltar para o menu**.
 
-O progresso usa PlayerPrefs durante a viagem e é preservado na passagem entre exterior e interior do Egito. Ao iniciar uma nova execução ou carregar o menu, TravelProgress.Reset limpa o progresso; voltar a um destino pelo menu começa uma nova partida. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
+O progresso usa PlayerPrefs durante a viagem e é preservado na passagem entre exterior e interior do Egito. O progresso de conquistas é preservado ao voltar ao menu dentro da mesma execução; ao iniciar uma nova execução, TravelProgress.Reset limpa o progresso da sessão. Como as texturas de cor das plantas não vieram nos arquivos recebidos, a cena usa materiais substitutos de cor sólida, preservando os modelos originais. Amira utiliza a animação de caminhada fornecida e ainda não tem um clip específico de salto.
 
 ## Próximas entregas planejadas
 
 - Revisar a experiência completa com a equipe e confirmar a execução no Unity da escola.
 - Refinar a animação de embaixadinha quando o clip definitivo estiver disponível.
-- Implementar Opções, Créditos e Sair; ampliar as cenas de exploração da Itália e do Japão.
+- Testar as trilhas instrumentais e as transições de pausa em Play Mode; substituir a katana provisória pela arte definitiva e revisar o posicionamento do templo japonês.
 
 ## Versionamento
 

@@ -1,0 +1,31 @@
+OK SÃ³ a pausa global exibe VOLTAR AO MENU PRINCIPAL
+OK Egito nÃ£o desenha botÃ£o externo ao pause
+OK Brasil nÃ£o desenha botÃ£o externo ao pause
+OK ItÃ¡lia nÃ£o desenha botÃ£o externo ao pause
+OK JapÃ£o nÃ£o desenha botÃ£o externo ao pause
+OK Egito usa controles verticais
+OK Brasil usa controles verticais
+OK JapÃ£o usa controles verticais
+OK JapÃ£o separa interaÃ§Ã£o do controle
+OK Brasil evita placar sobre prÃªmio
+OK Pausa nÃ£o esconde cronÃ´metro italiano
+OK Pausa funciona em quatro fases
+OK BotÃ£o de voltar na pausa continua
+OK CÃ¢mera externa referencia Kenji
+OK CÃ¢mera externa referencia limites
+OK CÃ¢mera externa FOV 49
+OK CÃ¢mera externa angle 64
+OK CÃ¢mera externa suave e protegida
+OK CÃ¢mera interna script carregÃ¡vel
+OK CÃ¢mera interna serializada na cena
+OK Antigo controlador interno desativado
+OK CÃ¢mera interna tem FOV 58
+OK CÃ¢mera interna acompanha profundidade
+OK CÃ¢mera interna tem limites da sala
+OK CÃ¢mera interna evita paredes
+OK JapanQuest inicializa cÃ¢mera interna
+OK JapanQuest inicializa cÃ¢mera externa
+OK Guia italiano preservado
+OK Monge e katana preservados
+OK Menu nÃ£o altera progresso na volta
+TOTAL 30/30

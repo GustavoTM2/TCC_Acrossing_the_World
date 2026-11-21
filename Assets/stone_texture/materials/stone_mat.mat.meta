@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aef1a8f976ceaeb47bd5f356761f2c66
+timeCreated: 1467715176
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 66497
+  packageName: Stone Cliff Texture
+  packageVersion: 1.0
+  assetPath: Assets/stone_texture/materials/stone_mat.mat
+  uploadId: 125756

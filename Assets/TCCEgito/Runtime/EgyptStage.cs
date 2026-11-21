@@ -198,7 +198,9 @@ namespace CrossingTheWorld.TCCEgypt
         public void CloseCompletion() { CompletionIsOpen = false; }
         public void ReturnToMenu()
         {
-            if (IsLoading || IsDeliveringScarab) return;
+            if (IsLoading) return;
+            // Cancelar a animação do artefato não concede a recompensa prematuramente.
+            if (IsDeliveringScarab) { StopAllCoroutines(); IsDeliveringScarab = false; }
             TravelProgress.SaveEgypt(Progress.Step);
             EgyptSceneTransition.Load(TravelMenu.ScenePath, this, "Voltando ao menu...");
         }
@@ -239,7 +241,7 @@ namespace CrossingTheWorld.TCCEgypt
                 switch (Progress.Step)
                 {
                     case EgyptQuestStep.MeetGuide: return "Converse com o guia turístico.";
-                    case EgyptQuestStep.EnterPyramid: return "Vá até a entrada da pirâmide e aperte E.";
+                    case EgyptQuestStep.EnterPyramid: return "Aproxime-se da entrada da pirâmide e pressione E ou Enter.";
                     case EgyptQuestStep.ListenToMummy: return "Suba a escadaria e converse com Rami, a múmia junto ao portal.";
                     default: return "Velho Escaravelho conquistado — fase concluída.";
                 }

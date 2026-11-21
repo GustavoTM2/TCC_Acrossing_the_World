@@ -181,8 +181,8 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             controller.AddParameter("Speed",AnimatorControllerParameterType.Float);
             var machine = controller.layers[0].stateMachine;
             var idle = machine.AddState("Parado");
-            idle.motion = walk;
-            idle.speed = 0;
+            idle.motion = AssetDatabase.LoadAssetAtPath<AnimationClip>(Generated + "Lucas_Repouso.anim");
+            idle.speed = 1;
             var walking = machine.AddState("Caminhada");
             walking.motion = walk;
             machine.defaultState = idle;

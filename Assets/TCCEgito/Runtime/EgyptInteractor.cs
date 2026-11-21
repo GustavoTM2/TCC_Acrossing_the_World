@@ -1,4 +1,5 @@
 using UnityEngine;
+using CrossingTheWorld.TCCAudio;
 
 namespace CrossingTheWorld.TCCEgypt
 {
@@ -11,7 +12,7 @@ namespace CrossingTheWorld.TCCEgypt
         // Verifico a tecla de interação e o que o jogador pode fazer neste momento.
         private void Update()
         {
-            if (stage == null || !stage.isActiveAndEnabled || stage.IsLoading || stage.IsDeliveringScarab) return;
+            if (stage == null || !stage.isActiveAndEnabled || stage.IsLoading || stage.IsDeliveringScarab || StageExperience.IsPaused) return;
             bool pressed = EgyptInput.InteractPressed;
             // Se uma conversa já está aberta, E ou Enter avança para a próxima fala.
             if (stage.DialogueIsOpen)

@@ -1,0 +1,26 @@
+OK Cena japonesa preserva cabeÃ§alho YAML
+OK Cena japonesa preserva quantidade de objetos serializados
+OK Cena externa contÃ©m guia italiano
+OK HUD de exploraÃ§Ã£o antiga foi desativada
+OK Script legado respeita HUD moderna
+OK Aviso superior Esc retirado de todas as fases
+OK Tecla Esc ainda abre o menu da fase
+OK Voltar ao menu permanece dentro da pausa
+OK JapÃ£o exibe Esc nos controles inferiores
+OK Egito exibe Esc nos controles inferiores
+OK Brasil exibe Esc nos controles inferiores
+OK ItÃ¡lia exibe Esc no rodapÃ© da pizzaria
+OK CÃ¢mera externa referencia Kenji
+OK CÃ¢mera externa referencia barreiras invisÃ­veis
+OK CÃ¢mera externa usa inclinaÃ§Ã£o inicial 44 graus
+OK CÃ¢mera externa ajusta inclinaÃ§Ã£o perto do templo
+OK CÃ¢mera externa foi aproximada
+OK CÃ¢mera externa usa FOV de 45 graus
+OK CÃ¢mera acompanha personagem com suavidade
+OK CÃ¢mera adapta Ã¢ngulo ao avanÃ§o de Kenji
+OK CÃ¢mera mantÃ©m proteÃ§Ã£o dos limites
+OK CÃ¢mera mantÃ©m proteÃ§Ã£o de colisÃ£o
+OK Brasil nÃ£o sobrepÃµe artefato ao placar
+OK Interface JapÃ£o usa painel compacto inferior
+OK Interface JapÃ£o usa prompt separado
+TOTAL 25/25

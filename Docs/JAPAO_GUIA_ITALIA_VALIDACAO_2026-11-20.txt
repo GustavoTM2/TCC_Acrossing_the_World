@@ -1,0 +1,16 @@
+OK Modelo italiano e recurso Japão são o mesmo arquivo FBX
+OK GUID da cópia do modelo é único
+OK Guia importado para Resources
+OK JapanQuest carrega guia italiano
+OK Guia é posicionado no marcador da fase
+OK Guia é orientado para o Kenji
+OK Colisores do guia desativados
+OK Diálogo do guia ativo
+OK Entrada depende de falar com guia
+OK Monge e katana preservados
+OK Cena externa com guia humano
+OK Verificação atualizada para guia humano
+OK Código antigo de guardião removido
+OK Sem referências à estátua na cena
+OK Menu de pausa preservado
+TOTAL 15/15

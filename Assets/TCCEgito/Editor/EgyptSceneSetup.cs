@@ -328,8 +328,8 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             controller.AddParameter("Speed", AnimatorControllerParameterType.Float);
             AnimatorStateMachine machine = controller.layers[0].stateMachine;
             AnimatorState idle = machine.AddState("Parada_Provisoria");
-            idle.motion = walk;
-            idle.speed = 0;
+            idle.motion = AssetDatabase.LoadAssetAtPath<AnimationClip>(Generated + "/Amira_Repouso.anim");
+            idle.speed = 1;
             AnimatorState walking = machine.AddState("Caminhada");
             walking.motion = walk;
             machine.defaultState = idle;

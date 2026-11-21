@@ -1,0 +1,21 @@
+﻿OK Entrada exterior no portal
+OK Saida interior no portal
+OK Kenji nasce na porta interna
+OK Kenji externo voltado ao templo
+OK Kenji interno voltado ao salao
+OK Monge dentro do salao
+OK Katana no cenario junto ao monge
+OK Cena original exterior preservada
+OK Cena original interna preservada
+OK Monge FBX
+OK Katana FBX
+OK Katana exposta antes de receber
+OK Katana retirada do cenario
+OK Entrega animada
+OK Recompensa com tela de conquista
+OK Camara 3D na interface pela URP
+OK Recompensa giratoria
+OK Recompensa canto superior direito
+OK Despedida obrigatoria antes de sair
+OK Menu Esc preservado
+TOTAL 20/20

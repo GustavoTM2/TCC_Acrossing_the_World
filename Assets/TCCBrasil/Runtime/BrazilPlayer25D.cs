@@ -37,7 +37,8 @@ namespace CrossingTheWorld.TCCBrazil
         // A cada quadro, leio as teclas. O deltaTime ajusta o movimento ao tempo entre os quadros
         private void Update()
         {
-            TickMovement(new Vector2(EgyptInput.Horizontal, EgyptInput.Depth), Time.deltaTime);
+            // Mesma inversão para o Brasil inteiro e para Kenji (ambas cenas).
+            TickMovement(new Vector2(EgyptInput.Horizontal, EgyptInput.BrazilDepth), Time.deltaTime);
         }
 
         // Reaproveito as entradas do Egito e respeito o bloqueio das conversas e do desafio.
@@ -50,7 +51,7 @@ namespace CrossingTheWorld.TCCBrazil
             // Limito a entrada para Lucas não andar mais rápido na diagonal
             input = Vector2.ClampMagnitude(input, 1);
             // Calculo o movimento para os lados e para frente/fundo. Na profundidade, a velocidade é menor
-            Vector3 velocity = (horizontalAxis * input.x + depthAxis * input.y * depthSpeedMultiplier) * speed;
+            Vector3 velocity = EgyptInput.GroundDirection(input, horizontalAxis, depthAxis, depthSpeedMultiplier) * speed;
             // Verifico o chão e aplico a gravidade para manter Lucas apoiado no cenário
             if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2f;
             verticalSpeed += gravity * deltaTime;
@@ -58,9 +59,9 @@ namespace CrossingTheWorld.TCCBrazil
             controller.Move((velocity + Vector3.up * verticalSpeed) * deltaTime);
             // Viro o modelo para a direção em que Lucas está andando
             if (visual != null && velocity.sqrMagnitude > 0.001f)
-                visual.rotation = Quaternion.LookRotation(velocity, Vector3.up) * Quaternion.Euler(0, visualYawOffset, 0);
+                visual.rotation = Quaternion.RotateTowards(visual.rotation, Quaternion.LookRotation(velocity, Vector3.up) * Quaternion.Euler(0, visualYawOffset, 0), 720f * deltaTime);
             // Passo a velocidade para o Animator alternar entre parado e caminhada
-            if (animator != null) animator.SetFloat("Speed", velocity.magnitude / speed);
+            if (animator != null) animator.SetFloat("Speed", input.sqrMagnitude > 0f ? Vector3.ProjectOnPlane(controller.velocity, Vector3.up).magnitude / Mathf.Max(.01f, speed) : 0f, .07f, deltaTime);
             if (transform.position.y < respawnBelowY) Respawn();
         }
 
