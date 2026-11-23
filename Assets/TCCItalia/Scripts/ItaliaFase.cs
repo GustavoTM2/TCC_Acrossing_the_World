@@ -183,6 +183,9 @@ public sealed partial class ItaliaFase : MonoBehaviour {
         SceneManager.LoadScene(System.IO.Path.GetFileNameWithoutExtension(path));
 #endif
     }
+    void ContinueExploring(){
+        mode=Mode.Explore;
+    }
     void Menu(){
         // A conquista permanece registrada no menu até o início da próxima execução.
         SceneManager.LoadScene("Assets/TCCMenu/Scenes/Menu_Principal.unity");
@@ -197,7 +200,7 @@ public sealed partial class ItaliaFase : MonoBehaviour {
         label.font=GUI.skin.font;label.normal.textColor=new Color(.96f,.95f,.90f);
         label.hover=label.active=label.focused=label.normal;
         if(mode!=Mode.Result){
-            Panel(new Rect(14,14,455,101),interior?"ITÁLIA  /  Pizzaria de Marco":"ITÁLIA  /  A cidade da ponte",Objective(),label);
+            Panel(new Rect(14,14,455,101),interior?"ITÁLIA  /  Pizzaria de Marco":"ITÁLIA  /  Veneza, a cidade flutuante",Objective(),label);
             if(won){Panel(new Rect(813,68,174,124),"","Ferrari F40 adquirida",label,true);Car(new Rect(847,77,106,69));}
         }
         if(mode==Mode.Explore){
@@ -216,9 +219,10 @@ public sealed partial class ItaliaFase : MonoBehaviour {
             Panel(new Rect(190,95,620,400),win?"CONQUISTA  /  DESAFIO CONCLUÍDO":"TEMPO ESGOTADO","",label);
             if(win)Car(new Rect(390,135,220,168));
             GUI.Label(new Rect(250,302,500,90),win?"Ferrari F40 adquirida\nPizza aprovada por Marco · Nota "+Grade+"/10":"Marco: Vamos tentar novamente? Siga a ordem da receita.",label);
-            if(GUI.Button(new Rect(265,415,235,45),win?"CONTINUAR EXPLORANDO":"TENTAR NOVAMENTE")){
-                if(win){mode=Mode.Explore;}else Begin();
-            }
+            if(win){
+                if(GUI.Button(new Rect(238,415,245,48),"Voltar ao Menu")) Menu();
+                if(GUI.Button(new Rect(504,415,256,48),"Continuar Explorando")) ContinueExploring();
+            }else if(GUI.Button(new Rect(370,415,260,48),"Tentar novamente")) Begin();
         }
         if(notice!="" && mode!=Mode.Result)
         {

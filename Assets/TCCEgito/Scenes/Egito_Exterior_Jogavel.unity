@@ -3722,7 +3722,7 @@ Transform:
   m_GameObject: {fileID: 1380196154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 418.5, y: 1.490242, z: 954.83}
+  m_LocalPosition: {x: 413.3, y: 1.6, z: 957.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3742,7 +3742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCEgypt.EgyptInteractionPoint
   kind: 1
-  radius: 5.8
+  radius: 1.35
   maxHeightDifference: 0
   origin: {fileID: 0}
 --- !u!1001 &1396960231

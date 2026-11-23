@@ -1833,7 +1833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d6a8e2686c8684db1ab0cfde3bab82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCExploration.ExplorationStage
-  title: "JAP\xC3O / TEMPLO"
+  title: "A cidade flutuante"
 --- !u!4 &1267599651
 Transform:
   m_ObjectHideFlags: 0

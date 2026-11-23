@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26d6a8e2686c8684db1ab0cfde3bab82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCExploration.ExplorationStage
-  title: "IT\xC1LIA / PONTES"
+  title: "IT\xC1LIA / Veneza, a cidade flutuante"
 --- !u!4 &783217959
 Transform:
   m_ObjectHideFlags: 0

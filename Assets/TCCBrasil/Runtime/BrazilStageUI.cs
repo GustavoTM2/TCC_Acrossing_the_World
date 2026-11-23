@@ -135,7 +135,8 @@ namespace CrossingTheWorld.TCCBrazil
                 GUI.DrawTexture(new Rect(220, 245, 250, 355), stage.rewardDisplay.PreviewTexture, ScaleMode.ScaleToFit, true);
             Text(new Rect(514, 260, 530, 45), "Berimbau antigo", title, Color.white);
             Text(new Rect(514, 322, 520, 160), "O berimbau que animava as rodas de capoeira do avô do morador agora acompanha sua viagem.\n\nMais uma história para levar pelo mundo!", body, Color.white);
-            if (Button(new Rect(514, 545, 520, 54), "Continuar na praia")) stage.ContinueExploring();
+            if (Button(new Rect(514, 525, 520, 52), "Continuar Explorando")) stage.ContinueExploring();
+            if (Button(new Rect(514, 592, 520, 52), "Voltar ao Menu")) stage.ReturnToMenu();
         }
         private void DrawSmallPrize()
         {

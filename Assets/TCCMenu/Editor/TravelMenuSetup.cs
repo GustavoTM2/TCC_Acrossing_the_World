@@ -64,7 +64,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
             var destinations = Rect("Selecao_de_Paises", frame, 0, 0, 1672, 941);
             menu.mainPage = main.gameObject; menu.destinationsPage = destinations.gameObject;
             Texture2D background = AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Art/Menu_Fundo.png");
-            Picture("Mapa", main, 0, 0, 1672, 941, background);
+            Map(main, background);
             menu.mainLabels = new Text[4];
             string[] options = { "JOGAR", "OPÇÕES", "CRÉDITOS", "SAIR" };
             for (int i = 0; i < 4; i++)
@@ -86,17 +86,17 @@ namespace CrossingTheWorld.TCCMenu.Editor
             menu.compass = compass.rectTransform;
             Label("Controles", main, 30, 885, 360, 28, "↑ ↓ / W S · selecionar     Enter · confirmar", body, 15, Cream);
 
-            Picture("Mapa", destinations, 0, 0, 1672, 941, background);
+            Map(destinations, background);
             Box("Fundo_Escuro", destinations, 0, 0, 1672, 941, new Color(.025f, .06f, .08f, .94f));
             Label("Titulo", destinations, 100, 130, 1472, 65, "ESCOLHA SEU DESTINO", serif, 42, Gold);
             Label("Subtitulo", destinations, 100, 205, 1472, 32, "Escolha o país que deseja conhecer.", body, 22, Cream);
             menu.cards = new RectTransform[4]; menu.cardBorders = new Image[4];
             menu.countryLabels = new Text[4]; menu.countryStatus = new Text[4];
-            string[] names = { "EGITO", "BRASIL", "ITÁLIA", "JAPÃO" };
-            string[] locations = { "Areias do Tempo", "Rio de Janeiro", "Pontes", "Templo" };
+            string[] names = { "Egito", "Brasil", "Itália", "Japão" };
+            string[] locations = { "Areias do Tempo", "Rio de Janeiro", "Veneza, a cidade flutuante", "Templo Okoizume" };
             for (int i = 0; i < 4; i++)
             {
-                RectTransform card = Rect(names[i], destinations, 100 + i * 370, 310, 340, 480);
+                RectTransform card = Rect(names[i].ToUpperInvariant(), destinations, 100 + i * 370, 310, 340, 480);
                 // Cards quadrados na área de prévia; mantém a seleção por teclado e mouse.
                 card.pivot = new Vector2(.5f, .5f);
                 card.anchoredPosition += new Vector2(170, -240);
@@ -106,9 +106,10 @@ namespace CrossingTheWorld.TCCMenu.Editor
                 Texture2D preview = i < 2 ? AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Art/" + (i == 0 ? "Egito.png" : "Brasil.png")) : AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCExploracao/Generated/" + (i == 2 ? "Italia" : "Japao") + "_Previa.png");
                 RawImage picture = Picture("Previa", card, 10, 10, 320, 320, preview);
                 picture.uvRect = new Rect(0, 0, 1, 1);
-                menu.countryLabels[i] = Label("Pais", card, 10, 338, 320, 42, names[i], serif, 33, Cream);
-                Label("Local", card, 10, 384, 320, 30, locations[i], body, 20, Cream);
-                menu.countryStatus[i] = Label("Estado", card, 10, 436, 320, 24, i < 2 ? "" : "EXPLORAR", body, 16, i < 2 ? Gold : new Color(.65f, .67f, .66f));
+                menu.countryLabels[i] = Label("Pais", card, 10, 328, 320, 62, names[i], serif, 32, Gold);
+                menu.countryLabels[i].verticalOverflow = VerticalWrapMode.Overflow;
+                Label("Local", card, 10, 390, 320, 32, locations[i], body, 20, Cream);
+                menu.countryStatus[i] = Label("Estado", card, 10, 436, 320, 24, "", body, 16, Gold);
                 MakeButton(card, menu, i, true);
             }
             var back = Rect("Voltar", destinations, 100, 818, 180, 48);
@@ -127,6 +128,23 @@ namespace CrossingTheWorld.TCCMenu.Editor
             EditorBuildSettings.scenes = scenes.ToArray();
             AssetDatabase.SaveAssets();
             Debug.Log("TRAVEL_MENU_SETUP_OK");
+        }
+
+        private static void Map(Transform parent, Texture2D background)
+        {
+            var map = Picture("Mapa", parent, 0, 0, 1672, 941, background);
+            // A primeira palavra fazia parte do PNG. Reaproveita o papel do próprio mapa
+            // sob o título editável, preservando o globo, os filetes e as outras duas linhas.
+            var band = Picture("Fundo do título", map.transform, 34, 63, 365, 83, background);
+            band.uvRect = new Rect(.024f, .51f, .165f, .085f);
+            var lower = Picture("Fundo da inicial", map.transform, 34, 146, 112, 19, background);
+            lower.uvRect = new Rect(.024f, .49f, .051f, .020f);
+            var title = Label("Acrossing the World", map.transform, 31, 45, 370, 115,
+                "Acrossing", serif, 63, new Color(.97f,.89f,.74f));
+            title.resizeTextForBestFit = true;
+            title.resizeTextMinSize = 42;
+            title.resizeTextMaxSize = 63;
+            title.fontStyle = FontStyle.Bold;
         }
 
         private static void ConfigureTexture(string file, bool sprite, int size)

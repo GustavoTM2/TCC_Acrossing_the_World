@@ -253,6 +253,7 @@ namespace CrossingTheWorld.TCCJapan
                     {
                         guideCharacter = Instantiate(prefab);
                         guideCharacter.name = "Guia_Turistico_Japao_Original";
+                        FitModel(guideCharacter, guide, 1.75f, 0f);
                         Debug.LogWarning("Japão: guia restaurado automaticamente; salve a cena atualizada.");
                     }
                 }
@@ -265,7 +266,7 @@ namespace CrossingTheWorld.TCCJapan
                     return;
                 }
                 guideCharacter.SetActive(true);
-                FitModel(guideCharacter, guide, 1.75f, 0f);
+                // A instância da cena já tem altura e posição dos pés ajustadas.
                 if(player != null)
                 {
                     Vector3 facing = player.position - guide.position;
@@ -414,8 +415,7 @@ namespace CrossingTheWorld.TCCJapan
             if(movement!=null)movement.enabled=!(talking || completionVisible || rewardPresentation || delivering);
             if(!EgyptInput.InteractPressed)return;
             if(talking) {AdvanceDialogue();return;}
-            if(rewardPresentation) {ContinueFromReward();return;}
-            if(completionVisible) {completionVisible=false;return;}
+            if(rewardPresentation || completionVisible) {ContinueFromReward();return;}
             if(player==null)return;
             if(!interior)
             {
@@ -501,6 +501,12 @@ namespace CrossingTheWorld.TCCJapan
         private void ContinueFromReward()
         {
             rewardPresentation=false;
+            completionVisible=false;
+        }
+        private static void ReturnToMenu()
+        {
+            SaveProgress();
+            Load(TravelMenu.ScenePath, "Voltando ao menu...");
         }
         private static void SaveProgress()
         {
@@ -578,7 +584,7 @@ namespace CrossingTheWorld.TCCJapan
             GUI.matrix=Matrix4x4.TRS(new Vector3((Screen.width-1280*scale)*.5f,(Screen.height-720*scale)*.5f,0),
                 Quaternion.identity,Vector3.one*scale);
             Panel(new Rect(24,22,610,100));
-            GUI.Label(new Rect(46,34,561,34),interior?"JAPÃO  /  TEMPLO DOS OKOIZUME":"JAPÃO  /  O SANTUÁRIO DOS ANTIGOS",titleStyle);
+            GUI.Label(new Rect(46,34,561,34),"A cidade flutuante",titleStyle);
             GUI.Label(new Rect(46,74,560,41),Objective,objectiveStyle);
             if(prizeAcquired && !rewardPresentation && !completionVisible)
             {
@@ -613,11 +619,8 @@ namespace CrossingTheWorld.TCCJapan
                 GUI.Label(new Rect(620,305,409,164),completionVisible?
                     "Kenji reconheceu seu passado e decidiu levar o legado dos Okoizume adiante com respeito e sabedoria.":
                     "Uma relíquia de seus ancestrais. O valor da katana está no compromisso que Kenji assumiu com a sua história.",bodyStyle);
-                if(GUI.Button(new Rect(470,554,340,53),"CONTINUAR EXPLORANDO",buttonStyle))
-                {
-                    if(rewardPresentation)ContinueFromReward();
-                    else completionVisible=false;
-                }
+                if(GUI.Button(new Rect(312,554,305,53),"Voltar ao Menu",buttonStyle)) ReturnToMenu();
+                if(GUI.Button(new Rect(640,554,328,53),"Continuar Explorando",buttonStyle)) ContinueFromReward();
             }
             else
             {

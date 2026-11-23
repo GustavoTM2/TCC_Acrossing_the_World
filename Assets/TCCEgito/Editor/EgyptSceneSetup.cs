@@ -155,9 +155,10 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             npc.transform.SetParent(setup.transform, true);
 
             Vector3 portalPosition = Ground(interior ? new Vector3(394, 0, 1030.5f)
-                : new Vector3(414, 0, 954.83f), interior);
+                : new Vector3(413.3f, 0, 957.9f), interior);
             EgyptInteractionPoint portal = MakePoint(interior ? "Saida_Piramide" : "Entrada_Piramide",
                 portalPosition, interior ? EgyptPointKind.Exit : EgyptPointKind.Entrance, scarabMaterial, true);
+            if (!interior) portal.radius = 1.35f;
             portal.transform.SetParent(setup.transform, true);
             interactor.points = new[] { npc, portal };
 

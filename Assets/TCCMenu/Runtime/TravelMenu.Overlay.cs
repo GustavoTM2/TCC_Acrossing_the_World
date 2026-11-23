@@ -12,6 +12,91 @@ namespace CrossingTheWorld.TCCMenu
         private int overlaySelection;
         private float volume = 1f;
         private GUIStyle overlayTitle, overlayBody, overlayButton;
+        private GUIStyle creditTitle, creditStudio, creditGame, creditName, creditRole, creditCaption, creditFooter, creditBack;
+        private Texture creditMap;
+
+        private static readonly Color CreditInk = new Color32(22, 47, 53, 255);
+        private static readonly Color CreditPaper = new Color32(247, 237, 211, 255);
+        private static readonly Color CreditBrass = new Color32(214, 176, 108, 255);
+
+        private static GUIStyle CreditText(int size, Color color, Font font = null,
+            FontStyle weight = FontStyle.Normal, TextAnchor align = TextAnchor.MiddleLeft)
+        {
+            var style = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = size, fontStyle = weight, alignment = align, font = font,
+                padding = new RectOffset(), wordWrap = false
+            };
+            style.normal.textColor = style.hover.textColor = style.active.textColor = style.focused.textColor = color;
+            return style;
+        }
+
+        private void PrepareCredits()
+        {
+            if (creditTitle != null) return;
+            var serif = mainLabels[0].font;
+            creditTitle = CreditText(50, CreditPaper, serif);
+            creditGame = CreditText(19, CreditBrass, serif);
+            creditStudio = CreditText(37, CreditInk, serif);
+            creditName = CreditText(21, CreditInk, null, FontStyle.Bold);
+            creditRole = CreditText(17, new Color32(73, 81, 72, 255));
+            creditCaption = CreditText(15, CreditPaper);
+            creditFooter = CreditText(15, new Color32(76, 72, 56, 255));
+            creditBack = CreditText(16, CreditPaper, null, FontStyle.Bold, TextAnchor.MiddleCenter);
+            var map = mainPage.transform.Find("Mapa");
+            if (map && map.TryGetComponent<RawImage>(out var picture)) creditMap = picture.texture;
+        }
+
+        private static void CreditFill(Rect area, Color color)
+        {
+            GUI.color = color;
+            GUI.DrawTexture(area, Texture2D.whiteTexture);
+            GUI.color = Color.white;
+        }
+
+        private void CreditRow(float y, string name, string role)
+        {
+            GUI.Label(new Rect(520, y, 504, 31), name, creditName);
+            GUI.Label(new Rect(520, y + 31, 504, 25), role, creditRole);
+        }
+
+        private void DrawCredits(float scale)
+        {
+            PrepareCredits();
+            float width = Screen.width / scale, height = Screen.height / scale;
+            CreditFill(new Rect((1200 - width) / 2, (720 - height) / 2, width, height), new Color(.02f, .055f, .07f, .82f));
+            CreditFill(new Rect(131, 95, 948, 548), new Color(0, 0, 0, .32f));
+            CreditFill(new Rect(126, 86, 948, 548), CreditBrass);
+            CreditFill(new Rect(128, 88, 346, 544), CreditInk);
+            CreditFill(new Rect(474, 88, 598, 544), CreditPaper);
+
+            GUI.Label(new Rect(158, 118, 294, 34), "Acrossing the World", creditGame);
+            GUI.Label(new Rect(155, 154, 303, 71), "Créditos", creditTitle);
+            CreditFill(new Rect(158, 240, 50, 2), CreditBrass);
+            GUI.Label(new Rect(158, 256, 304, 30), "Projeto educacional de exploração cultural", creditCaption);
+
+            if (creditMap)
+                GUI.DrawTextureWithTexCoords(new Rect(128, 315, 344, 185), creditMap, new Rect(.28f, .21f, .55f, .53f));
+            CreditFill(new Rect(128, 314, 344, 1), CreditBrass);
+            CreditFill(new Rect(128, 500, 344, 1), CreditBrass);
+            var back = new Rect(158, 544, 284, 49);
+            CreditFill(back, CreditBrass);
+            CreditFill(new Rect(back.x + 2, back.y + 2, back.width - 4, back.height - 4),
+                back.Contains(Event.current.mousePosition) ? new Color32(53, 85, 88, 255) : CreditInk);
+            if (GUI.Button(back, "Voltar ao menu", creditBack)) ShowMain();
+
+            GUI.Label(new Rect(518, 111, 508, 63), "Friends Dev", creditStudio);
+            var rule = new Color32(194, 173, 134, 255);
+            CreditFill(new Rect(520, 186, 505, 1), rule);
+            CreditRow(207, "Guilherme Nunes dos Santos", "Desenvolvedor / Programador");
+            CreditRow(284, "Filipe Ichiro Rabelo Okuizumi", "Game Designer / Modelador 3D");
+            CreditRow(361, "Davi Carvalho da Silva Clemente", "Level Designer");
+            CreditRow(438, "Gustavo Teixeira Marques", "Programador / Desenvolvedor");
+            CreditFill(new Rect(520, 527, 505, 1), rule);
+            GUI.Label(new Rect(520, 545, 504, 26), "ETEC Professor Basilides de Godoy", creditFooter);
+            GUI.Label(new Rect(520, 573, 504, 26), "Brasil · Egito · Itália · Japão", creditFooter);
+        }
+
         private bool OverlayVisible => activeOverlay != MenuOverlay.None;
 
         private void RestorePreferences()
@@ -103,6 +188,13 @@ namespace CrossingTheWorld.TCCMenu
             GUI.matrix = Matrix4x4.TRS(
                 new Vector3((Screen.width - 1200f * scale) / 2f, (Screen.height - 720f * scale) / 2f, 0),
                 Quaternion.identity, Vector3.one * scale);
+            if (activeOverlay == MenuOverlay.Credits)
+            {
+                DrawCredits(scale);
+                GUI.matrix = oldMatrix;
+                GUI.color = oldColor;
+                return;
+            }
             if (overlayTitle == null)
             {
                 overlayTitle = new GUIStyle(GUI.skin.label)
@@ -124,8 +216,7 @@ namespace CrossingTheWorld.TCCMenu
             GUI.color = new Color(.93f,.72f,.31f,1f);
             GUI.DrawTexture(new Rect(264,128,672,4), Texture2D.whiteTexture);
             GUI.color = Color.white;
-            string heading = activeOverlay == MenuOverlay.Options ? "OPÇÕES" :
-                activeOverlay == MenuOverlay.Credits ? "CRÉDITOS" : "SAIR DO JOGO?";
+            string heading = activeOverlay == MenuOverlay.Options ? "OPÇÕES" : "SAIR DO JOGO?";
             GUI.Label(new Rect(300,154,600,58), heading, overlayTitle);
 
             if (activeOverlay == MenuOverlay.Options)
@@ -143,12 +234,6 @@ namespace CrossingTheWorld.TCCMenu
                     "Qualidade: "+quality,overlayButton)) CycleQuality();
                 if (GUI.Button(new Rect(335,471,530,50),"VOLTAR AO MENU",overlayButton)) ShowMain();
                 GUI.Label(new Rect(335,537,530,30),"Esc: voltar  ·  Enter: confirmar",overlayBody);
-            }
-            else if (activeOverlay == MenuOverlay.Credits)
-            {
-                GUI.Label(new Rect(317,228,566,176),
-                    "ACROSSING THE WORLD — TCC\n\nProjeto educacional de exploração cultural.\nDesenvolvido pela equipe do TCC.\n\nCenários: Egito, Brasil, Itália e Japão.",overlayBody);
-                if (GUI.Button(new Rect(365,468,470,54),"VOLTAR AO MENU",overlayButton)) ShowMain();
             }
             else
             {

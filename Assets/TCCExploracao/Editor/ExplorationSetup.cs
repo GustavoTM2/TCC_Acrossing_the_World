@@ -32,7 +32,7 @@ public static class ExplorationSetup {
   if(!Physics.Raycast(spawn+Vector3.up*100,Vector3.down,out RaycastHit hit,200)) throw new InvalidOperationException("Chão não encontrado.");
   spawn.y=hit.point.y+.04f;
   var root=new GameObject("Exploracao_"+(japan?"Japao":"Italia"));
-  root.AddComponent<ExplorationStage>().title=japan?"JAPÃO / TEMPLO":"ITÁLIA / PONTES";
+  root.AddComponent<ExplorationStage>().title=japan?"A cidade flutuante":"ITÁLIA / Veneza, a cidade flutuante";
   var player=Character(japan?"Kenji":"Sofia",spawn,root.transform);
   player.horizontalAxis=japan?Vector3.left:Vector3.forward;player.depthAxis=japan?Vector3.back:Vector3.left;
   player.visual.rotation=Quaternion.LookRotation(player.horizontalAxis);player.respawnBelowY=spawn.y-25;
@@ -85,7 +85,7 @@ public static class ExplorationSetup {
  }
  static void UpdateMenu() {
   EditorSceneManager.OpenScene(TravelMenu.ScenePath);var menu=Object.FindFirstObjectByType<TravelMenu>();
-  for(int i=2;i<4;i++) {var picture=menu.cards[i].Find("Previa").GetComponent<UnityEngine.UI.RawImage>();picture.texture=AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"Generated/"+(i==2?"Italia":"Japao")+"_Previa.png");picture.uvRect=new Rect(0,0,1,1);picture.color=Color.white;menu.countryStatus[i].text="EXPLORAR";menu.cards[i].Find("Local").GetComponent<UnityEngine.UI.Text>().text=i==2?"Pontes":"Templo";}
+  for(int i=2;i<4;i++) {var picture=menu.cards[i].Find("Previa").GetComponent<UnityEngine.UI.RawImage>();picture.texture=AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"Generated/"+(i==2?"Italia":"Japao")+"_Previa.png");picture.uvRect=new Rect(0,0,1,1);picture.color=Color.white;menu.countryStatus[i].text="EXPLORAR";menu.cards[i].Find("Local").GetComponent<UnityEngine.UI.Text>().text=i==2?"Veneza, a cidade flutuante":"Templo Okoizume";}
   EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());EditorSceneManager.SaveOpenScenes();
  }
  public static void PlayJapan() {

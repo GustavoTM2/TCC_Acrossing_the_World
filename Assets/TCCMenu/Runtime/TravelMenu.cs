@@ -151,8 +151,9 @@ namespace CrossingTheWorld.TCCMenu
                 mainLabels[i].color = selected ? gold : cream;
                 bool chosen = i == CountryIndex;
                 cards[i].localScale = Vector3.one * (chosen ? 1.055f : 1f);
-                cardBorders[i].color = chosen ? gold : new Color(.45f, .41f, .31f, .7f);
-                countryLabels[i].color = chosen ? gold : cream;
+                cardBorders[i].color = chosen ? gold : new Color(.78f, .59f, .31f);
+                countryStatus[i].color = gold;
+                countryLabels[i].color = chosen ? gold : new Color(.94f, .78f, .51f);
             }
             compass.anchoredPosition = new Vector2(56, -(379 + MainIndex * 85));
         }
