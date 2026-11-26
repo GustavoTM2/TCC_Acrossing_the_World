@@ -15,6 +15,8 @@ public static class ExplorationSetup {
  public const string Japan=Root+"Scenes/Japao_Exploracao.unity";
  public const string Italy=Root+"Scenes/Italia_Exploracao.unity";
  public static void Build() {
+  if (!AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Scenes/Japao.unity") || !AssetDatabase.LoadAssetAtPath<SceneAsset>("Assets/Scenes/Itália.unity"))
+   throw new InvalidOperationException("Para reconstruir as fases de exploração antigas, restaure primeiro as cenas-fonte arquivadas.");
   BuildOne(true); BuildOne(false); UpdateMenu(); AssetDatabase.SaveAssets();
   File.WriteAllText("C:/Users/Gustavo/Downloads/tcc/exploracao-build-ok.txt","Kenji e Sofia preparados na Unity "+Application.unityVersion);
  }
@@ -89,6 +91,12 @@ public static class ExplorationSetup {
   EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());EditorSceneManager.SaveOpenScenes();
  }
  public static void PlayJapan() {
+ if (!AssetDatabase.LoadAssetAtPath<SceneAsset>(Japan)) {
+  if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+  EditorSceneManager.OpenScene(CrossingTheWorld.TCCJapan.JapanQuest.Exterior);
+  EditorApplication.EnterPlaymode();
+  return;
+ }
  var scene=EditorSceneManager.OpenScene(Japan);
  var follow=Object.FindFirstObjectByType<EgyptCamera25D>();follow.offset=new Vector3(0,5.5f,7);follow.GetComponent<Camera>().fieldOfView=55;
  follow.transform.position=follow.target.position+follow.offset;follow.transform.LookAt(follow.target.position+follow.lookOffset);

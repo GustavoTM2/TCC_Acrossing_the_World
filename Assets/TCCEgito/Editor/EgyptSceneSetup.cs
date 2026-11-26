@@ -87,13 +87,6 @@ namespace CrossingTheWorld.TCCEgypt.Editor
 
         private static void Build()
         {
-            string exteriorSource = AssetDatabase.GUIDToAssetPath(ExteriorSourceGuid);
-            string interiorSource = AssetDatabase.GUIDToAssetPath(InteriorSourceGuid);
-            string amiraPath = AssetDatabase.GUIDToAssetPath(AmiraGuid);
-            if (string.IsNullOrEmpty(exteriorSource) || string.IsNullOrEmpty(interiorSource)
-                || string.IsNullOrEmpty(amiraPath))
-                throw new InvalidOperationException("Não encontrei as duas cenas e o modelo de Amira enviados. Instale este pacote naquele projeto.");
-
             EnsureFolder(Generated);
             EnsureFolder(SceneFolder);
             bool hasExterior = AssetDatabase.LoadAssetAtPath<SceneAsset>(Exterior) != null;
@@ -107,6 +100,13 @@ namespace CrossingTheWorld.TCCEgypt.Editor
                 Debug.Log("As cenas jogáveis já existem. Abri o exterior e preservei suas alterações.");
                 return;
             }
+
+            string exteriorSource = AssetDatabase.GUIDToAssetPath(ExteriorSourceGuid);
+            string interiorSource = AssetDatabase.GUIDToAssetPath(InteriorSourceGuid);
+            string amiraPath = AssetDatabase.GUIDToAssetPath(AmiraGuid);
+            if (string.IsNullOrEmpty(exteriorSource) || string.IsNullOrEmpty(interiorSource)
+                || string.IsNullOrEmpty(amiraPath))
+                throw new InvalidOperationException("Não encontrei as duas cenas e o modelo de Amira enviados. Instale este pacote naquele projeto.");
 
             AnimatorController animation = MakeAnimation(amiraPath);
             Material guideMaterial = MakeMaterial("Guia", new Color(0.9f, 0.65f, 0.2f));

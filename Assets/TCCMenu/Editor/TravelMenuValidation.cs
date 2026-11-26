@@ -140,8 +140,8 @@ namespace CrossingTheWorld.TCCMenu.Editor
 #endif
                         menu.cards[2].GetComponent<MenuPointer>().OnPointerEnter(new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current));
                         Require(menu.CountryIndex == 2, "Mouse muda o destaque do país");
-                        Require(Application.CanStreamedLevelBeLoaded("Assets/TCCExploracao/Scenes/Italia_Exploracao.unity"), "Exploração da Itália disponível");
-                        Require(Application.CanStreamedLevelBeLoaded("Assets/TCCExploracao/Scenes/Japao_Exploracao.unity"), "Exploração do Japão disponível");
+                        Require(Application.CanStreamedLevelBeLoaded(Viaggio.Italia.ItaliaFase.Rua), "Exploração da Itália disponível");
+                        Require(Application.CanStreamedLevelBeLoaded(CrossingTheWorld.TCCJapan.JapanQuest.Exterior), "Exploração do Japão disponível");
                         menu.Select(1, true);
                         break;
                     case 3:

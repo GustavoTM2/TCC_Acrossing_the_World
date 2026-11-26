@@ -11,7 +11,12 @@ using CrossingTheWorld.TCCEgypt;
 public static class ExplorationValidation {
  static int phase,frames,lastFrame;const string Key="TCC.Exploration.Validation";
  static ExplorationValidation(){EditorApplication.update+=Tick;}
- public static void Run(){SessionState.SetBool(Key,true);EditorSceneManager.OpenScene(ExplorationSetup.Japan);EditorApplication.EnterPlaymode();}
+ public static void Run(){
+  if (!AssetDatabase.LoadAssetAtPath<SceneAsset>(ExplorationSetup.Japan) || !AssetDatabase.LoadAssetAtPath<SceneAsset>(ExplorationSetup.Italy)) {
+   TCCPlaySmoke.Run();
+   return;
+  }
+  SessionState.SetBool(Key,true);EditorSceneManager.OpenScene(ExplorationSetup.Japan);EditorApplication.EnterPlaymode();}
  static void Tick(){
   if(!SessionState.GetBool(Key,false)||!EditorApplication.isPlaying||EgyptSceneTransition.IsBusy)return;
   Application.runInBackground=true;EditorApplication.QueuePlayerLoopUpdate();if(lastFrame==Time.frameCount)return;lastFrame=Time.frameCount;if(++frames<90)return;frames=0;
