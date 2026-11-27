@@ -65,14 +65,17 @@ namespace CrossingTheWorld.TCCBrazil
             Matrix4x4 previous = GUI.matrix;
             float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
             GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280 * scale) / 2, (Screen.height - 720 * scale) / 2, 0), Quaternion.identity, Vector3.one * scale);
-            Panel(new Rect(24, 22, 610, 100));
-            Text(new Rect(46, 35, 558, 28), "BRASIL  /  RIO DE JANEIRO", phaseTitle, gold);
-            Text(new Rect(46, 72, 557, 42), stage.Objective, objective, Color.white);
-            // O placar substitui o cartão do prêmio durante as embaixadinhas.
-            // Desenhar os dois ao mesmo tempo causava sobreposição no canto direito.
-            if (stage.HasPrize && stage.State != BrazilState.Reward &&
-                stage.State != BrazilState.Playing && stage.State != BrazilState.Countdown)
-                DrawSmallPrize();
+            if (stage.State != BrazilState.Dialogue)
+            {
+                Panel(new Rect(24, 22, 610, 100));
+                Text(new Rect(46, 35, 558, 28), "BRASIL  /  RIO DE JANEIRO", phaseTitle, gold);
+                Text(new Rect(46, 72, 557, 42), stage.Objective, objective, Color.white);
+                // O placar substitui o cartão do prêmio durante as embaixadinhas.
+                // Desenhar os dois ao mesmo tempo causava sobreposição no canto direito.
+                if (stage.HasPrize && stage.State != BrazilState.Reward &&
+                    stage.State != BrazilState.Playing && stage.State != BrazilState.Countdown)
+                    DrawSmallPrize();
+            }
             switch (stage.State)
             {
                 case BrazilState.Exploring:

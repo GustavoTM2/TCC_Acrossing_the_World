@@ -388,7 +388,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &126088328
 GameObject:
@@ -515,7 +515,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &144981226
 GameObject:
@@ -965,7 +965,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &298170170
 GameObject:
@@ -1124,7 +1124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &329479758
 GameObject:
@@ -1315,7 +1315,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &388670009
 GameObject:
@@ -1654,8 +1654,31 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &499685672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499685667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7b8096a6c940759ae698fe063e8925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCJapan.JapanInteriorCamera25D
+  target: {fileID: 1530116077}
+  offset: {x: 0.45, y: 3.8, z: 4.8}
+  lookOffset: {x: 0, y: 1.2, z: -0.8}
+  fieldOfView: 58
+  smoothTime: 0.19
+  turnSharpness: 9
+  horizontalBounds: {x: -4.3, y: 4.3}
+  depthBounds: {x: -4.8, y: 8.15}
+  wallSafety: 0.32
+  avoidWalls: 1
+  collisionRadius: 0.16
 --- !u!1 &513228538
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,7 +1804,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &570864424
 GameObject:
@@ -2092,7 +2115,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &759784856
 GameObject:
@@ -2245,7 +2268,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1826034994}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fabfca0ef435d634d92e324fc0139e06, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2548,7 +2571,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &922312933
 GameObject:
@@ -2949,6 +2972,50 @@ Transform:
   - {fileID: 388670010}
   m_Father: {fileID: 1125408640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1269288975
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1269288976}
+  m_Layer: 0
+  m_Name: "C\xE2meras e ilumina\xE7\xE3o"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1269288976
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269288975}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1582320013}
+  - {fileID: 1559997366}
+  - {fileID: 909345024}
+  - {fileID: 301210842}
+  - {fileID: 1391948594}
+  - {fileID: 1639663446}
+  - {fileID: 513228541}
+  - {fileID: 103333126}
+  - {fileID: 709048223}
+  - {fileID: 371014101}
+  - {fileID: 126088331}
+  - {fileID: 289906706}
+  - {fileID: 499685671}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1285307069
 GameObject:
   m_ObjectHideFlags: 0
@@ -3310,7 +3377,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1410582365
 GameObject:
@@ -3519,7 +3586,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1569070854}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1563644224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1530116078
 MonoBehaviour:
@@ -3568,6 +3635,11 @@ CharacterController:
   m_SkinWidth: 0.025
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!4 &1534594581 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fabfca0ef435d634d92e324fc0139e06, type: 3}
+  m_PrefabInstance: {fileID: 861009507}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1559997364
 GameObject:
   m_ObjectHideFlags: 0
@@ -3664,7 +3736,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &1559997367
 MonoBehaviour:
@@ -3695,6 +3767,38 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1563644223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563644224}
+  m_Layer: 0
+  m_Name: Personagens
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563644224
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563644223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1530116077}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1569070853
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,7 +3922,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 5.472, y: -180.135, z: 0}
 --- !u!114 &1582320014
 MonoBehaviour:
@@ -4020,7 +4124,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!21 &1699538082
 Material:
@@ -4266,6 +4370,38 @@ Material:
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!1 &1826034993
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1826034994}
+  m_Layer: 0
+  m_Name: "Cen\xE1rio"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1826034994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826034993}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1534594581}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1848288112
 GameObject:
   m_ObjectHideFlags: 0
@@ -4570,46 +4706,11 @@ Transform:
   - {fileID: 1118267939}
   m_Father: {fileID: 1183995626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &499685672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 499685667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7b8096a6c940759ae698fe063e8925, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::CrossingTheWorld.TCCJapan.JapanInteriorCamera25D
-  target: {fileID: 1530116077}
-  offset: {x: 0.45, y: 3.8, z: 4.8}
-  lookOffset: {x: 0, y: 1.2, z: -0.8}
-  fieldOfView: 58
-  smoothTime: 0.19
-  turnSharpness: 9
-  horizontalBounds: {x: -4.3, y: 4.3}
-  depthBounds: {x: -4.8, y: 8.15}
-  wallSafety: 0.32
-  avoidWalls: 1
-  collisionRadius: 0.16
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1582320013}
-  - {fileID: 1559997366}
-  - {fileID: 861009507}
-  - {fileID: 909345024}
-  - {fileID: 301210842}
-  - {fileID: 1391948594}
-  - {fileID: 1639663446}
-  - {fileID: 513228541}
-  - {fileID: 103333126}
-  - {fileID: 709048223}
-  - {fileID: 371014101}
-  - {fileID: 126088331}
-  - {fileID: 289906706}
   - {fileID: 922312935}
-  - {fileID: 1530116077}
-  - {fileID: 499685671}
+  - {fileID: 1269288976}
+  - {fileID: 1826034994}
+  - {fileID: 1563644224}

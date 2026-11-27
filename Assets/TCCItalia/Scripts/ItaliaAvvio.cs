@@ -88,13 +88,18 @@ public sealed class ItaliaAvvio : MonoBehaviour {
     }
     void Awake(){
         var scene=gameObject.scene;
+        // As peças de rua ficam diretamente dentro dos grupos organizadores da cena.
+        var roots = scene.GetRootGameObjects();
+        var streetObjects = roots.SelectMany(o => o.name == "Cenário" || o.name == "Personagens"
+            ? o.transform.Cast<Transform>().Select(t => t.gameObject)
+            : new[] { o }).ToArray();
         parent=transform;
         var stage=gameObject.AddComponent<ItaliaFase>();stage.interior=interior;
             float floor=interior?.55f:(pisoRua ? pisoRua.bounds.max.y : 17.12f);
             Bounds entrance=new Bounds();
             Vector3 outward=Vector3.forward;
             if(!interior){
-                var house=scene.GetRootGameObjects().First(o=>o.name=="Modular European House Variant");
+                var house=streetObjects.First(o=>o.name=="Modular European House Variant");
                 var door=house.GetComponentsInChildren<Transform>(true).First(t=>t.name=="Door" && t.GetComponentsInParent<Transform>(true).Any(p=>p.name=="Parts"));
                 var meshes=door.GetComponentsInChildren<Renderer>();
                 entrance=meshes[0].bounds;
@@ -120,8 +125,8 @@ public sealed class ItaliaAvvio : MonoBehaviour {
                     stage.npc.rotation=Quaternion.Euler(0,-105,0);
                 }
             }else{
-                if(!transform.Find("Margens do canal")) CompleteCanal(scene.GetRootGameObjects());
-                var guide=scene.GetRootGameObjects().First(o=>o.name=="guiaturistico");
+                if(!transform.Find("Margens do canal")) CompleteCanal(streetObjects);
+                var guide=streetObjects.First(o=>o.name=="guiaturistico");
                 stage.npc=new GameObject("Interação com o guia").transform;stage.npc.SetParent(parent);stage.npc.position=V(682,floor,405);
                 var rs=guide.GetComponentsInChildren<Renderer>();
                 var bounds=rs[0].bounds;foreach(var r in rs)bounds.Encapsulate(r.bounds);
@@ -150,7 +155,7 @@ public sealed class ItaliaAvvio : MonoBehaviour {
                 stage.area=area;
                 }
             }
-            stage.player=new GameObject("Sofia").transform;stage.player.tag="Player";stage.player.position=interior?(chegadaSofia?chegadaSofia.position:V(-2,floor+.05f,-1)):BridgeStart(scene.GetRootGameObjects(),stage);
+            stage.player=new GameObject("Sofia").transform;stage.player.tag="Player";stage.player.position=interior?(chegadaSofia?chegadaSofia.position:V(-2,floor+.05f,-1)):BridgeStart(streetObjects,stage);
             var sofia = Instantiate(Resources.Load<GameObject>("ItaliaPronta/SofiaAnimada"), stage.player, false);
             sofia.transform.localScale = Vector3.one * stage.unit;
             stage.animator = sofia.GetComponentInChildren<Animator>();

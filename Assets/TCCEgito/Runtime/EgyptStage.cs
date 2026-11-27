@@ -55,6 +55,16 @@ namespace CrossingTheWorld.TCCEgypt
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         private static void ResetSession() { Progress = new EgyptQuestProgress(); }
 
+        private DialogueShot shot;
+        private Transform dialogueNpc;
+        private void LateUpdate()
+        {
+            if (!DialogueIsOpen || !player) return;
+            if (!shot) shot = gameObject.AddComponent<DialogueShot>();
+            if (!dialogueNpc) dialogueNpc = GameObject.Find(interior ? "Mumia_Guardia" : "Guia_Turistico")?.transform;
+            shot.Frame(player.transform, dialogueNpc, CurrentSpeaker == "Amira", player.visual, player.visualYawOffset);
+        }
+
         private void Awake()
         {
             Progress.Restore(TravelProgress.EgyptStep);

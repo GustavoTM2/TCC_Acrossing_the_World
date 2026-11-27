@@ -65,6 +65,14 @@ namespace CrossingTheWorld.TCCBrazil
             { "Morador brasileiro", "Parabéns pela vitória, Lucas! O berimbau do meu avô agora segue viagem com você. Obrigado pela companhia e até a próxima!" }
         };
 
+        private DialogueShot shot;
+        private void LateUpdate()
+        {
+            if (State != BrazilState.Dialogue || !player) return;
+            if (!shot) shot = gameObject.AddComponent<DialogueShot>();
+            shot.Frame(player.transform, TalkingToGuide ? guide : resident, Speaker == "Lucas", player.visual, player.visualYawOffset);
+        }
+
         private void Start()
         {
             GuideFinished = TravelProgress.BrazilGuide || TravelProgress.BrazilPrize;

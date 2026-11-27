@@ -17,6 +17,7 @@ public sealed partial class ItaliaFase : MonoBehaviour {
     public Bounds area,bridge;
     public Vector3 outward=Vector3.forward;
     public Animator animator;
+    GroundWalk walk;
     float verticalVelocity;
     bool waitForMovementRelease;
     static readonly int Speed = Animator.StringToHash("Speed");
@@ -40,10 +41,22 @@ public sealed partial class ItaliaFase : MonoBehaviour {
     string[] Lines=>interior?(farewell?after:chef):guide;
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     static void ResetTrip(){guideDone=won=returning=finalDone=false;}
+    DialogueShot dialogueShot;
+    Transform dialogueActor;
+    void LateUpdate(){
+        if(mode != Mode.Talk) return;
+        if(!dialogueShot) {
+            dialogueShot = gameObject.AddComponent<DialogueShot>();
+            if(interior) dialogueShot.SoftenCounterLighting();
+        }
+        if(!dialogueActor) dialogueActor = interior ? npc : GameObject.Find("guiaturistico")?.transform;
+        dialogueShot.Frame(player, dialogueActor, false, player, 0f, interior ? npc.forward : Vector3.zero, interior ? .48f : .15f);
+    }
     void Start(){
         Time.timeScale=1;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;
         won = won || TravelProgress.ItalyPrize;
         controller=player.GetComponent<CharacterController>();
+        walk = new GroundWalk(animator, controller.height);
         if(!interior && returning){controller.enabled=false;player.position=door.position+outward*(1.6f*unit)+Vector3.up*.12f;controller.enabled=true;returning=false;}
         cameraFase.transform.position=CameraPosition();
         Vector3 spawnForward = interior
@@ -83,13 +96,14 @@ public sealed partial class ItaliaFase : MonoBehaviour {
     }
     void UpdateStage(float x,float z,bool act){
         if(EgyptSceneTransition.IsBusy){animator.SetFloat(Speed,0);return;}
+        var previousPosition = player.position;
         if(mode==Mode.Explore){
             Vector3 screenRight = Vector3.ProjectOnPlane(cameraFase.transform.right, Vector3.up).normalized;
             // S avança para o fundo, W retorna; as setas continuam convencionais.
             Vector3 screenUp = Vector3.Cross(Vector3.up, screenRight);
             Vector3 direction = screenRight * x + screenUp * (z * .75f);
-            var move = Vector3.ClampMagnitude(direction, 1f) * (4f * unit * Time.deltaTime);
-            var dest=player.position+move;
+            float step = 2.65f * unit * Time.deltaTime;
+            var dest = player.position + Vector3.ClampMagnitude(direction, 1f) * step;
             if(interior){
                 dest.x=Mathf.Clamp(dest.x,-4.3f,4.65f); dest.z=Mathf.Clamp(dest.z,-2.4f,2f);
             }else{
@@ -100,8 +114,10 @@ public sealed partial class ItaliaFase : MonoBehaviour {
             }
             if(controller.isGrounded && verticalVelocity<=0) verticalVelocity=-2f*unit;
             verticalVelocity=Mathf.Max(verticalVelocity-22f*unit*Time.deltaTime,-30f*unit);
-            controller.Move(dest-player.position+Vector3.up*verticalVelocity*Time.deltaTime);
-            if(move.sqrMagnitude>.000001f)player.rotation=Quaternion.RotateTowards(player.rotation,Quaternion.LookRotation(move),720f*Time.deltaTime);
+            // Encosta na borda da ponte já voltada para o caminho que ainda pode percorrer.
+            var allowed = step > 0 ? Vector3.ClampMagnitude((dest - player.position) / step, 1f) : Vector3.zero;
+            var velocityOnGround = walk.Approach(allowed, 2.65f * unit, player, 0, Time.deltaTime);
+            controller.Move((velocityOnGround + Vector3.up * verticalVelocity) * Time.deltaTime);
             if(act && Near(npc)){line=0;farewell=won;mode=Mode.Talk;}
             else if(act && Near(door) && (interior?finalDone:guideDone)){
                 returning=interior;
@@ -115,9 +131,15 @@ public sealed partial class ItaliaFase : MonoBehaviour {
         else if(ClockRunning && Time.time>=deadline)Finish(false);
         else if(mode==Mode.Bake && OvenProgress>=1f)ServePizza();
         UpdatePour();
-        var velocity=controller.velocity;
+        var velocity = Time.deltaTime > 0 ? (player.position - previousPosition) / Time.deltaTime : Vector3.zero;
         bool moving=mode==Mode.Explore && (x!=0 || z!=0) && new Vector2(velocity.x,velocity.z).magnitude>.05f*unit;
-        animator.SetFloat(Speed, moving ? new Vector2(velocity.x,velocity.z).magnitude/unit : 0f);
+        // A colisão pode desviar Sofia ao longo de uma grade. A passada acompanha esse deslocamento.
+        if (moving)
+        {
+            var tangent = Vector3.ProjectOnPlane(velocity, Vector3.up);
+            player.rotation = Quaternion.LookRotation(tangent);
+        }
+        walk.Animate(animator, moving ? velocity : Vector3.zero);
         cameraFase.transform.position=Vector3.Lerp(cameraFase.transform.position,CameraPosition(),1-Mathf.Exp(-9*Time.deltaTime));
         if(reward && reward.gameObject.activeSelf)reward.Rotate(Vector3.up,40*Time.deltaTime,Space.World);
     }
@@ -199,7 +221,7 @@ public sealed partial class ItaliaFase : MonoBehaviour {
         var label=new GUIStyle(GUIStyle.none){alignment=TextAnchor.MiddleCenter,wordWrap=true,fontSize=19,padding=new RectOffset(10,10,5,5)};
         label.font=GUI.skin.font;label.normal.textColor=new Color(.96f,.95f,.90f);
         label.hover=label.active=label.focused=label.normal;
-        if(mode!=Mode.Result){
+        if(mode!=Mode.Result && mode!=Mode.Talk){
             Panel(new Rect(14,14,455,101),interior?"ITÁLIA  /  Pizzaria de Marco":"ITÁLIA  /  Veneza, a cidade flutuante",Objective(),label);
             if(won){Panel(new Rect(813,68,174,124),"","Ferrari F40 adquirida",label,true);Car(new Rect(847,77,106,69));}
         }

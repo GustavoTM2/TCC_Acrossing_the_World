@@ -119,19 +119,20 @@ namespace CrossingTheWorld.TCCEgypt
             GUI.backgroundColor = Color.white;
             try
             {
-                Panel(new Rect(24, 22, 610, 100));
-                GUI.Label(new Rect(46, 35, 558, 24), "EGITO  /  AREIAS DO TEMPO", speaker);
-                GUIStyle objectiveStyle = new GUIStyle(body) { fontSize = 18 };
-                GUI.Label(new Rect(46, 72, 557, 42), objective, objectiveStyle);
-                if (EgyptStage.Progress.HasScarab && !stage.CompletionIsOpen)
+                if (!stage.DialogueIsOpen)
                 {
-                    Panel(new Rect(944, 24, 312, 124));
-                    DrawScarab(new Rect(952, 28, 112, 112), stage.ScarabPreview);
-                    GUI.Label(new Rect(1074, 48, 170, 28), "ARTEFATO", small);
-                    GUI.Label(new Rect(1074, 75, 170, 55), "Velho Escaravelho", new GUIStyle(speaker) { fontSize = 19 });
+                    Panel(new Rect(24, 22, 610, 100));
+                    GUI.Label(new Rect(46, 35, 558, 24), "EGITO  /  AREIAS DO TEMPO", speaker);
+                    GUIStyle objectiveStyle = new GUIStyle(body) { fontSize = 18 };
+                    GUI.Label(new Rect(46, 72, 557, 42), objective, objectiveStyle);
+                    if (EgyptStage.Progress.HasScarab && !stage.CompletionIsOpen)
+                    {
+                        Panel(new Rect(944, 24, 312, 124));
+                        DrawScarab(new Rect(952, 28, 112, 112), stage.ScarabPreview);
+                        GUI.Label(new Rect(1074, 48, 170, 28), "ARTEFATO", small);
+                        GUI.Label(new Rect(1074, 75, 170, 55), "Velho Escaravelho", new GUIStyle(speaker) { fontSize = 19 });
+                    }
                 }
-
-
                 // Na conversa, mostro quem está falando, o texto e o botão para continuar.
                 if (stage.DialogueIsOpen && line != null)
                 {

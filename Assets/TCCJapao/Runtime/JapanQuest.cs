@@ -265,6 +265,7 @@ namespace CrossingTheWorld.TCCJapan
                     Debug.LogError("Japão: o guia turístico da Itália não foi encontrado na cena nem em Resources.");
                     return;
                 }
+                guideModel = guideCharacter.transform;
                 guideCharacter.SetActive(true);
                 // A instância da cena já tem altura e posição dos pés ajustadas.
                 if(player != null)
@@ -398,8 +399,15 @@ namespace CrossingTheWorld.TCCJapan
             lamp.cullingMask=1<<30;
         }
 
+        private DialogueShot shot;
+        private Transform guideModel;
         private void LateUpdate()
         {
+            if (talking && movement && dialogue != null)
+            {
+                if (!shot) shot = gameObject.AddComponent<DialogueShot>();
+                shot.Frame(player, interior ? monkModel : guideModel, dialogue[lineIndex].who == "Kenji", movement.visual, movement.visualYawOffset, interior && monkModel ? monkModel.forward : guideModel ? guideModel.forward : Vector3.zero);
+            }
             if(prizeCamera==null || prizeTexture==null || previewModel==null)return;
             if(!prizeAcquired && !rewardPresentation && !completionVisible)return;
             previewModel.localRotation=Quaternion.Euler(0f,30f+Time.unscaledTime*35f,0f);
@@ -583,15 +591,18 @@ namespace CrossingTheWorld.TCCJapan
             float scale=Mathf.Min(Screen.width/1280f,Screen.height/720f);
             GUI.matrix=Matrix4x4.TRS(new Vector3((Screen.width-1280*scale)*.5f,(Screen.height-720*scale)*.5f,0),
                 Quaternion.identity,Vector3.one*scale);
-            Panel(new Rect(24,22,610,100));
-            GUI.Label(new Rect(46,34,561,34),"A cidade flutuante",titleStyle);
-            GUI.Label(new Rect(46,74,560,41),Objective,objectiveStyle);
-            if(prizeAcquired && !rewardPresentation && !completionVisible)
+            if (!talking)
             {
-                Panel(new Rect(944,24,312,124));
-                if(prizeTexture!=null)GUI.DrawTexture(new Rect(952,28,112,112),prizeTexture,ScaleMode.ScaleToFit,true);
-                GUI.Label(new Rect(1074,48,170,28),"RELÍQUIA",captionStyle);
-                GUI.Label(new Rect(1074,75,170,55),"Katana Cerimonial\nOkoizume",rewardStyle);
+                Panel(new Rect(24,22,610,100));
+                GUI.Label(new Rect(46,34,561,34),"A cidade flutuante",titleStyle);
+                GUI.Label(new Rect(46,74,560,41),Objective,objectiveStyle);
+                if(prizeAcquired && !rewardPresentation && !completionVisible)
+                {
+                    Panel(new Rect(944,24,312,124));
+                    if(prizeTexture!=null)GUI.DrawTexture(new Rect(952,28,112,112),prizeTexture,ScaleMode.ScaleToFit,true);
+                    GUI.Label(new Rect(1074,48,170,28),"RELÍQUIA",captionStyle);
+                    GUI.Label(new Rect(1074,75,170,55),"Katana Cerimonial\nOkoizume",rewardStyle);
+                }
             }
             if(talking && dialogue!=null)
             {

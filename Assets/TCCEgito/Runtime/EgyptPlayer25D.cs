@@ -23,6 +23,7 @@ namespace CrossingTheWorld.TCCEgypt
         public float respawnBelowY = -15f;
 
         private CharacterController controller;
+        private GroundWalk walk;
         private Vector3 spawn;
         private float verticalSpeed;
 
@@ -77,20 +78,19 @@ namespace CrossingTheWorld.TCCEgypt
             }
             // Evito que andar na diagonal aumente a velocidade.
             input = Vector2.ClampMagnitude(input, 1f);
-            Vector3 planarVelocity = EgyptInput.GroundDirection(input, movementAxis, depthAxis, depthSpeedMultiplier) * speed;
+            walk ??= new GroundWalk(animator, controller.height);
+            Vector3 planarVelocity = walk.Approach(EgyptInput.GroundDirection(input, movementAxis, depthAxis, depthSpeedMultiplier),
+                speed, visual, visualYawOffset, deltaTime);
             if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2f;
             // Amira só pode iniciar um pulo quando está no chão.
             if (controller.isGrounded && jump && jumpHeight > 0)
                 verticalSpeed = Mathf.Sqrt(jumpHeight * -2f * gravity);
             // Aplico a gravidade e depois movimento Amira respeitando as colisões.
             verticalSpeed += gravity * deltaTime;
+            var previousPosition = transform.position;
             controller.Move((planarVelocity + Vector3.up * verticalSpeed) * deltaTime);
 
-            // Ajusto a direção do modelo e a animação de acordo com o movimento.
-            if (visual != null && planarVelocity.sqrMagnitude > 0.001f)
-                visual.rotation = Quaternion.RotateTowards(visual.rotation, Quaternion.LookRotation(planarVelocity, Vector3.up)
-                    * Quaternion.Euler(0, visualYawOffset, 0), 720f * deltaTime);
-            if (animator != null) animator.SetFloat("Speed", input.sqrMagnitude > 0f ? Vector3.ProjectOnPlane(controller.velocity, Vector3.up).magnitude / Mathf.Max(.01f, speed) : 0f, .07f, deltaTime);
+            walk.Animate(animator, input.sqrMagnitude > 0 ? (transform.position - previousPosition) / deltaTime : Vector3.zero);
             if (transform.position.y < respawnBelowY) Respawn();
         }
 

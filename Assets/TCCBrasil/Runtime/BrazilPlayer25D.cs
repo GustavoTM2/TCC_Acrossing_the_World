@@ -18,6 +18,7 @@ namespace CrossingTheWorld.TCCBrazil
         public float gravity = -22f;
         public float respawnBelowY = -15f;
         private CharacterController controller;
+        private GroundWalk walk;
         private Vector3 spawn;
         private float verticalSpeed;
 
@@ -51,17 +52,16 @@ namespace CrossingTheWorld.TCCBrazil
             // Limito a entrada para Lucas não andar mais rápido na diagonal
             input = Vector2.ClampMagnitude(input, 1);
             // Calculo o movimento para os lados e para frente/fundo. Na profundidade, a velocidade é menor
-            Vector3 velocity = EgyptInput.GroundDirection(input, horizontalAxis, depthAxis, depthSpeedMultiplier) * speed;
+            walk ??= new GroundWalk(animator, controller.height);
+            Vector3 velocity = walk.Approach(EgyptInput.GroundDirection(input, horizontalAxis, depthAxis, depthSpeedMultiplier),
+                speed, visual, visualYawOffset, deltaTime);
             // Verifico o chão e aplico a gravidade para manter Lucas apoiado no cenário
             if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2f;
             verticalSpeed += gravity * deltaTime;
             // O CharacterController movimenta Lucas e considera as colisões com o cenário
+            var previousPosition = transform.position;
             controller.Move((velocity + Vector3.up * verticalSpeed) * deltaTime);
-            // Viro o modelo para a direção em que Lucas está andando
-            if (visual != null && velocity.sqrMagnitude > 0.001f)
-                visual.rotation = Quaternion.RotateTowards(visual.rotation, Quaternion.LookRotation(velocity, Vector3.up) * Quaternion.Euler(0, visualYawOffset, 0), 720f * deltaTime);
-            // Passo a velocidade para o Animator alternar entre parado e caminhada
-            if (animator != null) animator.SetFloat("Speed", input.sqrMagnitude > 0f ? Vector3.ProjectOnPlane(controller.velocity, Vector3.up).magnitude / Mathf.Max(.01f, speed) : 0f, .07f, deltaTime);
+            walk.Animate(animator, input.sqrMagnitude > 0 ? (transform.position - previousPosition) / deltaTime : Vector3.zero);
             if (transform.position.y < respawnBelowY) Respawn();
         }
 
