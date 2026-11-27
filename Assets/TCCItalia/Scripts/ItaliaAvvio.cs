@@ -116,9 +116,59 @@ public sealed class ItaliaAvvio : MonoBehaviour {
             floorObj=new GameObject("Colisão do percurso");
             floorObj.transform.SetParent(parent);
             floorObj.transform.position=interior?V(0,floor-.15f,0):V(717,floor-.15f,405);
-            floorObj.AddComponent<BoxCollider>().size=interior?V(15,.3f,8):V(98,.3f,22);
+            floorObj.AddComponent<BoxCollider>().size=interior?V(15,.3f,15):V(98,.3f,22);
             }
             if(interior){
+                // A área jogável acompanha o piso que sustenta a Sofia.
+                // Não usar coordenadas rígidas que cortam o salão ao meio.
+                var building = roots.SelectMany(o => o.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Dinner_building");
+                if(building){
+                    var surfaces = building.GetComponentsInChildren<Renderer>().Where(r => r.enabled && r.sharedMaterials.Any(m => m && m.name.ToLowerInvariant().Contains("floor"))).ToArray();
+                    if(surfaces.Length > 0){
+                        var bounds = surfaces[0].bounds;
+                        foreach(var surface in surfaces) bounds.Encapsulate(surface.bounds);
+                        floorObj.transform.position = V(bounds.center.x,floor-.15f,bounds.center.z);
+                        floorObj.GetComponent<BoxCollider>().size = V(bounds.size.x,.3f,bounds.size.z);
+                    }
+                    foreach(var c in building.GetComponentsInChildren<Collider>(true)){
+                        if(!c.isTrigger) c.enabled = false;
+                    }
+                }
+                Physics.SyncTransforms();
+                stage.restaurantWalkArea = floorObj.GetComponent<BoxCollider>().bounds;
+                // Mesas e cadeiras mantêm colisão; objetos decorativos pequenos não
+                // devem funcionar como obstáculos invisíveis no caminho.
+                // Rebuild only physical obstacles from visible furniture geometry.
+                var props = roots.SelectMany(o => o.GetComponentsInChildren<Collider>(true)).ToArray();
+                foreach(var c in props){
+                    if(!c || c.isTrigger || c.gameObject == floorObj) continue;
+                    c.enabled = false;
+                }
+                foreach(var r in roots.SelectMany(o => o.GetComponentsInChildren<MeshRenderer>())){
+                    if(!r.enabled) continue;
+                    var n=r.name.ToLowerInvariant();
+                    if(!(n.Contains("table") || n.Contains("chair") || n.Contains("counter") || n.Contains("sofa") || n.Contains("stool"))) continue;
+                    var b=r.bounds;
+                    if(b.size.x<.15f || b.size.z<.15f || b.max.y<floor+.2f || b.min.y>floor+1.3f) continue;
+                    var obstacle=new GameObject("Furniture collision - "+r.name);
+                    obstacle.transform.SetParent(parent);
+                    obstacle.transform.position=b.center;
+                    obstacle.AddComponent<BoxCollider>().size=b.size;
+                }
+            }
+            if(interior){
+                var walls = new System.Collections.Generic.List<Collider>();
+                var building = roots.SelectMany(o => o.GetComponentsInChildren<Transform>(true)).FirstOrDefault(t => t.name == "Dinner_building");
+                if(building){
+                    foreach(var mesh in building.GetComponentsInChildren<MeshFilter>()){
+                        if(!mesh.sharedMesh) continue;
+                        var wall = mesh.gameObject.AddComponent<MeshCollider>();
+                        wall.sharedMesh=mesh.sharedMesh;
+
+                        walls.Add(wall);
+                    }
+                }
+                stage.restaurantCameraWalls=walls.ToArray();
                 stage.npc=chefMarco;
                 if(!stage.npc){
                     stage.npc=Model("Chef Marco","chef",V(6.2f,.40f,.65f),1.85f,"chef.001").transform;
@@ -160,7 +210,7 @@ public sealed class ItaliaAvvio : MonoBehaviour {
             sofia.transform.localScale = Vector3.one * stage.unit;
             stage.animator = sofia.GetComponentInChildren<Animator>();
             stage.animator.runtimeAnimatorController=Resources.Load<RuntimeAnimatorController>("ItaliaPronta/SofiaRestaurante");
-            var cc=stage.player.gameObject.AddComponent<CharacterController>(); cc.height=1.75f*stage.unit;cc.radius=.28f*stage.unit;cc.center=V(0,.89f*stage.unit,0);cc.stepOffset=.3f*stage.unit; cc.skinWidth=.025f*stage.unit; cc.minMoveDistance=0; cc.slopeLimit=50;
+            var cc=stage.player.gameObject.AddComponent<CharacterController>(); cc.height=1.75f*stage.unit;cc.radius=.28f*stage.unit;cc.center=V(0,.89f*stage.unit,0);cc.stepOffset=.3f*stage.unit; cc.skinWidth=.025f*stage.unit; cc.minMoveDistance=0; cc.slopeLimit=50; foreach(var wall in stage.restaurantCameraWalls) Physics.IgnoreCollision(cc,wall,true);
             stage.cameraFase=scene.GetRootGameObjects().SelectMany(o=>o.GetComponentsInChildren<Camera>()).First(c=>c.CompareTag("MainCamera"));
             if(interior)stage.cameraFase.transform.rotation=Quaternion.Euler(28,17,0);
             else {

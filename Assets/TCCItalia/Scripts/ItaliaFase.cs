@@ -15,6 +15,8 @@ public sealed partial class ItaliaFase : MonoBehaviour {
     public Camera cameraFase;
     public float unit=1;
     public Bounds area,bridge;
+    // Limites físicos do piso do restaurante, configurados pelo ItaliaAvvio.
+    public Bounds restaurantWalkArea; public Collider[] restaurantCameraWalls = new Collider[0];
     public Vector3 outward=Vector3.forward;
     public Animator animator;
     GroundWalk walk;
@@ -105,7 +107,12 @@ public sealed partial class ItaliaFase : MonoBehaviour {
             float step = 2.65f * unit * Time.deltaTime;
             var dest = player.position + Vector3.ClampMagnitude(direction, 1f) * step;
             if(interior){
-                dest.x=Mathf.Clamp(dest.x,-4.3f,4.65f); dest.z=Mathf.Clamp(dest.z,-2.4f,2f);
+                // O restaurante usa os limites do piso, não uma parede invisível no meio da sala.
+                float radius=controller.radius + controller.skinWidth;
+                if(restaurantWalkArea.size.x>radius*2f && restaurantWalkArea.size.z>radius*2f){
+                    dest.x=Mathf.Clamp(dest.x,restaurantWalkArea.min.x+radius,restaurantWalkArea.max.x-radius);
+                    dest.z=Mathf.Clamp(dest.z,restaurantWalkArea.min.z+radius,restaurantWalkArea.max.z-radius);
+                }
             }else{
                 bool pastStreet=dest.z>area.max.z-unit;
                 float radius=controller.radius;
@@ -140,7 +147,7 @@ public sealed partial class ItaliaFase : MonoBehaviour {
             player.rotation = Quaternion.LookRotation(tangent);
         }
         walk.Animate(animator, moving ? velocity : Vector3.zero);
-        cameraFase.transform.position=Vector3.Lerp(cameraFase.transform.position,CameraPosition(),1-Mathf.Exp(-9*Time.deltaTime));
+        cameraFase.transform.position=interior ? CameraPosition() : Vector3.Lerp(cameraFase.transform.position,CameraPosition(),1-Mathf.Exp(-9*Time.deltaTime));
         if(reward && reward.gameObject.activeSelf)reward.Rotate(Vector3.up,40*Time.deltaTime,Space.World);
     }
     RenderTexture preview;
@@ -191,8 +198,16 @@ public sealed partial class ItaliaFase : MonoBehaviour {
             focus.z = Mathf.Clamp(focus.z, area.min.z + unit, bridge.max.z - 2.2f * unit);
             return LimitStreetView(focus + Vector3.up * unit - cameraFase.transform.forward * (8f * unit));
         }
-        return new Vector3(Mathf.Clamp(player.position.x-1.05f,-4.65f,3.6f),3.7f,
-            Mathf.Clamp(player.position.z-4.1f,-6.4f,-2.1f));
+        var restaurantFocus = player.position + Vector3.up * 1.1f;
+        var desired = player.position + new Vector3(-1.05f,3.15f,-4.1f);
+        var offset = desired - restaurantFocus;
+        float distance = offset.magnitude;
+        var direction = offset / distance;
+        foreach(var wall in restaurantCameraWalls){
+            if(!wall || !wall.enabled) continue;
+            if(wall.Raycast(new Ray(restaurantFocus,direction),out var hit,distance)) distance=Mathf.Min(distance,Mathf.Max(.05f,hit.distance-.3f));
+        }
+        return restaurantFocus + direction * distance;
     }
     void Begin(){serviceRemaining=120f;order=0;PrepareOrder();}
     void PrepareOrder(){ResetRecipe();step=errors=ovenPenalty=0;bakeFeedback="";drag=-1;notice="";deadline=Time.time+3.5f;mode=Mode.Count;}
