@@ -18,7 +18,7 @@ public static class TCCPlaySmoke
     static readonly string[] Scenes = {
         TravelMenu.ScenePath,
         TravelMenu.EgyptScene,
-        "Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity",
+        "Assets/TCCEgito/Cenas/Egito_Interior_Jogavel.unity",
         TravelMenu.BrazilScene,
         ItaliaFase.Rua,
         ItaliaFase.Sala,

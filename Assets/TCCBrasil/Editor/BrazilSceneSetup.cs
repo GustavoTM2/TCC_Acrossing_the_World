@@ -11,9 +11,9 @@ namespace CrossingTheWorld.TCCBrazil.Editor
 {
     public static class BrazilSceneSetup
     {
-        public const string ScenePath = "Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity";
-        public const string Art = "Assets/TCCBrasil/Art/Lucas/";
-        public const string Generated = "Assets/TCCBrasil/Generated/";
+        public const string ScenePath = "Assets/TCCBrasil/Cenas/Brasil_Praia_Jogavel.unity";
+        public const string Art = "Assets/TCCBrasil/Arte/Lucas/";
+        public const string Generated = "Assets/TCCBrasil/Gerados/";
 
         public static void BuildForValidation()
         {
@@ -54,7 +54,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             foreach (GameObject root in roots)
                 foreach (MeshFilter filter in root.GetComponentsInChildren<MeshFilter>(true))
                 {
-                    if (root.name == "TCC_Brasil_Exploracao" || root.name == "Water Surface" || filter.sharedMesh == null) continue;
+                    if (root.name == "Exploracao do Brasil" || root.name == "Water Surface" || filter.sharedMesh == null) continue;
                     Renderer renderer = filter.GetComponent<Renderer>();
                     if (renderer == null || !renderer.enabled || filter.GetComponent<Collider>() != null) continue;
                     // Evita colisão com a superfície da água e objetos distantes da faixa de exploração.

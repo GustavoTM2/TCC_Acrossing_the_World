@@ -27,7 +27,7 @@ public static class JapanIntegrationSetup
         if (!originalCamera) throw new Exception("Camera de acompanhamento nao encontrada.");
         if (!UnityEngine.Object.FindFirstObjectByType<JapanQuest>())
         {
-            var root = new GameObject("Missao_Japao_Exterior");
+            var root = new GameObject("Missao do Japao - Exterior");
             var quest = root.AddComponent<JapanQuest>();
             quest.player = playerGo.transform;
             quest.animator = playerGo.GetComponentInChildren<Animator>();
@@ -40,7 +40,7 @@ public static class JapanIntegrationSetup
         EditorSceneManager.SaveScene(outside);
 
         var inside = EditorSceneManager.OpenScene(JapanQuest.Interior, OpenSceneMode.Additive);
-        if (!inside.GetRootGameObjects().Any(x => x.name == "Missao_Japao_Interior"))
+        if (!inside.GetRootGameObjects().Any(x => x.name == "Missao do Japao - Interior"))
         {
             var currentCameras = inside.GetRootGameObjects().SelectMany(x=>x.GetComponentsInChildren<Camera>(true)).ToArray();
             foreach (var c in currentCameras)
@@ -48,7 +48,7 @@ public static class JapanIntegrationSetup
                 c.enabled = false; c.tag = "Untagged";
                 foreach(var listener in c.GetComponents<AudioListener>()) listener.enabled = false;
             }
-            var root = new GameObject("Missao_Japao_Interior");
+            var root = new GameObject("Missao do Japao - Interior");
             SceneManager.MoveGameObjectToScene(root,inside);
             var floor = GameObject.CreatePrimitive(PrimitiveType.Cube);
             floor.name = "Chao Jogavel do Templo";

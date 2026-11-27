@@ -15,10 +15,10 @@ namespace CrossingTheWorld.TCCMenu.Editor
     {
         private static readonly string[] PreviewPaths =
         {
-            "Assets/TCCMenu/Art/Egito.png",
-            "Assets/TCCMenu/Art/Brasil.png",
-            "Assets/TCCExploracao/Generated/Italia_Previa.png",
-            "Assets/TCCExploracao/Generated/Japao_Previa.png"
+            "Assets/TCCMenu/Arte/Egito.png",
+            "Assets/TCCMenu/Arte/Brasil.png",
+            "Assets/TCCExploracao/Gerados/Italia_Previa.png",
+            "Assets/TCCExploracao/Gerados/Japao_Previa.png"
         };
 
         [MenuItem("TCC/Menu/Atualizar imagens das fases (1x1)")]

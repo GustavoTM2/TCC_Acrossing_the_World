@@ -8,7 +8,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
 {
     public static class EgyptExplorationSetup
     {
-        private const string Generated = "Assets/TCCEgito/Generated/";
+        private const string Generated = "Assets/TCCEgito/Gerados/";
 
         [MenuItem("TCC/Egito/Atualizar exploracao e vegetacao")]
         public static void FromMenu()

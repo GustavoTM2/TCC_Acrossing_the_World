@@ -34,14 +34,14 @@ namespace CrossingTheWorld.TCCMenu.Editor
             body = AssetDatabase.LoadAssetAtPath<Font>("Assets/TextMesh Pro/Fonts/LiberationSans.ttf");
             if (serif == null || body == null) throw new InvalidOperationException("Fontes do menu não encontradas.");
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            Camera camera = new GameObject("Camera_Menu").AddComponent<Camera>();
+            Camera camera = new GameObject("Camera do menu").AddComponent<Camera>();
             camera.tag = "MainCamera";
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(.025f, .045f, .06f);
             camera.cullingMask = 0;
             camera.gameObject.AddComponent<AudioListener>();
 
-            var canvas = new GameObject("Canvas_Menu", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+            var canvas = new GameObject("Interface do menu", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
             canvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
             var scaler = canvas.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -52,7 +52,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
             frame.anchoredPosition = Vector2.zero;
             var menu = canvas.AddComponent<TravelMenu>();
 
-            var events = new GameObject("EventSystem", typeof(EventSystem));
+            var events = new GameObject("Sistema de eventos", typeof(EventSystem));
             // A navegação por teclado fica no TravelMenu; o EventSystem cuida dos cliques.
             events.GetComponent<EventSystem>().sendNavigationEvents = false;
 #if ENABLE_INPUT_SYSTEM
@@ -103,7 +103,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
                 menu.cards[i] = card;
                 menu.cardBorders[i] = Box("Borda", card, 0, 0, 340, 480, Gold);
                 Box("Fundo", card, 3, 3, 334, 474, new Color(.035f, .065f, .08f));
-                Texture2D preview = i < 2 ? AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Art/" + (i == 0 ? "Egito.png" : "Brasil.png")) : AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCExploracao/Generated/" + (i == 2 ? "Italia" : "Japao") + "_Previa.png");
+                Texture2D preview = i < 2 ? AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "Arte/" + (i == 0 ? "Egito.png" : "Brasil.png")) : AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCExploracao/Gerados/" + (i == 2 ? "Italia" : "Japao") + "_Previa.png");
                 RawImage picture = Picture("Previa", card, 10, 10, 320, 320, preview);
                 picture.uvRect = new Rect(0, 0, 1, 1);
                 menu.countryLabels[i] = Label("Pais", card, 10, 328, 320, 62, names[i], serif, 32, Gold);
@@ -149,7 +149,7 @@ namespace CrossingTheWorld.TCCMenu.Editor
 
         private static void ConfigureTexture(string file, bool sprite, int size)
         {
-            var importer = (TextureImporter)AssetImporter.GetAtPath(Root + "Art/" + file);
+            var importer = (TextureImporter)AssetImporter.GetAtPath(Root + "Arte/" + file);
             importer.textureType = sprite ? TextureImporterType.Sprite : TextureImporterType.Default;
             importer.spriteImportMode = SpriteImportMode.Single;
             importer.alphaIsTransparency = sprite; importer.mipmapEnabled = false;

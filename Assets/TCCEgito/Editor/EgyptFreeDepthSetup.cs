@@ -9,8 +9,8 @@ namespace CrossingTheWorld.TCCEgypt.Editor
 {
     public static class EgyptFreeDepthSetup
     {
-        public const string Exterior = "Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity";
-        public const string Interior = "Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity";
+        public const string Exterior = "Assets/TCCEgito/Cenas/Egito_Exterior_Jogavel.unity";
+        public const string Interior = "Assets/TCCEgito/Cenas/Egito_Interior_Jogavel.unity";
 
         [MenuItem("TCC/Atualizar movimentacao e postura do Egito")]
         public static void UpdateFromMenu()
@@ -162,7 +162,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             right = Bone("Braco_Direito", root.transform, new Vector3(bounds.center.x - bounds.size.x * 0.23f,
                 bounds.min.y + bounds.size.y * 0.72f, bounds.center.z));
             Transform[] bones = { body, head, left, right };
-            string meshPath = "Assets/TCCEgito/Generated/" + id + "_Rig_Leve.asset";
+            string meshPath = "Assets/TCCEgito/Gerados/" + id + "_Rig_Leve.asset";
             Mesh existingMesh = AssetDatabase.LoadAssetAtPath<Mesh>(meshPath);
             Mesh mesh;
             {

@@ -94,7 +94,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             if (hasExterior || hasInterior)
             {
                 if (!hasExterior || !hasInterior)
-                    throw new InvalidOperationException("Uma das cenas jogáveis já existe. A montagem foi interrompida para preservar seu trabalho. Confira Assets/TCCEgito/Scenes.");
+                    throw new InvalidOperationException("Uma das cenas jogáveis já existe. A montagem foi interrompida para preservar seu trabalho. Confira Assets/TCCEgito/Cenas.");
                 RegisterScenes();
                 EditorSceneManager.OpenScene(Exterior);
                 Debug.Log("As cenas jogáveis já existem. Abri o exterior e preservei suas alterações.");
@@ -135,7 +135,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             if (interior) AddInteriorColliders(scene);
             Physics.SyncTransforms();
 
-            GameObject setup = new GameObject("TCC_Egito_Programacao");
+            GameObject setup = new GameObject("Programacao do Egito");
             EgyptStage stage = setup.AddComponent<EgyptStage>();
             stage.interior = interior;
             stage.exteriorScene = Exterior;
@@ -471,7 +471,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
                 stage.AdvanceDialogue();
                 Require(EgyptStage.Progress.Step == EgyptQuestStep.EnterPyramid && guideEvents == 1, "Guia deve avançar a missão uma vez.");
 
-                stage.interiorScene = "Assets/TCCEgito/Scenes/CenaInexistente.unity";
+                stage.interiorScene = "Assets/TCCEgito/Cenas/CenaInexistente.unity";
                 stage.Interact(EgyptPointKind.Entrance);
                 Require(!stage.IsLoading && EgyptStage.Progress.Step == EgyptQuestStep.EnterPyramid,
                     "Destino ausente não deve bloquear o jogo nem avançar a missão.");

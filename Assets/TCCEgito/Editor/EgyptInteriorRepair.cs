@@ -11,8 +11,8 @@ namespace CrossingTheWorld.TCCEgypt.Editor
     // Ajusta somente a cópia jogável; cenas, prefabs e materiais originais permanecem preservados.
     public static class EgyptInteriorRepair
     {
-        private const string EnvironmentName = "Cenario_Interior_Original";
-        private const string Generated = "Assets/TCCEgito/Generated/";
+        private const string EnvironmentName = "Cenario interno";
+        private const string Generated = "Assets/TCCEgito/Gerados/";
 
         [MenuItem("TCC/Corrigir interior da piramide")]
         public static void RepairFromMenu()

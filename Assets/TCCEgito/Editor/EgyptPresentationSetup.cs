@@ -9,10 +9,10 @@ namespace CrossingTheWorld.TCCEgypt.Editor
 {
     public static class EgyptPresentationSetup
     {
-        public const string Exterior = "Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity";
-        public const string Interior = "Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity";
-        private const string PrefabPath = "Assets/TCCEgito/Generated/Escaravelho_Interface.prefab";
-        private const string MaterialPath = "Assets/TCCEgito/Generated/Escaravelho_Interface.mat";
+        public const string Exterior = "Assets/TCCEgito/Cenas/Egito_Exterior_Jogavel.unity";
+        public const string Interior = "Assets/TCCEgito/Cenas/Egito_Interior_Jogavel.unity";
+        private const string PrefabPath = "Assets/TCCEgito/Gerados/Escaravelho_Interface.prefab";
+        private const string MaterialPath = "Assets/TCCEgito/Gerados/Escaravelho_Interface.mat";
 
         [MenuItem("TCC/Egito/Atualizar altura e escaravelho na tela")]
         public static void ApplyFromMenu()

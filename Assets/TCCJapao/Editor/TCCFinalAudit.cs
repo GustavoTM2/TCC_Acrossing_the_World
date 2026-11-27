@@ -15,12 +15,12 @@ public static class TCCFinalAudit
         var lines = new List<string>();
         int errors = 0;
         var scenes = new [] {
-            "Assets/TCCMenu/Scenes/Menu_Principal.unity",
-            "Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity",
-            "Assets/TCCEgito/Scenes/Egito_Interior_Jogavel.unity",
-            "Assets/TCCBrasil/Scenes/Brasil_Praia_Jogavel.unity",
-            "Assets/TCCItalia/Scenes/ITALIA_RUA.unity",
-            "Assets/TCCItalia/Scenes/ITALIA_RESTAURANTE.unity",
+            "Assets/TCCMenu/Cenas/Menu_Principal.unity",
+            "Assets/TCCEgito/Cenas/Egito_Exterior_Jogavel.unity",
+            "Assets/TCCEgito/Cenas/Egito_Interior_Jogavel.unity",
+            "Assets/TCCBrasil/Cenas/Brasil_Praia_Jogavel.unity",
+            "Assets/TCCItalia/Cenas/ITALIA_RUA.unity",
+            "Assets/TCCItalia/Cenas/ITALIA_RESTAURANTE.unity",
             JapanQuest.Exterior, JapanQuest.Interior
         };
         foreach (var path in scenes)
@@ -46,11 +46,11 @@ public static class TCCFinalAudit
             catch (Exception ex) { errors++; lines.Add("ERRO CENA " + path + " : " + ex.Message); }
         }
         var controllers = new [] {
-            "Assets/TCCExploracao/Generated/Kenji.controller",
-            "Assets/TCCExploracao/Generated/Sofia.controller",
-            "Assets/TCCBrasil/Generated/Lucas_Movimento.controller",
-            "Assets/TCCEgito/Generated/Amira_Movimento.controller",
-            "Assets/TCCItalia/Scripts/Resources/ItaliaPronta/SofiaRestaurante.controller"
+            "Assets/TCCExploracao/Gerados/Kenji.controller",
+            "Assets/TCCExploracao/Gerados/Sofia.controller",
+            "Assets/TCCBrasil/Gerados/Lucas_Movimento.controller",
+            "Assets/TCCEgito/Gerados/Amira_Movimento.controller",
+            "Assets/TCCItalia/Programacao/Resources/ItaliaPronta/SofiaRestaurante.controller"
         };
         foreach (var path in controllers)
         {

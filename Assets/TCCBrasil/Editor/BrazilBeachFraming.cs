@@ -69,7 +69,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
         }
 
         internal static Terrain BeachTerrain() => Terrain.activeTerrains.Single(t =>
-            AssetDatabase.GetAssetPath(t.terrainData) == "Assets/TCCBrasil/Generated/Praia_Terreno.asset");
+            AssetDatabase.GetAssetPath(t.terrainData) == "Assets/TCCBrasil/Gerados/Praia_Terreno.asset");
 
         private static void PlacePerson(Transform person, Vector3 position)
         {

@@ -10,9 +10,9 @@ namespace CrossingTheWorld.TCCEgypt.Editor
 {
     public static class EgyptTerrainRepair
     {
-        private const string ScenePath = "Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity";
-        private const string Generated = "Assets/TCCEgito/Generated";
-        private const string SandPath = "Assets/TCCEgito/Art/Ambiente/Areia.png";
+        private const string ScenePath = "Assets/TCCEgito/Cenas/Egito_Exterior_Jogavel.unity";
+        private const string Generated = "Assets/TCCEgito/Gerados";
+        private const string SandPath = "Assets/TCCEgito/Arte/Ambiente/Areia.png";
 
         [MenuItem("TCC/Corrigir terreno do Egito")]
         public static void RepairFromMenu()
@@ -33,7 +33,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             if (sand == null) throw new InvalidOperationException("Falta a textura " + SandPath);
             if (AssetDatabase.LoadAssetAtPath<SceneAsset>(ScenePath) == null)
                 throw new InvalidOperationException("Abra o projeto com a fase integrada: não encontrei " + ScenePath);
-            if (!AssetDatabase.IsValidFolder(Generated)) AssetDatabase.CreateFolder("Assets/TCCEgito", "Generated");
+            if (!AssetDatabase.IsValidFolder(Generated)) AssetDatabase.CreateFolder("Assets/TCCEgito", "Gerados");
 
             Scene scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
             Terrain[] terrains = scene.GetRootGameObjects()

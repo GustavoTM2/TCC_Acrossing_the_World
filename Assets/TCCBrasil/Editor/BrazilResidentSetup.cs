@@ -10,9 +10,9 @@ namespace CrossingTheWorld.TCCBrazil.Editor
 {
     public static class BrazilResidentSetup
     {
-        public const string ModelPath = "Assets/TCCBrasil/Art/Morador/Morador_Brasileiro.fbx";
-        public const string TexturePath = "Assets/TCCBrasil/Art/Morador/Morador_Brasileiro.png";
-        private const string MaterialPath = "Assets/TCCBrasil/Generated/Morador_Texturizado.mat";
+        public const string ModelPath = "Assets/TCCBrasil/Arte/Morador/Morador_Brasileiro.fbx";
+        public const string TexturePath = "Assets/TCCBrasil/Arte/Morador/Morador_Brasileiro.png";
+        private const string MaterialPath = "Assets/TCCBrasil/Gerados/Morador_Texturizado.mat";
 
         // Atualizo só o visual do morador, mantendo o ponto de conversa e o desafio.
         [MenuItem("TCC/Brasil/Atualizar modelo do morador")]

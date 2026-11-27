@@ -9,8 +9,8 @@ namespace CrossingTheWorld.TCCEgypt.Editor
 {
     public static class EgyptModelIntegration
     {
-        private const string Art = "Assets/TCCEgito/Art/";
-        private const string Generated = "Assets/TCCEgito/Generated/";
+        private const string Art = "Assets/TCCEgito/Arte/";
+        private const string Generated = "Assets/TCCEgito/Gerados/";
         private static readonly string[] Ids = { "Amira", "Guia", "Mumia", "Escaravelho" };
 
         public static string ModelPath(string id)
@@ -24,7 +24,7 @@ namespace CrossingTheWorld.TCCEgypt.Editor
             foreach (string id in Ids)
                 if (AssetDatabase.LoadAssetAtPath<GameObject>(ModelPath(id)) == null
                     || AssetDatabase.LoadAssetAtPath<Texture2D>(TexturePath(id)) == null)
-                    throw new InvalidOperationException("Falta o modelo ou a textura de " + id + " em Assets/TCCEgito/Art.");
+                    throw new InvalidOperationException("Falta o modelo ou a textura de " + id + " em Assets/TCCEgito/Arte.");
 
             EgyptPlayer25D player = scene.GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<EgyptPlayer25D>(true)).Single();

@@ -56,7 +56,7 @@ public static class ExplorationSetup {
   Debug.Log("EXPLORATION_BUILT "+target+" spawn="+spawn);
  }
  static BrazilPlayer25D Character(string name,Vector3 position,Transform parent) {
-  string art=Root+"Art/"+name+"/", generated=Root+"Generated/"+name;
+  string art=Root+"Arte/"+name+"/", generated=Root+"Gerados/"+name;
   string modelPath=art+name+"_Caminhada.fbx";
   var importer=(ModelImporter)AssetImporter.GetAtPath(modelPath);importer.animationType=ModelImporterAnimationType.Generic;importer.importAnimation=true;importer.isReadable=true;importer.SaveAndReimport();
   var root=new GameObject(name+"_Jogador");root.transform.SetParent(parent);root.transform.position=position;root.tag="Player";
@@ -75,7 +75,7 @@ public static class ExplorationSetup {
   var clip=Object.Instantiate(AssetDatabase.LoadAllAssetsAtPath(modelPath).OfType<AnimationClip>().First(c=>!c.name.StartsWith("__preview")));
   var settings=AnimationUtility.GetAnimationClipSettings(clip);settings.loopTime=true;settings.keepOriginalPositionXZ=true;settings.keepOriginalPositionY=true;AnimationUtility.SetAnimationClipSettings(clip,settings);AssetDatabase.CreateAsset(clip,generated+"_Caminhada.anim");
   var controller=AnimatorController.CreateAnimatorControllerAtPath(generated+".controller");controller.AddParameter("Speed",AnimatorControllerParameterType.Float);var sm=controller.layers[0].stateMachine;
-  var idle=sm.AddState("Parado");idle.motion=AssetDatabase.LoadAssetAtPath<AnimationClip>(name=="Kenji"?generated+"_Repouso.anim":"Assets/TCCItalia/Scripts/Resources/ItaliaPronta/SofiaParadaRestaurante.anim");idle.speed=1;var walk=sm.AddState("Caminhando");walk.motion=clip;sm.defaultState=idle;
+  var idle=sm.AddState("Parado");idle.motion=AssetDatabase.LoadAssetAtPath<AnimationClip>(name=="Kenji"?generated+"_Repouso.anim":"Assets/TCCItalia/Programacao/Resources/ItaliaPronta/SofiaParadaRestaurante.anim");idle.speed=1;var walk=sm.AddState("Caminhando");walk.motion=clip;sm.defaultState=idle;
   var start=idle.AddTransition(walk);start.hasExitTime=false;start.duration=.12f;start.AddCondition(AnimatorConditionMode.Greater,.05f,"Speed");var stop=walk.AddTransition(idle);stop.hasExitTime=false;stop.duration=.12f;stop.AddCondition(AnimatorConditionMode.Less,.05f,"Speed");
   animator.runtimeAnimatorController=controller;animator.applyRootMotion=false;player.animator=animator;player.visual=pivot.transform;return player;
  }
@@ -83,11 +83,11 @@ public static class ExplorationSetup {
  static void Capture(Camera camera,string name) {
   var rt=new RenderTexture(1280,720,24);var old=RenderTexture.active;camera.targetTexture=rt;camera.Render();RenderTexture.active=rt;
   var image=new Texture2D(1280,720,TextureFormat.RGB24,false);image.ReadPixels(new Rect(0,0,1280,720),0,0);image.Apply();
-  File.WriteAllBytes(Root+"Generated/"+name+"_Previa.png",image.EncodeToPNG());camera.targetTexture=null;RenderTexture.active=old;Object.DestroyImmediate(image);Object.DestroyImmediate(rt);AssetDatabase.Refresh();
+  File.WriteAllBytes(Root+"Gerados/"+name+"_Previa.png",image.EncodeToPNG());camera.targetTexture=null;RenderTexture.active=old;Object.DestroyImmediate(image);Object.DestroyImmediate(rt);AssetDatabase.Refresh();
  }
  static void UpdateMenu() {
   EditorSceneManager.OpenScene(TravelMenu.ScenePath);var menu=Object.FindFirstObjectByType<TravelMenu>();
-  for(int i=2;i<4;i++) {var picture=menu.cards[i].Find("Previa").GetComponent<UnityEngine.UI.RawImage>();picture.texture=AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"Generated/"+(i==2?"Italia":"Japao")+"_Previa.png");picture.uvRect=new Rect(0,0,1,1);picture.color=Color.white;menu.countryStatus[i].text="EXPLORAR";menu.cards[i].Find("Local").GetComponent<UnityEngine.UI.Text>().text=i==2?"Veneza, a cidade flutuante":"Templo Okoizume";}
+  for(int i=2;i<4;i++) {var picture=menu.cards[i].Find("Previa").GetComponent<UnityEngine.UI.RawImage>();picture.texture=AssetDatabase.LoadAssetAtPath<Texture2D>(Root+"Gerados/"+(i==2?"Italia":"Japao")+"_Previa.png");picture.uvRect=new Rect(0,0,1,1);picture.color=Color.white;menu.countryStatus[i].text="EXPLORAR";menu.cards[i].Find("Local").GetComponent<UnityEngine.UI.Text>().text=i==2?"Veneza, a cidade flutuante":"Templo Okoizume";}
   EditorSceneManager.MarkSceneDirty(UnityEngine.SceneManagement.SceneManager.GetActiveScene());EditorSceneManager.SaveOpenScenes();
  }
  public static void PlayJapan() {

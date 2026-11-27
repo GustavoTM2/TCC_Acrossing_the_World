@@ -12,7 +12,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
 {
     public static class BrazilAdventureSetup
     {
-        private const string Generated = "Assets/TCCBrasil/Generated/";
+        private const string Generated = "Assets/TCCBrasil/Gerados/";
         private const float Ground = 77.13f;
 
         [MenuItem("TCC/Brasil/Preparar fase completa")]
@@ -24,10 +24,10 @@ namespace CrossingTheWorld.TCCBrazil.Editor
             var terrain = Object.FindObjectsByType<Terrain>(FindObjectsSortMode.None).Single(t => AssetDatabase.GetAssetPath(t.terrainData) == Generated + "Praia_Terreno.asset");
             RepairGround(terrain);
             ResizeProps(terrain);
-            var old = GameObject.Find("TCC_Brasil_Aventura");
+            var old = GameObject.Find("Aventura do Brasil");
             if (old != null) Object.DestroyImmediate(old);
             foreach (var hud in Object.FindObjectsByType<BrazilExplorationHUD>(FindObjectsSortMode.None)) Object.DestroyImmediate(hud);
-            var root = new GameObject("TCC_Brasil_Aventura");
+            var root = new GameObject("Aventura do Brasil");
             var stage = root.AddComponent<BrazilStage>();
             root.AddComponent<BrazilStageUI>();
             stage.rewardDisplay = root.AddComponent<BrazilRewardDisplay>();
@@ -152,7 +152,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
 
         private static Transform MakeGuide(Scene brazil, Transform parent)
         {
-            var egypt = EditorSceneManager.OpenScene("Assets/TCCEgito/Scenes/Egito_Exterior_Jogavel.unity", OpenSceneMode.Additive);
+            var egypt = EditorSceneManager.OpenScene("Assets/TCCEgito/Cenas/Egito_Exterior_Jogavel.unity", OpenSceneMode.Additive);
             var source = Object.FindObjectsByType<EgyptInteractionPoint>(FindObjectsSortMode.None).Single(p => p.gameObject.scene == egypt && p.kind == EgyptPointKind.Guide);
             var guide = Object.Instantiate(source.gameObject);
             guide.name = "Guia_Horizon_Travel";
@@ -193,7 +193,7 @@ namespace CrossingTheWorld.TCCBrazil.Editor
         private static Transform MakeBall(Transform parent)
         {
             var root = new GameObject("Bola_Do_Desafio").transform; root.SetParent(parent,false);
-            var model = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TCCBrasil/Art/Bola/Bola.fbx"),root);
+            var model = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TCCBrasil/Arte/Bola/Bola.fbx"),root);
             var b = BoundsOf(model); model.transform.localScale *= .26f / b.size.x;
             b = BoundsOf(model); model.transform.position -= b.center;
             // O FBX veio sem textura. Divido os gomos entre preto e branco no modelo de exibição.
@@ -229,10 +229,10 @@ namespace CrossingTheWorld.TCCBrazil.Editor
         private static GameObject MakePrize()
         {
             var root = new GameObject("Berimbau_Premio");
-            var model = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TCCBrasil/Art/Berimbau/Berimbau.fbx"),root.transform);
+            var model = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/TCCBrasil/Arte/Berimbau/Berimbau.fbx"),root.transform);
             var b = BoundsOf(model); model.transform.localScale *= 2.3f / b.size.y;
             b = BoundsOf(model); model.transform.position -= b.center;
-            var material = Material("Berimbau_Premio", Color.white, AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCBrasil/Art/Berimbau/Berimbau.png"),true);
+            var material = Material("Berimbau_Premio", Color.white, AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/TCCBrasil/Arte/Berimbau/Berimbau.png"),true);
             foreach (var r in model.GetComponentsInChildren<Renderer>()) r.sharedMaterials = Enumerable.Repeat(material,r.sharedMaterials.Length).ToArray();
             var prefab = PrefabUtility.SaveAsPrefabAsset(root,Generated + "Berimbau_Premio.prefab");
             Object.DestroyImmediate(root); return prefab;
