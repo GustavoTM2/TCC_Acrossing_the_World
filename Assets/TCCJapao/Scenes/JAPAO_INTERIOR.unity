@@ -1317,6 +1317,69 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1269288976}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1001 &373142485
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3740563098572868144, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_Name
+      value: Quadro
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.0767775
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.583884
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.90418136
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.42714888
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -50.574
+      objectReference: {fileID: 0}
+    - target: {fileID: 5060605939199350156, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923408347306900045, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
+      propertyPath: historia
+      value: "Grande l\xEDder na primeira gera\xE7\xE3o Okoizume, reuniu fam\xEDlias
+        divididas e fez do p\xE1tio um lugar de encontro. Na hist\xF3ria do pa\xEDs,
+        seu retrato lembra a promessa do cl\xE3 de proteger quem procura abrigo."
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b4393eac68cabe8468e5af1c58344049, type: 3}
 --- !u!1 &388670009
 GameObject:
   m_ObjectHideFlags: 0
@@ -1837,6 +1900,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 298170171}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &583715236
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.010000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434121827792351399, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8454151367282259020, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
+      propertyPath: m_Name
+      value: Manga
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7a68108f67f326b4a94c870805d16b92, type: 3}
 --- !u!21 &669111053
 Material:
   serializedVersion: 8
@@ -2145,7 +2265,7 @@ Transform:
   m_GameObject: {fileID: 759784856}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.27, z: 0}
+  m_LocalPosition: {x: 0, y: -0.64, z: 0}
   m_LocalScale: {x: 0.09, y: 0.35, z: 0.09}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2609,6 +2729,7 @@ MonoBehaviour:
   monk: {fileID: 1285307070}
   exit: {fileID: 1201297243}
   katana: {fileID: 1105332173}
+  guideModel: {fileID: 0}
   animator: {fileID: 158807518}
   interactionRadius: 2.8
 --- !u!4 &922312935
@@ -4714,3 +4835,5 @@ SceneRoots:
   - {fileID: 1269288976}
   - {fileID: 1826034994}
   - {fileID: 1563644224}
+  - {fileID: 583715236}
+  - {fileID: 373142485}

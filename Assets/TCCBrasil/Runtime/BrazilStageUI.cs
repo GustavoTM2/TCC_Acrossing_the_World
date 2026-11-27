@@ -34,6 +34,8 @@ namespace CrossingTheWorld.TCCBrazil
             panel.normal.background = rounded;
             body = new GUIStyle(GUI.skin.label) { fontSize = 22, wordWrap = true, richText = false, alignment = TextAnchor.UpperLeft };
             body.normal.textColor = Color.white;
+            body.hover = body.normal;
+            panel.hover = panel.normal;
             small = new GUIStyle(body) { fontSize = 16 };
             phaseTitle = new GUIStyle(body) { fontSize = 23, fontStyle = FontStyle.Bold, padding = new RectOffset() };
             objective = new GUIStyle(body) { fontSize = 18, padding = new RectOffset() };

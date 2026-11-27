@@ -14,11 +14,11 @@ namespace CrossingTheWorld.TCCJapan
         public Transform boundaryRoot;
 
         [Header("Enquadramento")]
-        [Range(30f, 65f)] public float downwardAngle = 44f;
-        [Range(40f, 65f)] public float angleNearTemple = 54f;
-        [Range(30f, 60f)] public float verticalFieldOfView = 45f;
-        [Min(1f)] public float heightAbovePlayer = 4.8f;
-        [Min(.2f)] public float distanceBehindPlayer = 5.2f;
+        [Range(30f, 65f)] public float downwardAngle = 39f;
+        [Range(40f, 65f)] public float angleNearTemple = 47f;
+        [Range(30f, 60f)] public float verticalFieldOfView = 46f;
+        [Min(1f)] public float heightAbovePlayer = 5.3f;
+        [Min(.2f)] public float distanceBehindPlayer = 7.7f;
         [Range(.05f, .65f)] public float followSmoothTime = .19f;
         [Range(0f, .4f)] public float movementLookAhead = .15f;
         [Range(0f, 1f)] public float boundarySafety = .55f;
@@ -73,7 +73,7 @@ namespace CrossingTheWorld.TCCJapan
             smoothVelocity = Vector3.zero;
             UpdateFraming();
             transform.position = DesiredPosition(false);
-            transform.rotation = Quaternion.Euler(CurrentAngle, 180f, 0f);
+            transform.rotation = FollowRotation();
         }
 
         private void FindBounds()
@@ -197,32 +197,48 @@ namespace CrossingTheWorld.TCCJapan
             // Evita atravessar telhados, pilares e paredes quando Kenji se aproxima.
             var origin = target.position + Vector3.up * 1.25f;
             Vector3 segment = result - origin;
+            float clear = ClearDistance(origin, segment);
+            if (clear >= segment.magnitude) return result;
+
+            // Tenta contornar a peça do pátio antes de encurtar o plano.
+            for (int side = -1; side <= 1; side += 2)
+            {
+                var alternate = result;
+                alternate.x = Mathf.Clamp(result.x + side * 1.8f, xLo, xHi);
+                if (Mathf.Abs(alternate.x - result.x) < .5f) continue;
+                Vector3 path = alternate - origin;
+                if (ClearDistance(origin, path) >= path.magnitude) return alternate;
+            }
+            return origin + segment.normalized * Mathf.Max(.25f, clear - .3f);
+        }
+
+        private float ClearDistance(Vector3 origin, Vector3 segment)
+        {
             float distance = segment.magnitude;
-            if (distance <= .3f) return result;
+            if (distance <= .3f) return distance;
             float best = distance;
             foreach (var hit in Physics.SphereCastAll(origin, collisionRadius,
                 segment / distance, distance, ~0, QueryTriggerInteraction.Ignore))
             {
                 if (hit.collider == null || hit.collider.transform.IsChildOf(target)) continue;
                 if (hit.collider.transform.IsChildOf(transform)) continue;
-                // Os limites invisíveis definem o enquadramento, mas NÃO são
-                // obstáculos contra os quais a própria câmera deva bater.
                 if (boundaryRoot != null && hit.collider.transform.IsChildOf(boundaryRoot)) continue;
-                // Não puxar a câmera para dentro de Kenji por acertar chão/rampas.
-                if (hit.normal.y > .72f) continue;
-                if (hit.distance < .65f) continue;
+                if (hit.normal.y > .72f || hit.distance < .65f) continue;
                 best = Mathf.Min(best, hit.distance);
             }
-            if (best < distance)
-            {
-                float permitted = Mathf.Max(2.5f, best - .3f);
-                result = origin + segment / distance * permitted;
-                // Reaplica os limites depois do desvio para que a câmera
-                // nunca atravesse o retângulo de enquadramento da fase.
-                result.x = Mathf.Clamp(result.x, xLo, xHi);
-                result.z = Mathf.Clamp(result.z, minCameraZ, maxCameraZ);
-            }
-            return result;
+            return best;
+        }
+
+        private Quaternion FollowRotation()
+        {
+            // Nas bordas, o rig para antes de Kenji. Reserva espaço para a cabeça
+            // mesmo quando a posição da câmera fica limitada pelo pátio.
+            float playerHeight = playerController ? playerController.height : 1.75f;
+            Vector3 head = target.position + Vector3.up * playerHeight;
+            float depth = Mathf.Max(.1f, transform.position.z - head.z);
+            float headAngle = Mathf.Atan2(transform.position.y - head.y, depth) * Mathf.Rad2Deg;
+            float marginAngle = Mathf.Atan(.72f * Mathf.Tan(gameCamera.fieldOfView * .5f * Mathf.Deg2Rad)) * Mathf.Rad2Deg;
+            return Quaternion.Euler(Mathf.Min(CurrentAngle, headAngle + marginAngle), 180f, 0f);
         }
 
         private void LateUpdate()
@@ -235,7 +251,7 @@ namespace CrossingTheWorld.TCCJapan
                 ref smoothVelocity, followSmoothTime, 40f, Time.deltaTime);
             // Fixar a orientação evita que a lente oscile ao pular,
             // e evita mostrar o lado de fora do cenário ao girar junto ao Kenji.
-            transform.rotation = Quaternion.Euler(CurrentAngle, 180f, 0f);
+            transform.rotation = FollowRotation();
         }
     }
 }

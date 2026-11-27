@@ -172,6 +172,7 @@ namespace CrossingTheWorld.TCCAudio
             small=new GUIStyle(GUI.skin.label){fontSize=15,alignment=TextAnchor.MiddleRight};
             button=new GUIStyle(GUI.skin.button){fontSize=20,fontStyle=FontStyle.Bold};
             heading.normal.textColor=text.normal.textColor=small.normal.textColor=Color.white;
+            heading.hover=heading.normal; text.hover=text.normal; small.hover=small.normal;
         }
         private void OnGUI()
         {
@@ -296,6 +297,8 @@ namespace CrossingTheWorld.TCCAudio
                 keyStyle.normal.textColor = new Color(.98f, .97f, .92f);
                 descriptionStyle.normal.textColor = new Color(.94f, .96f, .95f);
                 detailStyle.normal.textColor = new Color(.68f, .73f, .73f);
+                headingStyle.hover=headingStyle.normal; keyStyle.hover=keyStyle.normal;
+                descriptionStyle.hover=descriptionStyle.normal; detailStyle.hover=detailStyle.normal;
 
                 // Fundo escuro + borda delicada na cor temática do país.
                 Fill(new Rect(area.x + 3, area.y + 4, area.width, area.height),

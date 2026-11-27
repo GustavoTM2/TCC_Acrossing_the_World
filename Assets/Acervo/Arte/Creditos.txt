@@ -1,0 +1,5 @@
+The Gayer-Anderson Cat (Polycam) — Thomas Flynn (nebulousflynn)
+Licença CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Fonte: https://zenodo.org/records/21355343
+Original: https://sketchfab.com/3d-models/the-gayer-anderson-cat-polycam-2c315a3fdd3140a8a4d1f53f3d7e3d12
+Conversão de GLB para FBX com texturas externas.

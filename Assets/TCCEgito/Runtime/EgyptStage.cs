@@ -38,7 +38,7 @@ namespace CrossingTheWorld.TCCEgypt
         public bool IsDeliveringScarab { get; private set; }
         public string CurrentSpeaker => DialogueIsOpen ? lines[lineIndex].speaker : "";
         // Estas situações pausam a movimentação para o jogador acompanhar o que está acontecendo.
-        public bool BlocksMovement => DialogueIsOpen || CompletionIsOpen || IsLoading || IsDeliveringScarab;
+        public bool BlocksMovement => DialogueIsOpen || CompletionIsOpen || IsLoading || IsDeliveringScarab || MuseumExhibit.IsReading;
         public string Hint { get; set; }
         private EgyptLine[] lines;
         private int lineIndex;
@@ -261,7 +261,7 @@ namespace CrossingTheWorld.TCCEgypt
         // Envio os textos e o estado da fase para a classe que desenha a interface.
         private void OnGUI()
         {
-            if (IsLoading) return;
+            if (IsLoading || MuseumExhibit.IsReading) return;
             if (ui == null) ui = new EgyptStageUI();
             string status = Time.unscaledTime < messageUntil ? message : Hint;
             ui.Draw(this, Objective, status, DialogueIsOpen ? lines[lineIndex] : null,

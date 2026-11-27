@@ -156,13 +156,32 @@ public sealed partial class ItaliaFase : MonoBehaviour {
         display.targetTexture=preview;display.enabled=won;reward.gameObject.SetActive(won);
     }
     void OnDestroy(){if(toppingLayer)Destroy(toppingLayer);if(preview){if(display)display.targetTexture=null;preview.Release();Destroy(preview);}}
-    Vector3 streetCameraHome,streetFocus;
-    public void SetupStreetCamera(){
+    Bounds streetView;
+    public void SetupStreetCamera(Bounds quay){
+        streetView = quay;
+        streetView.Encapsulate(bridge);
         var rig = cameraFase.transform;
         rig.rotation = Quaternion.Euler(34f, rig.eulerAngles.y, 0f);
         cameraFase.fieldOfView = 42f;
-        streetFocus = player.position;
-        streetCameraHome = streetFocus + Vector3.up * unit - rig.forward * (8f * unit);
+    }
+    // Mantém os dois cantos inferiores da imagem dentro da parte acabada do cais.
+    // A largura visível muda com a proporção da janela e a altura da ponte.
+    Vector3 LimitStreetView(Vector3 eye){
+        var rig = cameraFase.transform;
+        float halfHeight = Mathf.Tan(cameraFase.fieldOfView * .5f * Mathf.Deg2Rad);
+        Vector3 bottom = rig.forward - rig.up * halfHeight;
+        Vector3 side = rig.right * (halfHeight * cameraFase.aspect);
+        float depth = (player.position.y - eye.y) / bottom.y;
+        Vector3 left = (bottom - side) * depth;
+        Vector3 right = (bottom + side) * depth;
+        eye.x = FitViewAxis(eye.x, left.x, right.x, streetView.min.x, streetView.max.x);
+        eye.z = FitViewAxis(eye.z, left.z, right.z, streetView.min.z, streetView.max.z);
+        return eye;
+    }
+    static float FitViewAxis(float position,float a,float b,float low,float high){
+        float min = low - Mathf.Min(a,b);
+        float max = high - Mathf.Max(a,b);
+        return min <= max ? Mathf.Clamp(position,min,max) : (min + max) * .5f;
     }
     public Vector3 CameraPosition(){
         if(!interior){
@@ -170,8 +189,7 @@ public sealed partial class ItaliaFase : MonoBehaviour {
             float margin = Mathf.Min(1.7f * unit, area.extents.x * .4f);
             focus.x = Mathf.Clamp(focus.x, area.min.x + margin, area.max.x - margin);
             focus.z = Mathf.Clamp(focus.z, area.min.z + unit, bridge.max.z - 2.2f * unit);
-            Vector3 shift = focus - streetFocus;
-            return streetCameraHome+shift;
+            return LimitStreetView(focus + Vector3.up * unit - cameraFase.transform.forward * (8f * unit));
         }
         return new Vector3(Mathf.Clamp(player.position.x-1.05f,-4.65f,3.6f),3.7f,
             Mathf.Clamp(player.position.z-4.1f,-6.4f,-2.1f));

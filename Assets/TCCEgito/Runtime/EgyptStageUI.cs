@@ -28,6 +28,7 @@ namespace CrossingTheWorld.TCCEgypt
             rounded.SetPixels(pixels); rounded.Apply(false, true);
             panel = new GUIStyle { border = new RectOffset(10, 10, 10, 10) };
             panel.normal.background = rounded;
+            panel.hover = panel.normal;
             small = Text(14, new Color(0.75f, 0.78f, 0.79f));
             body = Text(22, new Color(0.95f, 0.94f, 0.91f));
             speaker = Text(23, gold, true);
@@ -44,6 +45,7 @@ namespace CrossingTheWorld.TCCEgypt
             var style = new GUIStyle(GUI.skin.label) { fontSize = size, wordWrap = true,
                 fontStyle = bold ? FontStyle.Bold : FontStyle.Normal, padding = new RectOffset() };
             style.normal.textColor = color;
+            style.hover = style.normal;
             return style;
         }
 

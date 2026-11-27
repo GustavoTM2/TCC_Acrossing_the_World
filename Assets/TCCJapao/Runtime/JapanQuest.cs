@@ -20,6 +20,8 @@ namespace CrossingTheWorld.TCCJapan
         [Header("Referências das cenas")]
         public bool interior;
         public Transform player, guide, door, monk, exit, katana;
+        [SerializeField] private Transform guideModel;
+        public bool CanTalkToGuide => !interior && Near(guideModel ? guideModel : guide);
         public Animator animator;
 
         [Header("Interação")]
@@ -239,13 +241,8 @@ namespace CrossingTheWorld.TCCJapan
             {
                 // O mesmo FBX de guiaturistico da Itália agora é um prefab visível
                 // na Hierarchy da cena (inclusive antes de apertar Play).
-                if(guide == null)
-                {
-                    Debug.LogError("Japão: o marcador Guia turistico - conversar não está associado.");
-                    return;
-                }
-                var guideCharacter = GameObject.Find("Guia_Turistico_Japao_Original");
-                if(guideCharacter == null)
+                var guideCharacter = guideModel ? guideModel.gameObject : GameObject.Find("Guia_Turistico_Japao_Original");
+                if(guideCharacter == null && guide != null)
                 {
                     // Recuperação para cenas antigas que ainda não têm o prefab fixo.
                     var prefab = Resources.Load<GameObject>("GuiaItaliaOriginal");
@@ -260,7 +257,7 @@ namespace CrossingTheWorld.TCCJapan
                 if(guideCharacter == null)
                 {
                     // Um marcador visível é melhor que um NPC totalmente ausente.
-                    var proxy = guide.GetComponent<Renderer>();
+                    var proxy = guide ? guide.GetComponent<Renderer>() : null;
                     if(proxy != null) proxy.enabled = true;
                     Debug.LogError("Japão: o guia turístico da Itália não foi encontrado na cena nem em Resources.");
                     return;
@@ -270,7 +267,7 @@ namespace CrossingTheWorld.TCCJapan
                 // A instância da cena já tem altura e posição dos pés ajustadas.
                 if(player != null)
                 {
-                    Vector3 facing = player.position - guide.position;
+                    Vector3 facing = player.position - guideModel.position;
                     facing.y = 0f;
                     if(facing.sqrMagnitude > .01f)
                         guideCharacter.transform.rotation = Quaternion.LookRotation(facing.normalized, Vector3.up);
@@ -281,12 +278,12 @@ namespace CrossingTheWorld.TCCJapan
                     collider.enabled = false;
                 var guideAnimator = guideCharacter.GetComponentInChildren<Animator>();
                 if(guideAnimator != null) guideAnimator.applyRootMotion = false;
-                var guideStand = guide.GetComponent<Renderer>();
+                var guideStand = guide ? guide.GetComponent<Renderer>() : null;
                 if(guideStand != null) guideStand.enabled = renderers.Length == 0;
                 if(renderers.Length == 0)
                     Debug.LogError("Japão: o modelo do guia foi carregado, mas não contém Renderer.");
                 else
-                    Debug.Log("Japão: guia italiano visível e posicionado próximo ao Kenji: " +
+                    Debug.Log("Japão: posição do guia turístico na cena externa: " +
                         guideCharacter.transform.position);
                 return;
             }
@@ -296,7 +293,7 @@ namespace CrossingTheWorld.TCCJapan
             if(pref==null) {Debug.LogWarning("NPC japonês não encontrado.");return;}
             var character=Instantiate(pref);
             character.name="Monge_Okoizume_Original";
-            FitModel(character,marker,1.75f,180f);
+            FitModel(character,marker,1.75f,0f);
             foreach(var c in character.GetComponentsInChildren<Collider>(true))c.enabled=false;
             TextureModel(character,"MongeOkoizume");monkModel=character.transform;
             var anim=character.GetComponentInChildren<Animator>();
@@ -400,7 +397,6 @@ namespace CrossingTheWorld.TCCJapan
         }
 
         private DialogueShot shot;
-        private Transform guideModel;
         private void LateUpdate()
         {
             if (talking && movement && dialogue != null)
@@ -420,14 +416,25 @@ namespace CrossingTheWorld.TCCJapan
             if(EgyptSceneTransition.IsBusy || StageExperience.IsPaused) return;
             if(katanaModel!=null && katana!=null && katana.gameObject.activeSelf)katana.Rotate(Vector3.up,30f*Time.deltaTime);
             if(animator!=null && (talking || completionVisible || rewardPresentation || delivering))animator.SetFloat(Speed,0f);
-            if(movement!=null)movement.enabled=!(talking || completionVisible || rewardPresentation || delivering);
+            bool busy = talking || completionVisible || rewardPresentation || delivering;
+            float priority = float.PositiveInfinity;
+            if (player && !busy)
+            {
+                var npc = interior ? monk : (guideModel ? guideModel : guide);
+                var portal = interior ? exit : door;
+                if (Near(npc)) priority = Vector3.ProjectOnPlane(npc.position-player.position,Vector3.up).sqrMagnitude;
+                if (Near(portal)) priority = Mathf.Min(priority,Vector3.ProjectOnPlane(portal.position-player.position,Vector3.up).sqrMagnitude);
+            }
+            bool inspecting = MuseumExhibit.Handle(player, !busy, EgyptInput.InteractPressed, priority);
+            if(movement!=null)movement.enabled=!(busy || MuseumExhibit.IsReading);
+            if(inspecting) { if(animator && MuseumExhibit.IsReading) animator.SetFloat(Speed,0f); return; }
             if(!EgyptInput.InteractPressed)return;
             if(talking) {AdvanceDialogue();return;}
             if(rewardPresentation || completionVisible) {ContinueFromReward();return;}
             if(player==null)return;
             if(!interior)
             {
-                if(Near(guide))
+                if(CanTalkToGuide)
                 {
                     OpenDialogue(GuideText,()=>{guideComplete=true;SaveProgress();});
                 }
@@ -545,6 +552,8 @@ namespace CrossingTheWorld.TCCJapan
             rewardStyle.normal.textColor=gold;
             captionStyle.normal.textColor=new Color(.77f,.83f,.81f);
             countStyle.normal.textColor=cream;
+            foreach (var label in new[] { titleStyle, speakerStyle, bodyStyle, captionStyle, countStyle, objectiveStyle, promptStyle, rewardStyle })
+                label.hover = label.normal;
         }
         private static void Panel(Rect bounds)
         {
@@ -573,7 +582,7 @@ namespace CrossingTheWorld.TCCJapan
             {
                 if(!interior)
                 {
-                    if(Near(guide))return "E / Enter   Conversar com o guia turístico";
+                    if(CanTalkToGuide)return "E / Enter   Conversar com o guia turístico";
                     if(Near(door))return guideComplete?"E / Enter   Entrar no templo":"Primeiro, converse com o guia turístico.";
                     return "";
                 }
@@ -585,7 +594,7 @@ namespace CrossingTheWorld.TCCJapan
         }
         private void OnGUI()
         {
-            if(EgyptSceneTransition.IsBusy || StageExperience.IsPaused)return;
+            if(EgyptSceneTransition.IsBusy || StageExperience.IsPaused || MuseumExhibit.IsReading)return;
             Style();
             var old=GUI.matrix;
             float scale=Mathf.Min(Screen.width/1280f,Screen.height/720f);
@@ -635,7 +644,7 @@ namespace CrossingTheWorld.TCCJapan
             }
             else
             {
-                string prompt=Prompt;
+                string prompt=MuseumExhibit.HasPrompt ? "" : Prompt;
                 if(!string.IsNullOrEmpty(prompt))
                 {
                     // Painel de interação separado dos controles à esquerda.

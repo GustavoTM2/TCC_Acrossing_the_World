@@ -42,6 +42,11 @@ namespace CrossingTheWorld.TCCEgypt
                     }
                 }
             // Mostro o aviso de interação e, ao apertar a tecla, chamo a ação daquele ponto.
+            if (MuseumExhibit.Handle(transform, true, pressed, best))
+            {
+                stage.Hint = "";
+                return;
+            }
             stage.Hint = closest != null ? closest.Prompt : "";
             if (pressed && closest != null) stage.Interact(closest.kind);
         }

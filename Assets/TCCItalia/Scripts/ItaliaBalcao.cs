@@ -84,7 +84,7 @@ public sealed partial class ItaliaFase {
         GUI.Label(rect,text,style);
     }
     static bool CounterButton(Rect rect,string text){
-        Card(rect,rect.Contains(Event.current.mousePosition)?new Color32(71,109,85,255):Green);
+        Card(rect,Green);
         Letter(rect,text,17,Color.white,true);
         return GUI.Button(rect,GUIContent.none,GUIStyle.none);
     }

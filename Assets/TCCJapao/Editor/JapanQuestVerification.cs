@@ -87,12 +87,27 @@ public static class JapanQuestVerification
                         {
                             check(visibleGuide.GetComponentsInChildren<Renderer>(true).Length>0,
                                 "Modelo do guia na Hierarchy possui malhas");
-                            check(Vector3.Distance(visibleGuide.transform.position,quest.guide.position)<1.0f,
-                                "Modelo posicionado no ponto de interação");
+                            if(quest.player!=null)
+                            {
+                                var placed=visibleGuide.transform;
+                                var originalGuide=placed.position;
+                                var originalPlayer=quest.player.position;
+                                try
+                                {
+                                    quest.player.position=originalGuide;
+                                    check(quest.CanTalkToGuide,"Conversa disponível junto ao guia");
+                                    placed.position=originalGuide+Vector3.right*(quest.interactionRadius+2f);
+                                    check(!quest.CanTalkToGuide,"Mover o guia desativa a conversa no ponto anterior");
+                                    quest.player.position=placed.position;
+                                    check(quest.CanTalkToGuide,"A conversa acompanha a posição do guia");
+                                }
+                                finally
+                                {
+                                    placed.position=originalGuide;
+                                    quest.player.position=originalPlayer;
+                                }
+                            }
                         }
-                        if(quest.player!=null)
-                            check(Vector3.Distance(quest.guide.position,quest.player.position)<3.5f,
-                                "Guia visível próximo ao início da fase");
                     }
                     if(!quest.interior && quest.door!=null && quest.player!=null)
                         check(quest.door.position.z<quest.player.position.z-10f,

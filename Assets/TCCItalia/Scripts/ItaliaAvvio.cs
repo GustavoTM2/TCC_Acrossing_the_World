@@ -163,7 +163,11 @@ public sealed class ItaliaAvvio : MonoBehaviour {
             var cc=stage.player.gameObject.AddComponent<CharacterController>(); cc.height=1.75f*stage.unit;cc.radius=.28f*stage.unit;cc.center=V(0,.89f*stage.unit,0);cc.stepOffset=.3f*stage.unit; cc.skinWidth=.025f*stage.unit; cc.minMoveDistance=0; cc.slopeLimit=50;
             stage.cameraFase=scene.GetRootGameObjects().SelectMany(o=>o.GetComponentsInChildren<Camera>()).First(c=>c.CompareTag("MainCamera"));
             if(interior)stage.cameraFase.transform.rotation=Quaternion.Euler(28,17,0);
-            else stage.SetupStreetCamera();
+            else {
+                var quay = streetObjects.FirstOrDefault(o => o.name == "Cube");
+                var surface = quay ? quay.GetComponentInChildren<Renderer>() : null;
+                stage.SetupStreetCamera(surface ? surface.bounds : stage.area);
+            }
             if(interior)stage.cameraFase.fieldOfView=43;
             stage.cameraFase.nearClipPlane=.05f;
             stage.cameraFase.transform.position=stage.CameraPosition();
